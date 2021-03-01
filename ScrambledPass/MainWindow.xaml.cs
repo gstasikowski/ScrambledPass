@@ -2,10 +2,11 @@
 using System.Windows;
 using ScrambledPass.Logic;
 
-// TODO 1. figure a way to capture copying/cutting password from text field
-//         to make "clear clipboard after x time" feature?
-//      2. add warning if one of "count" textboxes is not a number
-//      3. error handler logic
+// TODO 1. implement error handler logic
+//      2. warning messages for failed file operations and parsing errors (word and char count boxes)
+//      3. multi-language UI
+//      4. proper password entropy calculations
+//      5. optional clipboard cleaning after copying/cutting from password textbox?
 
 namespace ScrambledPass
 {
@@ -71,7 +72,7 @@ namespace ScrambledPass
             }
             catch
             {
-                // TODO Add activating error message window (through separate logic class)
+                // TODO activate error handler
             }
 
             return wordCount;

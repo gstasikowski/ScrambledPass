@@ -48,8 +48,8 @@ namespace ScrambledPass.Logic
                 wordList.AddRange(File.ReadAllLines(filePath));
             }
 
-            // TODO Add activating error message window in case of problems (through separate logic class)
-            
+            // TODO activate error handler
+
             return wordList;
         }
     }
