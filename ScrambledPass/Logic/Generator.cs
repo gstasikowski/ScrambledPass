@@ -10,7 +10,7 @@ namespace ScrambledPass.Logic
 
         List<string> wordList = new List<string>();
         char[] specialCharacters = { ',', '.', '/', ';', '\'', '[', ']', '\\', '~', '!', '@', '$', '%', '^', '&', '*', '(', ')', '-', '+' };
-        List<char> availableCharList = new List<char>(); 
+        List<char> availableCharList = new List<char>();
 
         public Generator()
         {
@@ -101,9 +101,9 @@ namespace ScrambledPass.Logic
         {
             string newPassword = password.Trim();
             int spacePos = newPassword.IndexOf(' ');
-            
+
             while (spacePos > 0)
-            { 
+            {
                 int spacingWidth = randIndex.Next(0, charCount);
                 string newSpacing = "";
 
@@ -144,11 +144,11 @@ namespace ScrambledPass.Logic
         string InsertRandomCharacters(string password, int charCount)
         {
             string newPassword = password;
-            
+
             for (int i = 0; i < charCount; i++)
             {
                 int charPosition = (newPassword.Length > 0) ? randIndex.Next(0, newPassword.Length) : 0;
-                
+
                 if (charPosition > 0)
                     newPassword = newPassword.Substring(0, charPosition) + GetRandomCharacter() + newPassword.Substring(charPosition);
                 else

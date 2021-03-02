@@ -1,12 +1,11 @@
 ﻿using Microsoft.Win32;
-using System.Windows;
 using ScrambledPass.Logic;
+using System.Windows;
 
-// TODO 1. implement error handler logic
-//      2. warning messages for failed file operations and parsing errors (word and char count boxes)
-//      3. multi-language UI
-//      4. proper password entropy calculations
-//      5. optional clipboard cleaning after copying/cutting from password textbox?
+// TODO 
+//      1. multi-language UI
+//      2. proper password entropy calculations
+//      3. optional clipboard cleaning after copying/cutting from password textbox?
 
 namespace ScrambledPass
 {
@@ -79,7 +78,7 @@ namespace ScrambledPass
 
             int charCount = 0;
 
-            if(!int.TryParse(txtb_charCount.Text, out charCount))            
+            if (!int.TryParse(txtb_charCount.Text, out charCount))
             { new ErrorHandler("parserError"); }
 
             return charCount;
@@ -98,8 +97,8 @@ namespace ScrambledPass
 
         private void LoadCustomWordList(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog(); 
-            
+            OpenFileDialog fileDialog = new OpenFileDialog();
+
             if (fileDialog.ShowDialog() == true)
                 passGen.PrepareWordList(fileDialog.FileName);
         }
