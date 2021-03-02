@@ -68,6 +68,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Logic\ErrorHandler.cs" />
     <Compile Include="Logic\FileOperations.cs" />
     <Page Include="Views\ErrorMessage.xaml">
       <SubType>Designer</SubType>

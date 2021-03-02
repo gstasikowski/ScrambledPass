@@ -64,16 +64,10 @@ namespace ScrambledPass
             if (!pnl_words.IsEnabled)
                 return 0;
 
-            int wordCount = 5;
+            int wordCount = 0;
 
-            try
-            {
-                int.TryParse(txtb_wordCount.Text, out wordCount);
-            }
-            catch
-            {
-                // TODO activate error handler
-            }
+            if (!int.TryParse(txtb_wordCount.Text, out wordCount))
+            { new ErrorHandler("parserError"); }
 
             return wordCount;
         }
@@ -84,7 +78,9 @@ namespace ScrambledPass
                 return 0;
 
             int charCount = 0;
-            int.TryParse(txtb_charCount.Text, out charCount);
+
+            if(!int.TryParse(txtb_charCount.Text, out charCount))            
+            { new ErrorHandler("parserError"); }
 
             return charCount;
         }

@@ -38,7 +38,7 @@ namespace ScrambledPass.Logic
             return wordList;
         }
 
-        public List<string> LoadCustomWordList(string filePath) // TODO add error checks
+        public List<string> LoadCustomWordList(string filePath)
         {
             List<string> wordList = new List<string>();
 
@@ -47,8 +47,8 @@ namespace ScrambledPass.Logic
                 wordList.Clear();
                 wordList.AddRange(File.ReadAllLines(filePath));
             }
-
-            // TODO activate error handler
+            else
+            { new ErrorHandler("fileNotFound"); }
 
             return wordList;
         }
