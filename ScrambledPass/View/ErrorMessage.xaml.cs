@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ScrambledPass.Views
+namespace ScrambledPass.View
 {
     /// <summary>
     /// Interaction logic for ErroMessage.xaml

@@ -1,15 +1,15 @@
-﻿using System;
+﻿using ScrambledPass.Model;
+using System;
 using System.Collections.Generic;
 
 namespace ScrambledPass.Logic
 {
     public class Generator
     {
+        DataBank dataBank = new DataBank();
         FileOperations fileO = new FileOperations();
         Random randIndex = new Random();
 
-        List<string> wordList = new List<string>();
-        char[] specialCharacters = { ',', '.', '/', ';', '\'', '[', ']', '\\', '~', '!', '@', '$', '%', '^', '&', '*', '(', ')', '-', '+' };
         List<char> availableCharList = new List<char>();
 
         public Generator()
@@ -23,7 +23,7 @@ namespace ScrambledPass.Logic
             PrepareCharList(wordCount, letters, bigLetters, numbers, specialChars);
 
             for (int i = 0; i < wordCount; i++)
-                newPassword += wordList[randIndex.Next(0, wordList.Count)] + " ";
+                newPassword += dataBank.WordList[randIndex.Next(0, dataBank.WordList.Count)] + " ";
 
             if (randCharSize)
                 newPassword = RandomizeLetterSize(newPassword);
@@ -51,12 +51,12 @@ namespace ScrambledPass.Logic
 
         public void PrepareWordList(string filePath)
         {
-            wordList.Clear();
+            dataBank.WordList.Clear();
 
             if (filePath == string.Empty)
-                wordList.AddRange(fileO.LoadDefaultWordList());
+                dataBank.WordList.AddRange(fileO.LoadDefaultWordList());
             else
-                wordList.AddRange(fileO.LoadCustomWordList(filePath));
+                dataBank.WordList.AddRange(fileO.LoadCustomWordList(filePath));
         }
 
         void PrepareCharList(int wordCount, bool letters, bool bigLetters, bool numbers, bool specialChars)
@@ -82,7 +82,7 @@ namespace ScrambledPass.Logic
             }
 
             if (specialChars)
-                availableCharList.AddRange(specialCharacters);
+                availableCharList.AddRange(dataBank.SpecialCharacters);
 
             if (wordCount > 0)
                 availableCharList.Add(' ');

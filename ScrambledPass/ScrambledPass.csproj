@@ -70,7 +70,7 @@
     </ApplicationDefinition>
     <Compile Include="Logic\ErrorHandler.cs" />
     <Compile Include="Logic\FileOperations.cs" />
-    <Page Include="Views\ErrorMessage.xaml">
+    <Page Include="View\ErrorMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -83,7 +83,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Logic\Generator.cs" />
-    <Compile Include="Views\ErrorMessage.xaml.cs">
+    <Compile Include="Model\DataBank.cs" />
+    <Compile Include="View\ErrorMessage.xaml.cs">
       <DependentUpon>ErrorMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
