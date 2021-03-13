@@ -1,20 +1,19 @@
-﻿using ScrambledPass.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ScrambledPass.Logic
 {
     public class Generator
     {
-        DataBank dataBank = new DataBank();
-        FileOperations fileO = new FileOperations();
+        App app = (App)App.Current;
         Random randIndex = new Random();
 
         List<char> availableCharList = new List<char>();
 
         public Generator()
         {
-            PrepareWordList(string.Empty);
+
         }
 
         public string GeneratePassword(int wordCount, int charMode, int charCount, bool randCharSize, bool letters, bool bigLetters, bool numbers, bool specialChars)
@@ -23,7 +22,7 @@ namespace ScrambledPass.Logic
             PrepareCharList(wordCount, letters, bigLetters, numbers, specialChars);
 
             for (int i = 0; i < wordCount; i++)
-                newPassword += dataBank.WordList[randIndex.Next(0, dataBank.WordList.Count)] + " ";
+                newPassword += app.dataBank.WordList[randIndex.Next(0, app.dataBank.WordList.Count)] + " ";
 
             if (randCharSize)
                 newPassword = RandomizeLetterSize(newPassword);
@@ -51,12 +50,12 @@ namespace ScrambledPass.Logic
 
         public void PrepareWordList(string filePath)
         {
-            dataBank.WordList.Clear();
+            app.dataBank.WordList.Clear();
 
             if (filePath == string.Empty)
-                dataBank.WordList.AddRange(fileO.LoadDefaultWordList());
+                app.dataBank.WordList.AddRange(app.fileO.LoadDefaultWordList());
             else
-                dataBank.WordList.AddRange(fileO.LoadCustomWordList(filePath));
+                app.dataBank.WordList.AddRange(app.fileO.LoadCustomWordList(filePath));
         }
 
         void PrepareCharList(int wordCount, bool letters, bool bigLetters, bool numbers, bool specialChars)
@@ -82,9 +81,9 @@ namespace ScrambledPass.Logic
             }
 
             if (specialChars)
-                availableCharList.AddRange(dataBank.SpecialCharacters);
+                availableCharList.AddRange(app.dataBank.SpecialChars);
 
-            if (wordCount > 0)
+            if (wordCount > 0 && !specialChars)
                 availableCharList.Add(' ');
         }
 
@@ -156,6 +155,26 @@ namespace ScrambledPass.Logic
             }
 
             return newPassword;
+        }
+
+        public double CalculateEntropy(string password)
+        {
+            int uniqueSymbols = 0;
+
+            if (password.Any(char.IsLower))
+                uniqueSymbols += 26;
+
+            if (password.Any(char.IsUpper))
+                uniqueSymbols += 26;
+
+            if (password.Any(char.IsDigit))
+                uniqueSymbols += 10;
+
+            if (password.Any(char.IsSymbol) || password.Any(char.IsPunctuation))
+                uniqueSymbols += app.dataBank.SpecialCharsCount;
+
+            double entropy = Math.Log(Math.Pow(uniqueSymbols, password.Length));
+            return Math.Round(entropy, 2);
         }
     }
 }

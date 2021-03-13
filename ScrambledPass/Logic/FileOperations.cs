@@ -11,7 +11,7 @@ namespace ScrambledPass.Logic
 
         public FileOperations()
         {
-            LoadDefaultWordList();
+
         }
 
         public List<string> LoadDefaultWordList()
@@ -35,6 +35,7 @@ namespace ScrambledPass.Logic
                 reader.Close();
             }
 
+            SaveSettings("lastWordList", string.Empty);
             return wordList;
         }
 
@@ -46,11 +47,18 @@ namespace ScrambledPass.Logic
             {
                 wordList.Clear();
                 wordList.AddRange(File.ReadAllLines(filePath));
+                SaveSettings("lastWordList", filePath);
             }
             else
             { new ErrorHandler("fileNotFound"); }
 
             return wordList;
+        }
+
+        public void SaveSettings(string property, string value)
+        {
+            Properties.Settings.Default[property] = value;
+            Properties.Settings.Default.Save();
         }
     }
 }

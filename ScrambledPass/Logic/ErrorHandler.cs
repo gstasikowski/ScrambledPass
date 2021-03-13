@@ -4,10 +4,10 @@
     {
         public ErrorHandler(string errorCode)
         {
+            App app = (App)App.Current;
             View.ErrorMessage messageWindows = new View.ErrorMessage();
-            Model.DataBank dataBase = new Model.DataBank();
 
-            messageWindows.DisplayMessage(dataBase.GetErrorMessage(errorCode));
+            messageWindows.DisplayMessage(app.dataBank.GetErrorMessage(errorCode, (int)Properties.Settings.Default["languageID"]));
             messageWindows.Show();
         }
     }
