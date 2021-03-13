@@ -21,8 +21,6 @@ namespace ScrambledPass.View
 
             SetCharPanelStatus(this, null);
             SetWordsPanelStatus(this, null);
-
-            app.settingsLoaded = true;
         }
 
         private void InitialSetup()
