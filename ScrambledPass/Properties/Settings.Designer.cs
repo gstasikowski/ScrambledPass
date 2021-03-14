@@ -46,5 +46,41 @@ namespace ScrambledPass.Properties {
                 this["lastWordList"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public string rememberLastWordList {
+            get {
+                return ((string)(this["rememberLastWordList"]));
+            }
+            set {
+                this["rememberLastWordList"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public string defWordCount {
+            get {
+                return ((string)(this["defWordCount"]));
+            }
+            set {
+                this["defWordCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public string defCharCount {
+            get {
+                return ((string)(this["defCharCount"]));
+            }
+            set {
+                this["defCharCount"] = value;
+            }
+        }
     }
 }

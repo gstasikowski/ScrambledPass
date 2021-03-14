@@ -25,12 +25,17 @@ namespace ScrambledPass.View
 
         private void InitialSetup()
         {
-            int langID = 0;
-            int.TryParse((string)Properties.Settings.Default["languageID"], out langID);
-            cb_language.SelectedIndex = langID;
-            ApplyLocalizedUI();
+            RefreshUI();
 
-            passGen.PrepareWordList((string)Properties.Settings.Default["lastWordList"]);
+            if ((string)Properties.Settings.Default["rememberLastWordList"] == "True")
+                passGen.PrepareWordList((string)Properties.Settings.Default["lastWordList"]);
+            else
+                passGen.PrepareWordList(string.Empty);
+
+            pnl_layout.Visibility = Visibility.Visible;
+            pnl_settings.Visibility = Visibility.Collapsed;
+
+            app.appReady = true;
         }
 
         private void SetWordsPanelStatus(object sender, RoutedEventArgs e)
@@ -166,12 +171,68 @@ namespace ScrambledPass.View
             btn_generate.ToolTip = app.dataBank.GetToolTip("t_passGen", cb_language.SelectedIndex);
             btn_loadWordList.ToolTip = app.dataBank.GetToolTip("t_wordList", cb_language.SelectedIndex);
             btn_loadDefWordList.ToolTip = app.dataBank.GetToolTip("t_defWordList", cb_language.SelectedIndex);
+            btn_settings.ToolTip = app.dataBank.GetToolTip("t_settings", cb_language.SelectedIndex);
+
+            // settings
+            lbl_language.Content = string.Format("{0}:", app.dataBank.GetLocalText("language", cb_language.SelectedIndex));
+            chkb_loadCustomWordList.Content = app.dataBank.GetLocalText("loadWordList", cb_language.SelectedIndex);
+            lbl_defWordCount.Content = string.Format("{0}:", app.dataBank.GetLocalText("defWordCount", cb_language.SelectedIndex));
+            lbl_defCharCount.Content = string.Format("{0}:", app.dataBank.GetLocalText("defCharCount", cb_language.SelectedIndex));
+            btn_defaultSettings.ToolTip = app.dataBank.GetToolTip("t_defSettings", cb_language.SelectedIndex);
+            btn_closeSettings.Content = app.dataBank.GetLocalText("back", cb_language.SelectedIndex);
         }
 
         private void SelectLanguage(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             app.fileO.SaveSettings("languageID", cb_language.SelectedIndex.ToString());
             ApplyLocalizedUI();
+        }
+
+        private void ToggleCustomWordListReload(object sender, RoutedEventArgs e)
+        {
+            app.fileO.SaveSettings("rememberLastWordList", chkb_loadCustomWordList.IsChecked.ToString());
+        }
+
+        private void ToggleSettingsMenu(object sender, RoutedEventArgs e)
+        {
+            pnl_layout.Visibility = (pnl_layout.Visibility == Visibility.Visible) ? Visibility.Collapsed : Visibility.Visible;
+            pnl_settings.Visibility = (pnl_settings.Visibility == Visibility.Visible) ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        private void RestoreDefaultSettings(object sender, RoutedEventArgs e)
+        {
+            app.fileO.DefaultSettings();
+            RefreshUI();
+        }
+
+        private void RefreshUI()
+        {
+            int languageID = 0;
+            int.TryParse((string)Properties.Settings.Default["languageID"], out languageID);
+            cb_language.SelectedIndex = languageID;
+
+
+            if ((string)Properties.Settings.Default["rememberLastWordList"] == "True")
+                chkb_loadCustomWordList.IsChecked = true;
+            else
+                chkb_loadCustomWordList.IsChecked = false;
+
+            txtb_wordCount.Text = txtb_defWordCount.Text = (string)Properties.Settings.Default["defWordCount"];
+            txtb_charCount.Text = txtb_defCharCount.Text = (string)Properties.Settings.Default["defCharCount"];
+
+            ApplyLocalizedUI();
+        }
+
+        private void SetDefWordCount(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (app.appReady)
+                app.fileO.SaveSettings("defWordCount", txtb_defWordCount.Text);
+        }
+
+        private void SetDefCharCount(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (app.appReady)
+                app.fileO.SaveSettings("defCharCount", txtb_defCharCount.Text);
         }
     }
 }

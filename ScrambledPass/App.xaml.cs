@@ -11,5 +11,7 @@ namespace ScrambledPass
     {
         public DataBank dataBank = new DataBank();
         public FileOperations fileO = new FileOperations();
+
+        public bool appReady = false;
     }
 }

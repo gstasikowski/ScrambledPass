@@ -47,6 +47,7 @@ namespace ScrambledPass.Logic
             {
                 wordList.Clear();
                 wordList.AddRange(File.ReadAllLines(filePath));
+
                 SaveSettings("lastWordList", filePath);
             }
             else
@@ -58,6 +59,16 @@ namespace ScrambledPass.Logic
         public void SaveSettings(string property, string value)
         {
             Properties.Settings.Default[property] = value;
+            Properties.Settings.Default.Save();
+        }
+
+        public void DefaultSettings()
+        {
+            Properties.Settings.Default["languageID"] = "0";
+            Properties.Settings.Default["lastWordList"] = string.Empty;
+            Properties.Settings.Default["rememberLastWordList"] = "False";
+            Properties.Settings.Default["defWordCount"] = "5";
+            Properties.Settings.Default["defCharCount"] = "5";
             Properties.Settings.Default.Save();
         }
     }

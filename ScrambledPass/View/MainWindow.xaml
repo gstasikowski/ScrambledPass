@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ScrambledPass" Height="auto" Width="450" MaxHeight="360" SizeToContent="Height" BorderThickness="0" Padding="0">
     <Grid x:Name="mainUI" Margin="0" Width="440" Height="auto" MaxHeight="350" VerticalAlignment="Top">
-        <StackPanel x:Name="pnl_layout" Width="440" Height="auto" VerticalAlignment="Top" Margin="0" HorizontalAlignment="Left">
+        <StackPanel x:Name="pnl_layout" Width="440" Height="auto" VerticalAlignment="Top" Margin="0" HorizontalAlignment="Left" MinHeight="150">
             <CheckBox x:Name="chkb_randWords" Content="Words" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True" Click="SetWordsPanelStatus"/>
             <StackPanel x:Name="pnl_words" HorizontalAlignment="Left" Height="50" Margin="30,0,0,0" VerticalAlignment="Top" Width="248">
                 <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
@@ -49,12 +49,39 @@
                         <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/reload.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Separator Margin="0" Width="250" Visibility="Hidden"/>
+                <Separator Margin="0" Width="270" Visibility="Hidden"/>
                 <CheckBox x:Name="chkb_ClrClipboard" Content="Clear clipboard after 20s" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Visibility="Collapsed"/>
+                <Button x:Name="btn_settings" Height="20" Width="20" Click="ToggleSettingsMenu" >
+                    <Button.Background>
+                        <ImageBrush Stretch="Uniform" ImageSource="pack://siteoforigin:,,,/Resources/settings.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel x:Name="pnl_settings" Width="440" Height="auto" VerticalAlignment="Top" Margin="5" HorizontalAlignment="Left" MinHeight="150" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <Label x:Name="lbl_language" Content="Language"/>
                 <ComboBox x:Name="cb_language" SelectionChanged="SelectLanguage">
                     <ListBoxItem Content="EN" IsSelected="True"/>
                     <ListBoxItem Content="PL"/>
                 </ComboBox>
+            </StackPanel>
+            <CheckBox x:Name="chkb_loadCustomWordList" Content="Load custom wordlist on startup" Checked="ToggleCustomWordListReload" Unchecked="ToggleCustomWordListReload" />
+            <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
+                    <Label x:Name="lbl_defWordCount" Content="Def word count:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtb_defWordCount" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefWordCount"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
+                <Label x:Name="lbl_defCharCount" Content="Def char count:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtb_defCharCount" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefCharCount"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="btn_defaultSettings" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="RestoreDefaultSettings" Margin="0,0,10,0" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/reload.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="btn_closeSettings" Content="Back" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="ToggleSettingsMenu" Margin="0,0,10,0" />
             </StackPanel>
         </StackPanel>
     </Grid>
