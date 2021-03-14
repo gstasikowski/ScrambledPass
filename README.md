@@ -1,5 +1,8 @@
 # ScrambledPass
- Rewrite of the old password generator project with more sensible code structure. 
+ Rewrite of an old password generator project with more sensible code structure.
+
+ Generates passwords using word list and/or random characters.
+ Includes password entropy and (biased) strength indicator.
  
  TODO:
  - ~~implement error handler logic~~

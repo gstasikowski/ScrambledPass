@@ -8,7 +8,7 @@
             <StackPanel x:Name="pnl_words" HorizontalAlignment="Left" Height="50" Margin="30,0,0,0" VerticalAlignment="Top" Width="248">
                 <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
                     <Label x:Name="lbl_wordCount" Content="Word count:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtb_wordCount" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="5" VerticalAlignment="Center" Width="40"/>
+                    <TextBox x:Name="txtb_wordCount" HorizontalAlignment="Left" Height="23" Text="5" VerticalAlignment="Center" Width="40"/>
                 </StackPanel>
                 <CheckBox x:Name="chkb_randLetterSize" Content="Randomize letter size" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
             </StackPanel>
@@ -26,12 +26,12 @@
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Height="30" VerticalAlignment="Top" Width="127" Orientation="Horizontal" Margin="0,-15,-10,0">
                     <Label x:Name="lbl_charCount" Content="Character count:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtb_charCount" HorizontalAlignment="Right" Height="22" TextWrapping="Wrap" Text="5" VerticalAlignment="Center" Width="25" Margin="0,4"/>
+                    <TextBox x:Name="txtb_charCount" HorizontalAlignment="Right" Height="22" Text="5" VerticalAlignment="Center" Width="25" Margin="0,4"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Bottom" Margin="0" HorizontalAlignment="Right">
                 <Label x:Name="lbl_pass" Content="Password:" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtb_passTarget" Height="23" Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="350" TextChanged="UpdatePasswordStrength" Background="White" HorizontalAlignment="Left"/>
+                <TextBox x:Name="txtb_passTarget" Height="23" Margin="10,10,10,0" VerticalAlignment="Center" Width="350" TextChanged="UpdatePasswordStrength" Background="White" HorizontalAlignment="Left"/>
             </StackPanel>
             <StackPanel Margin="0,-5,10,0" HorizontalAlignment="Right">
                 <Label x:Name="lbl_passEntropy" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="420" Padding="5,5,15,-11" HorizontalContentAlignment="Right"/>
@@ -69,11 +69,11 @@
             <CheckBox x:Name="chkb_loadCustomWordList" Content="Load custom wordlist on startup" Checked="ToggleCustomWordListReload" Unchecked="ToggleCustomWordListReload" />
             <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
                     <Label x:Name="lbl_defWordCount" Content="Def word count:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtb_defWordCount" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefWordCount"/>
+                    <TextBox x:Name="txtb_defWordCount" HorizontalAlignment="Left" Height="23" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefWordCount"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
                 <Label x:Name="lbl_defCharCount" Content="Def char count:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtb_defCharCount" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefCharCount"/>
+                <TextBox x:Name="txtb_defCharCount" HorizontalAlignment="Left" Height="23" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefCharCount"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="btn_defaultSettings" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="RestoreDefaultSettings" Margin="0,0,10,0" >
