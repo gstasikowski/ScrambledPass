@@ -25,6 +25,8 @@ namespace ScrambledPass.View
 
         private void InitialSetup()
         {
+            DataContext = app.dataBank;
+            app.fileO.LoadTranslations();
             RefreshUI();
 
             if ((string)Properties.Settings.Default["rememberLastWordList"] == "True")
@@ -201,7 +203,7 @@ namespace ScrambledPass.View
 
         private void RestoreDefaultSettings(object sender, RoutedEventArgs e)
         {
-            app.fileO.DefaultSettings();
+            app.dataBank.DefaultSettings();
             RefreshUI();
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ScrambledPass.Model
 {
@@ -7,45 +8,21 @@ namespace ScrambledPass.Model
         List<string> wordList = new List<string>();
         char[] specialChars = { ' ', '.', ',', ';', '/', '\\', '\'', '[', ']', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '|', ':', '\"', '<', '>', '?' };
 
-        Dictionary<string, List<string>> UIText = new Dictionary<string, List<string>> {
-            { "words", new List<string>{ "Words", "Wyrazy" } },
-            { "wordCount", new List<string>{ "Word count", "Ilość słów" } },
-            { "randLetterSize", new List<string>{ "Randomize letter size", "Losowy rozmiar liter" } },
-            { "characters", new List<string>{ "Characters", "Znaki" } },
-            { "charCount", new List<string>{ "Character count", "Ilość znaków" } },
-            { "symbols", new List<string>{ "Symbols", "Znaki specjalne" } },
-            { "replaceSpacing", new List<string>{ "Replace word spacing", "Zastąp odstępy" } },
-            { "replaceChars", new List<string>{ "Replace random characters", "Zastęp losowe znaki" } },
-            { "randomPosition", new List<string>{ "Add in random position", "Dodaj w losowej pozycji" } },
-            { "password", new List<string>{ "Password", "Hasło" } },
-            { "entropy", new List<string>{ "Entropy", "Entropia" } },
-            { "passStrength", new List<string>{ "Password strength", "Siła hasła" } },
-            { "passWeak", new List<string>{ "weak", "słabe" } },
-            { "passGood", new List<string>{ "good", "dobre" } },
-            { "passGreat", new List<string>{ "great", "świetne" } },
-            { "generate", new List<string>{ "Generate", "Generuj" } },
-            { "language", new List<string>{ "Language", "Język"} },
-            { "loadWordList", new List<string>{ "Load last used wordlist on startup", "Wczytaj ostatnią użytą listę wyrazów przy starcie" } },
-            { "defWordCount", new List<string>{ "Default word count", "Domyślna ilość słów"} },
-            { "defCharCount", new List<string>{ "Default character count", "Domyślna ilość znaków"} },
-            { "back", new List<string>{ "Back", "Cofnij"} }
-        };
+        Dictionary<string, List<string>> UIText = new Dictionary<string, List<string>>();
+        Dictionary<string, List<string>> ToolTips = new Dictionary<string, List<string>>();
+        Dictionary<string, List<string>> ErrorMessages = new Dictionary<string, List<string>>();
 
-        Dictionary<string, List<string>> ToolTips = new Dictionary<string, List<string>> {
-            { "t_words", new List<string>{ "Generate new password using a word list", "Generuj nowe hasło korzystając z listy wyrazów" } },
-            { "t_characters", new List<string>{ "Generate new password using random characters", "Generuj nowe hasło używając losowych znaków" } },
-            { "t_passGen", new List<string>{ "Generate new password", "Generuj nowe hasło" } },
-            { "t_wordList", new List<string>{ "Load custom word list", "Wczytaj własną listę wyrazów" } },
-            { "t_defWordList", new List<string>{ "Load default word list", "Wczytaj domyślną listę wyrazów" } },
-            { "t_settings", new List<string>{ "Open settings panel", "Otwórz panel ustawień" } },
-            { "t_defSettings", new List<string>{ "Restore default settings", "Przywróć domyślne ustawienia" } }
-        };
+        ObservableCollection<string> cmbContent = new ObservableCollection<string>();
 
-        Dictionary<string, List<string>> errorMessages = new Dictionary<string, List<string>> {
-            { "default", new List<string>{ "Unkown error has occured. Please try again.", "Nieznany błąd. Spróbuj ponownie." } },
-            { "parserError", new List<string>{ "Word and character count fields require numerical input.\nPlease fix problematic values and try again.", "Pola ilości słów i znaków muszą mieć wartość liczbową.\nPopraw błędne wartości i spróbuj ponownie." } },
-            { "fileNotFound", new List<string>{ "Word list file can't be accessed.", "Plik z listą wyrazów nie jest dostępny."} }
-        };
+        public void DefaultSettings()
+        {
+            Properties.Settings.Default["languageID"] = (cmbContent.IndexOf("EN") >= 0 ? cmbContent.IndexOf("EN") : 0).ToString();
+            Properties.Settings.Default["lastWordList"] = string.Empty;
+            Properties.Settings.Default["rememberLastWordList"] = "False";
+            Properties.Settings.Default["defWordCount"] = "5";
+            Properties.Settings.Default["defCharCount"] = "5";
+            Properties.Settings.Default.Save();
+        }
 
         public List<string> WordList
         {
@@ -67,9 +44,9 @@ namespace ScrambledPass.Model
             string message;
 
             try
-            { message = errorMessages[errorCode][lang]; }
+            { message = ErrorMessages[errorCode][lang]; }
             catch
-            { message = errorMessages["default"][0]; }
+            { message = ErrorMessages["default"][0]; }
 
             return message;
         }
@@ -96,6 +73,55 @@ namespace ScrambledPass.Model
             { localizedText = "<missing_value>"; }
 
             return localizedText;
+        }
+
+        public ObservableCollection<string> CmbContent
+        { 
+            get { return cmbContent; }
+            set { cmbContent = value; } 
+        }
+
+        public void AddAvailableLanguage(string languageCode)
+        {
+            if (!cmbContent.Contains(languageCode))
+            { cmbContent.Add(languageCode); }
+        }
+
+        public void FillLanguageDictionary(string target, Dictionary<string, string> translation)
+        {
+            // merge with ApplyTranslation()
+            switch (target)
+            {
+                case "UI":
+                    ApplyTranslation(UIText, translation);
+                    break;
+
+                case "ToolTips":
+                    ApplyTranslation(ToolTips, translation);
+                    break;
+
+                case "ErrorMessages":
+                    ApplyTranslation(ErrorMessages, translation);
+                    break;
+
+                default:
+                    return;
+            }
+        }
+
+        void ApplyTranslation(Dictionary<string, List<string>> target, Dictionary<string, string> translation)
+        {
+            foreach (var element in translation)
+            {
+                if (target.ContainsKey(element.Key))
+                {
+                    target[element.Key].Add(element.Value);
+                }
+                else
+                {
+                    target.Add(element.Key, new List<string>() { element.Value });
+                }
+            }
         }
     }
 }

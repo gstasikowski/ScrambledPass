@@ -1,7 +1,7 @@
 # ScrambledPass
  Rewrite of an old password generator project with more sensible code structure.
 
- Generates passwords using word list and/or random characters.
+ Generate passwords using word list and/or random characters.
  Includes password entropy and (biased) strength indicator.
  
  TODO:
@@ -10,6 +10,6 @@
  - ~~multi-language UI~~
  - ~~calculating password entropy~~
  - ~~user settings panel (default language, load last used word list etc.)~~
- - dynamic language loading (load from file, ability to add custom languages)
+ - ~~dynamic language loading (load from file, ability to add custom languages)~~
  - UI improvements
  - (maybe?) optional clipboard cleaning after copying/cutting from password textbox (see copying passwords in KeepassXC)

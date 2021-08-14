@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Xml.Linq;
 
 namespace ScrambledPass.Logic
 {
@@ -62,14 +63,30 @@ namespace ScrambledPass.Logic
             Properties.Settings.Default.Save();
         }
 
-        public void DefaultSettings()
+        public void LoadTranslations()
         {
-            Properties.Settings.Default["languageID"] = "0";
-            Properties.Settings.Default["lastWordList"] = string.Empty;
-            Properties.Settings.Default["rememberLastWordList"] = "False";
-            Properties.Settings.Default["defWordCount"] = "5";
-            Properties.Settings.Default["defCharCount"] = "5";
-            Properties.Settings.Default.Save();
+            foreach (string fileName in Directory.EnumerateFiles(System.AppDomain.CurrentDomain.BaseDirectory + "Translation"))
+            {
+                string translationFile = string.Empty;
+
+                if (File.Exists(fileName))
+                {
+                    translationFile = File.ReadAllText(fileName);
+                }
+                else
+                { new ErrorHandler("fileNotFound"); }
+
+                XElement rootElement = XElement.Parse(translationFile);
+                Dictionary<string, string> dict = new Dictionary<string, string>();
+                foreach (var el in rootElement.Elements())
+                {
+                    dict.Add(el.Name.LocalName, el.Value);
+                }
+
+                App app = (App)App.Current;
+                app.dataBank.AddAvailableLanguage(fileName.Substring(fileName.IndexOf('_') - 2, 2));
+                app.dataBank.FillLanguageDictionary(fileName.Substring(fileName.IndexOf('_') + 1).Replace(".xml", ""), dict);
+            }
         }
     }
 }
