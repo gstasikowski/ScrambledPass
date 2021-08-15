@@ -13,3 +13,5 @@
  - ~~dynamic language loading (load from file, ability to add custom languages)~~
  - UI improvements
  - (maybe?) optional clipboard cleaning after copying/cutting from password textbox (see copying passwords in KeepassXC)
+ - rewrite to allow for linux builds
+ 

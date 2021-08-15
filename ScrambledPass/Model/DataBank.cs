@@ -89,38 +89,32 @@ namespace ScrambledPass.Model
 
         public void FillLanguageDictionary(string target, Dictionary<string, string> translation)
         {
-            // merge with ApplyTranslation()
+            Dictionary<string, List<string>> tempDic;
+
             switch (target)
             {
                 case "UI":
-                    ApplyTranslation(UIText, translation);
+                    tempDic = UIText;
                     break;
 
                 case "ToolTips":
-                    ApplyTranslation(ToolTips, translation);
+                    tempDic = ToolTips;
                     break;
 
                 case "ErrorMessages":
-                    ApplyTranslation(ErrorMessages, translation);
+                    tempDic = ErrorMessages;
                     break;
 
                 default:
                     return;
             }
-        }
 
-        void ApplyTranslation(Dictionary<string, List<string>> target, Dictionary<string, string> translation)
-        {
             foreach (var element in translation)
             {
-                if (target.ContainsKey(element.Key))
-                {
-                    target[element.Key].Add(element.Value);
-                }
+                if (tempDic.ContainsKey(element.Key))
+                { tempDic[element.Key].Add(element.Value); }
                 else
-                {
-                    target.Add(element.Key, new List<string>() { element.Value });
-                }
+                { tempDic.Add(element.Key, new List<string>() { element.Value }); }
             }
         }
     }

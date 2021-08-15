@@ -7,7 +7,9 @@
             App app = (App)App.Current;
             View.ErrorMessage messageWindows = new View.ErrorMessage();
 
-            messageWindows.DisplayMessage(app.dataBank.GetErrorMessage(errorCode, (int)Properties.Settings.Default["languageID"]));
+            string message = app.dataBank.GetErrorMessage(errorCode, int.Parse(Properties.Settings.Default["languageID"].ToString()));
+
+            messageWindows.DisplayMessage(message);
             messageWindows.Show();
         }
     }
