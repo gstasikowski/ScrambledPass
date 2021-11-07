@@ -11,7 +11,7 @@
  - ~~calculating password entropy~~
  - ~~user settings panel (default language, load last used word list etc.)~~
  - ~~dynamic language loading (load from file, ability to add custom languages)~~
- - UI improvements
+ - UI improvements (modern look, dark mode)
  - (maybe?) optional clipboard cleaning after copying/cutting from password textbox (see copying passwords in KeepassXC)
  - rewrite to allow for linux builds
  

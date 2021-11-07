@@ -3,34 +3,34 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ScrambledPass" Height="auto" Width="450" MaxHeight="360" SizeToContent="Height" BorderThickness="0" Padding="0" ResizeMode="NoResize">
     <Grid x:Name="mainUI" Margin="0" Width="440" Height="auto" MaxHeight="350" VerticalAlignment="Top">
-        <StackPanel x:Name="pnl_layout" Width="440" Height="auto" VerticalAlignment="Top" Margin="0" HorizontalAlignment="Left" MinHeight="150">
-            <CheckBox x:Name="chkb_randWords" Content="Words" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True" Click="SetWordsPanelStatus"/>
+        <StackPanel x:Name="pnl_layout" Width="440" Height="auto" VerticalAlignment="Top" Margin="0" HorizontalAlignment="Left" MinHeight="150" Visibility="Collapsed">
+            <CheckBox x:Name="chkb_randWords" Content="{DynamicResource UIWords}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True" Click="SetWordsPanelStatus"/>
             <StackPanel x:Name="pnl_words" HorizontalAlignment="Left" Height="50" Margin="30,0,0,0" VerticalAlignment="Top" Width="248">
                 <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
-                    <Label x:Name="lbl_wordCount" Content="Word count:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Label x:Name="lbl_wordCount" Content="{DynamicResource UIWordCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <TextBox x:Name="txtb_wordCount" HorizontalAlignment="Left" Height="23" Text="5" VerticalAlignment="Center" Width="40"/>
                 </StackPanel>
-                <CheckBox x:Name="chkb_randLetterSize" Content="Randomize letter size" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="chkb_randLetterSize" Content="{DynamicResource UIRandomizeLetterSize}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
             </StackPanel>
-            <CheckBox x:Name="chkb_randChars" Content="Characters" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Click="SetCharPanelStatus" IsChecked="True"/>
+            <CheckBox x:Name="chkb_randChars" Content="{DynamicResource UICharacters}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Click="SetCharPanelStatus" IsChecked="True"/>
             <StackPanel x:Name="pnl_chars" Orientation="Horizontal">
                 <StackPanel x:Name="pnl_charsOptions" HorizontalAlignment="Left" Height="115" Margin="30,0,0,0" VerticalAlignment="Top" Width="270">
                     <CheckBox x:Name="chkb_randLower" Content="a-z" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <CheckBox x:Name="chkb_randUpper" Content="A-Z" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <CheckBox x:Name="chkb_randNumbers" Content="0-9" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="chkb_randSpcChar" Content="Symbols" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="chkb_randSpcChar" Content="{DynamicResource UISymbols}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <Separator Height="10" Margin="0"/>
-                    <RadioButton x:Name="rb_replaceWhiteChar" Content="Replace word spacing" IsChecked="True" GroupName="charPositioning" Tag="0" Checked="SetCharacterMode"/>
-                    <RadioButton x:Name="rb_replaceRandChar" Content="Replace random character" GroupName="charPositioning" Tag="1" Checked="SetCharacterMode"/>
-                    <RadioButton x:Name="rb_randPos" Content="Random position" GroupName="charPositioning" Tag="2" Checked="SetCharacterMode"/>
+                    <RadioButton x:Name="rb_replaceWhiteChar" Content="{DynamicResource UIReplaceSpacing}" IsChecked="True" GroupName="charPositioning" Tag="0" Checked="SetCharacterMode"/>
+                    <RadioButton x:Name="rb_replaceRandChar" Content="{DynamicResource UIReplaceCharacters}" GroupName="charPositioning" Tag="1" Checked="SetCharacterMode"/>
+                    <RadioButton x:Name="rb_randPos" Content="{DynamicResource UIRandomPosition}" GroupName="charPositioning" Tag="2" Checked="SetCharacterMode"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Height="30" VerticalAlignment="Top" Width="127" Orientation="Horizontal" Margin="0,-15,-10,0">
-                    <Label x:Name="lbl_charCount" Content="Character count:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <Label x:Name="lbl_charCount" Content="{DynamicResource UICharacterCount}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <TextBox x:Name="txtb_charCount" HorizontalAlignment="Right" Height="22" Text="5" VerticalAlignment="Center" Width="25" Margin="0,4"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Bottom" Margin="0" HorizontalAlignment="Right">
-                <Label x:Name="lbl_pass" Content="Password:" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Center"/>
+                <Label x:Name="lbl_pass" Content="{DynamicResource UIPassword}" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Center"/>
                 <TextBox x:Name="txtb_passTarget" Height="23" Margin="10,10,10,0" VerticalAlignment="Center" Width="350" TextChanged="UpdatePasswordStrength" Background="White" HorizontalAlignment="Left"/>
             </StackPanel>
             <StackPanel Margin="0,-5,10,0" HorizontalAlignment="Right">
@@ -38,47 +38,50 @@
                 <Label x:Name="lbl_passStrength" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="420" Padding="5,5,15,-11" HorizontalContentAlignment="Right"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5,10,5,5">
-                <Button x:Name="btn_generate" Content="Generate" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="75" Click="GeneratePassword"/>
-                <Button x:Name="btn_loadWordList" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="LoadCustomWordList" BorderBrush="#00707070" >
+                <Button x:Name="btn_generate" Content="{DynamicResource UIGenerate}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="75" Click="GeneratePassword"/>
+                <Button x:Name="btn_loadWordList" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="LoadCustomWordList" >
+                    <Button.BorderBrush>
+                        <ImageBrush ImageSource="/ScrambledPass;component/Resources/open-folder-w.png" Stretch="Uniform"/>
+                    </Button.BorderBrush>
                     <Button.Background>
-                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/openFile.PNG" Stretch="Uniform"/>
+                        <ImageBrush ImageSource="/ScrambledPass;component/Resources/open-folder-b.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
                 <Button x:Name="btn_loadDefWordList" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="LoadDefaultWordList" ToolTip="Reload default word list" BorderBrush="#00707070">
                     <Button.Background>
-                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/reload.png" Stretch="Uniform"/>
+                        <ImageBrush ImageSource="/ScrambledPass;component/Resources/anticlockwise-rotation-b.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
                 <Separator Margin="0" Width="270" Visibility="Hidden"/>
                 <CheckBox x:Name="chkb_ClrClipboard" Content="Clear clipboard after 20s" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Visibility="Collapsed"/>
                 <Button x:Name="btn_settings" Height="20" Width="20" Click="ToggleSettingsMenu" BorderBrush="#00707070" >
                     <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="pack://siteoforigin:,,,/Resources/settings.png"/>
+                        <ImageBrush Stretch="Uniform" ImageSource="/ScrambledPass;component/Resources/cog-b.png"/>
                     </Button.Background>
                 </Button>
             </StackPanel>
         </StackPanel>
-        <StackPanel x:Name="pnl_settings" Width="440" Height="auto" VerticalAlignment="Top" Margin="0" HorizontalAlignment="Left" MinHeight="130" Visibility="Collapsed">
+        <StackPanel x:Name="pnl_settings" Width="440" Height="auto" VerticalAlignment="Top" Margin="0" HorizontalAlignment="Left" MinHeight="130">
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                <Label x:Name="lbl_language" Content="Language"/>
+                <Label x:Name="lbl_language" Content="{DynamicResource UILanguage}"/>
                 <ComboBox x:Name="cb_language" SelectionChanged="SelectLanguage" ItemsSource="{Binding CmbContent}"/>
             </StackPanel>
-            <CheckBox x:Name="chkb_loadCustomWordList" Content="Load custom wordlist on startup" Checked="ToggleCustomWordListReload" Unchecked="ToggleCustomWordListReload" Margin="3,0,0,0" />
+            <CheckBox x:Name="chkb_loadCustomWordList" Content="{DynamicResource UILoadWordList}" Checked="ToggleCustomWordListReload" Unchecked="ToggleCustomWordListReload" Margin="3,0,0,0" />
             <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
-                    <Label x:Name="lbl_defWordCount" Content="Def word count:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtb_defWordCount" HorizontalAlignment="Left" Height="23" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefWordCount"/>
+                <Label x:Name="lbl_defWordCount" Content="{DynamicResource UIDefWordCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtb_defWordCount" HorizontalAlignment="Left" Height="23" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefWordCount"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
-                <Label x:Name="lbl_defCharCount" Content="Def char count:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Label x:Name="lbl_defCharCount" Content="{DynamicResource UIDefCharacterCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <TextBox x:Name="txtb_defCharCount" HorizontalAlignment="Left" Height="23" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefCharCount"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,5" >
                 <Button x:Name="btn_defaultSettings" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="RestoreDefaultSettings" Margin="0,0,10,0" BorderBrush="#00707070" >
                     <Button.Background>
-                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/reload.png" Stretch="Uniform"/>
+                        <ImageBrush ImageSource="/ScrambledPass;component/Resources/reload.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="btn_closeSettings" Content="Back" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="ToggleSettingsMenu" />
+                <Button x:Name="btn_closeSettings" Content="{DynamicResource UIBack}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="ToggleSettingsMenu" />
             </StackPanel>
         </StackPanel>
     </Grid>

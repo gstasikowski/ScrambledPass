@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace ScrambledPass.Logic
 {
     public class FileOperations
     {
-        string defaultNamespace = "ScrambledPass";
-        string defaultWordList = "defaultWordList.txt";
-
         public FileOperations()
         {
 
@@ -18,25 +17,28 @@ namespace ScrambledPass.Logic
         public List<string> LoadDefaultWordList()
         {
             List<string> wordList = new List<string>();
-
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = defaultNamespace + ".Resources." + defaultWordList;
-
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            using (StreamReader reader = new StreamReader(stream))
+            try
             {
-                string newWord = "";
+                var assembly = Assembly.GetExecutingAssembly();
 
-                do
+                using (Stream stream = assembly.GetManifestResourceStream(Refs.dataBank.DefaultWordList))
+                using (StreamReader reader = new StreamReader(stream))
                 {
-                    newWord = reader.ReadLine();
-                    wordList.Add(newWord);
-                } while (!string.IsNullOrEmpty(newWord));
+                    string newWord = "";
 
-                reader.Close();
+                    do
+                    {
+                        newWord = reader.ReadLine();
+                        wordList.Add(newWord);
+                    } while (!string.IsNullOrEmpty(newWord));
+
+                    reader.Close();
+                }
             }
+            catch
+            { new ErrorHandler("ErrorFileNotFound"); }
 
-            SaveSettings("lastWordList", string.Empty);
+            Refs.dataBank.SetSetting("lastWordList", string.Empty);
             return wordList;
         }
 
@@ -49,43 +51,55 @@ namespace ScrambledPass.Logic
                 wordList.Clear();
                 wordList.AddRange(File.ReadAllLines(filePath));
 
-                SaveSettings("lastWordList", filePath);
+                Refs.dataBank.SetSetting("lastWordList", filePath);
             }
             else
-            { new ErrorHandler("fileNotFound"); }
+            { new ErrorHandler("ErrorFileNotFound"); }
 
             return wordList;
         }
 
-        public void SaveSettings(string property, string value)
+        public void LoadSettings()
         {
-            Properties.Settings.Default[property] = value;
-            Properties.Settings.Default.Save();
+            string configFilePath = Refs.dataBank.DefaultConfigPath + "Config.xml";
+
+            if (File.Exists(configFilePath))
+            {
+                string configFile = File.ReadAllText(configFilePath);
+                XElement rootElement = XElement.Parse(configFile);
+
+                foreach (var element in rootElement.Elements())
+                { Refs.dataBank.SetSetting(element.Name.LocalName, element.Value); }
+            }
+            else
+            {
+                Refs.dataBank.DefaultSettings();
+                SaveSettings(); }
+
+            Refs.localizationHandler.SwitchLanguage(Refs.dataBank.GetSetting("languageID"));
+        }
+
+        public void SaveSettings()
+        {
+            Dictionary<string, string> appSettings = Refs.dataBank.GetAllSettings();
+
+            FileStream fileStream;
+            fileStream = new FileStream(Refs.dataBank.DefaultConfigPath + "Config.xml", FileMode.Create);
+
+            XElement rootElement = new XElement("Config", appSettings.Select(kv => new XElement(kv.Key, kv.Value)));
+            XmlSerializer serializer = new XmlSerializer(rootElement.GetType());
+            serializer.Serialize(fileStream, rootElement);
+
+            fileStream.Close();
         }
 
         public void LoadTranslations()
         {
-            foreach (string fileName in Directory.EnumerateFiles(System.AppDomain.CurrentDomain.BaseDirectory + "Translation"))
+            foreach (string filePath in Directory.EnumerateFiles(Refs.dataBank.DefaultLanguagePath))
             {
-                string translationFile = string.Empty;
-
-                if (File.Exists(fileName))
-                {
-                    translationFile = File.ReadAllText(fileName);
-                }
-                else
-                { new ErrorHandler("fileNotFound"); }
-
-                XElement rootElement = XElement.Parse(translationFile);
-                Dictionary<string, string> dict = new Dictionary<string, string>();
-                foreach (var el in rootElement.Elements())
-                {
-                    dict.Add(el.Name.LocalName, el.Value);
-                }
-
-                App app = (App)App.Current;
-                app.dataBank.AddAvailableLanguage(fileName.Substring(fileName.IndexOf('_') - 2, 2));
-                app.dataBank.FillLanguageDictionary(fileName.Substring(fileName.IndexOf('_') + 1).Replace(".xml", ""), dict);
+                string cultureCode = filePath.Substring(filePath.LastIndexOf('\\') + 1).Replace(".xaml", "");
+                var tempCulture = System.Globalization.CultureInfo.GetCultureInfo(cultureCode);
+                Refs.dataBank.AddAvailableLanguage(string.Format("{0} [{1}]", tempCulture.DisplayName, tempCulture.Name));
             }
         }
     }

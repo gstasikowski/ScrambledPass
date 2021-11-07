@@ -7,14 +7,9 @@ namespace ScrambledPass.View
     /// </summary>
     public partial class ErrorMessage : Window
     {
-        public ErrorMessage()
+        public ErrorMessage(string message)
         {
             InitializeComponent();
-        }
-
-        public void DisplayMessage(string message)
-        {
-            Application.Current.MainWindow.IsEnabled = false;
             lbl_message.Content = message;
         }
 

@@ -1,15 +1,23 @@
-﻿namespace ScrambledPass.Logic
+﻿using System.Windows;
+
+namespace ScrambledPass.Logic
 {
     public class ErrorHandler
     {
-        public ErrorHandler(string errorCode)
+        public ErrorHandler(string errorCode) => new ErrorHandler(errorCode, string.Empty);
+
+        public ErrorHandler(string errorCode, string exceptionMessage)
         {
-            App app = (App)App.Current;
-            View.ErrorMessage messageWindows = new View.ErrorMessage();
+            Application app = Application.Current;
+            string message = (exceptionMessage != string.Empty) ? string.Format("\n\nException message: {0}", exceptionMessage) : exceptionMessage;
 
-            string message = app.dataBank.GetErrorMessage(errorCode, int.Parse(Properties.Settings.Default["languageID"].ToString()));
+            try
+            { message = (string)app.FindResource(errorCode) + message; }
+            catch
+            { message = (string)app.FindResource("ErrorDefault") + message; }
 
-            messageWindows.DisplayMessage(message);
+            Application.Current.MainWindow.IsEnabled = false;
+            View.ErrorMessage messageWindows = new View.ErrorMessage(message);
             messageWindows.Show();
         }
     }

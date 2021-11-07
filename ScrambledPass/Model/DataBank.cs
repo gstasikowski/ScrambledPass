@@ -1,27 +1,61 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace ScrambledPass.Model
 {
     public class DataBank
     {
+        string defaultConfigPath = AppDomain.CurrentDomain.BaseDirectory;
+        string defaultLanguagePath = AppDomain.CurrentDomain.BaseDirectory + "Languages\\";
+        string defaultWordList = "ScrambledPass.Resources.defaultWordList.txt";
+        Dictionary<string, string> settings = new Dictionary<string, string>();
+
         List<string> wordList = new List<string>();
         char[] specialChars = { ' ', '.', ',', ';', '/', '\\', '\'', '[', ']', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '|', ':', '\"', '<', '>', '?' };
+        
+        ObservableCollection<string> langList = new ObservableCollection<string>();
+        List<string> languageList = new List<string>();
 
-        Dictionary<string, List<string>> UIText = new Dictionary<string, List<string>>();
-        Dictionary<string, List<string>> ToolTips = new Dictionary<string, List<string>>();
-        Dictionary<string, List<string>> ErrorMessages = new Dictionary<string, List<string>>();
+        public string DefaultConfigPath
+        {
+            get { return defaultConfigPath; }
+        }
 
-        ObservableCollection<string> cmbContent = new ObservableCollection<string>();
+        public string DefaultLanguagePath
+        {
+            get { return defaultLanguagePath; }
+        }
+        public string DefaultWordList
+        {
+            get { return defaultWordList; }
+        }
 
         public void DefaultSettings()
         {
-            Properties.Settings.Default["languageID"] = (cmbContent.IndexOf("EN") >= 0 ? cmbContent.IndexOf("EN") : 0).ToString();
-            Properties.Settings.Default["lastWordList"] = string.Empty;
-            Properties.Settings.Default["rememberLastWordList"] = "False";
-            Properties.Settings.Default["defWordCount"] = "5";
-            Properties.Settings.Default["defCharCount"] = "5";
-            Properties.Settings.Default.Save();
+            SetSetting("languageID", "en-US");
+            SetSetting("lastWordList", string.Empty);
+            SetSetting("rememberLastWordList", "False");
+            SetSetting("defWordCount", "5");
+            SetSetting("defCharCount", "5");
+        }
+
+        public Dictionary<string, string> GetAllSettings()
+        {
+            return settings;
+        }
+
+        public string GetSetting(string key)
+        {
+            return settings[key];
+        }
+
+        public void SetSetting(string key, string value)
+        {
+            if (settings.ContainsKey(key))
+            { settings[key] = value; }
+            else
+            { settings.Add(key, value); }
         }
 
         public List<string> WordList
@@ -39,83 +73,32 @@ namespace ScrambledPass.Model
             get { return specialChars.Length; }
         }
 
-        public string GetErrorMessage(string errorCode, int lang)
-        {
-            string message;
-
-            try
-            { message = ErrorMessages[errorCode][lang]; }
-            catch
-            { message = ErrorMessages["default"][0]; }
-
-            return message;
-        }
-
-        public string GetLocalText(string key, int lang)
-        {
-            string localizedText;
-
-            try
-            { localizedText = UIText[key][lang]; }
-            catch
-            { localizedText = "<missing_value>"; }
-
-            return localizedText;
-        }
-
-        public string GetToolTip(string key, int lang)
-        {
-            string localizedText;
-
-            try
-            { localizedText = ToolTips[key][lang]; }
-            catch
-            { localizedText = "<missing_value>"; }
-
-            return localizedText;
-        }
-
         public ObservableCollection<string> CmbContent
         { 
-            get { return cmbContent; }
-            set { cmbContent = value; } 
+            get { return langList; }
+            set { langList = value; } 
         }
-
+        
         public void AddAvailableLanguage(string languageCode)
         {
-            if (!cmbContent.Contains(languageCode))
-            { cmbContent.Add(languageCode); }
+            if (!langList.Contains(languageCode))
+            { langList.Add(languageCode); }
         }
 
-        public void FillLanguageDictionary(string target, Dictionary<string, string> translation)
+        public List<string> LanguageList
         {
-            Dictionary<string, List<string>> tempDic;
+            get { return languageList; }
+        }
 
-            switch (target)
+        public int LanguageIndex(string languageCode)
+        {
+            for (int i = 0; i < langList.Count; i++)
             {
-                case "UI":
-                    tempDic = UIText;
-                    break;
-
-                case "ToolTips":
-                    tempDic = ToolTips;
-                    break;
-
-                case "ErrorMessages":
-                    tempDic = ErrorMessages;
-                    break;
-
-                default:
-                    return;
+                if (langList[i].Contains(languageCode))
+                    return i;
             }
 
-            foreach (var element in translation)
-            {
-                if (tempDic.ContainsKey(element.Key))
-                { tempDic[element.Key].Add(element.Value); }
-                else
-                { tempDic.Add(element.Key, new List<string>() { element.Value }); }
-            }
+            return 0;
         }
     }
 }

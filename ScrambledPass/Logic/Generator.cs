@@ -6,7 +6,6 @@ namespace ScrambledPass.Logic
 {
     public class Generator
     {
-        App app = (App)App.Current;
         Random randIndex = new Random();
 
         List<char> availableCharList = new List<char>();
@@ -22,7 +21,7 @@ namespace ScrambledPass.Logic
             PrepareCharList(wordCount, letters, bigLetters, numbers, specialChars);
 
             for (int i = 0; i < wordCount; i++)
-                newPassword += app.dataBank.WordList[randIndex.Next(0, app.dataBank.WordList.Count)] + " ";
+                newPassword += Refs.dataBank.WordList[randIndex.Next(0, Refs.dataBank.WordList.Count)] + " ";
 
             if (randCharSize)
                 newPassword = RandomizeLetterSize(newPassword);
@@ -50,12 +49,12 @@ namespace ScrambledPass.Logic
 
         public void PrepareWordList(string filePath)
         {
-            app.dataBank.WordList.Clear();
+            Refs.dataBank.WordList.Clear();
 
             if (filePath == string.Empty)
-                app.dataBank.WordList.AddRange(app.fileO.LoadDefaultWordList());
+                Refs.dataBank.WordList.AddRange(Refs.fileOperations.LoadDefaultWordList());
             else
-                app.dataBank.WordList.AddRange(app.fileO.LoadCustomWordList(filePath));
+                Refs.dataBank.WordList.AddRange(Refs.fileOperations.LoadCustomWordList(filePath));
         }
 
         void PrepareCharList(int wordCount, bool letters, bool bigLetters, bool numbers, bool specialChars)
@@ -81,7 +80,7 @@ namespace ScrambledPass.Logic
             }
 
             if (specialChars)
-                availableCharList.AddRange(app.dataBank.SpecialChars);
+                availableCharList.AddRange(Refs.dataBank.SpecialChars);
 
             if (wordCount > 0 && !specialChars)
                 availableCharList.Add(' ');
@@ -171,7 +170,7 @@ namespace ScrambledPass.Logic
                 uniqueSymbols += 10;
 
             if (password.Any(char.IsSymbol) || password.Any(char.IsPunctuation))
-                uniqueSymbols += app.dataBank.SpecialCharsCount;
+                uniqueSymbols += Refs.dataBank.SpecialCharsCount;
 
             double entropy = Math.Log(Math.Pow(uniqueSymbols, password.Length));
             return Math.Round(entropy, 2);

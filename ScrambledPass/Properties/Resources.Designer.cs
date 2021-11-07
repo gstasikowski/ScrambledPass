@@ -61,6 +61,46 @@ namespace ScrambledPass.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap anticlockwise_rotation_b {
+            get {
+                object obj = ResourceManager.GetObject("anticlockwise_rotation_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap anticlockwise_rotation_w {
+            get {
+                object obj = ResourceManager.GetObject("anticlockwise_rotation_w", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap cog_b {
+            get {
+                object obj = ResourceManager.GetObject("cog_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap cog_w {
+            get {
+                object obj = ResourceManager.GetObject("cog_w", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to a
         ///a&amp;p
         ///a&apos;s
@@ -151,6 +191,26 @@ namespace ScrambledPass.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap open_folder_b {
+            get {
+                object obj = ResourceManager.GetObject("open_folder_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap open_folder_w {
+            get {
+                object obj = ResourceManager.GetObject("open_folder_w", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap openFile {
             get {
                 object obj = ResourceManager.GetObject("openFile", resourceCulture);
@@ -174,6 +234,26 @@ namespace ScrambledPass.Properties {
         internal static System.Drawing.Bitmap settings {
             get {
                 object obj = ResourceManager.GetObject("settings", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings_knobs_b {
+            get {
+                object obj = ResourceManager.GetObject("settings_knobs_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings_knobs_w {
+            get {
+                object obj = ResourceManager.GetObject("settings_knobs_w", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
