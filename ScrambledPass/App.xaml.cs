@@ -1,5 +1,4 @@
-﻿using ScrambledPass.Logic;
-using ScrambledPass.Model;
+﻿using ScrambledPass.Models;
 using System.Windows;
 
 namespace ScrambledPass
@@ -9,9 +8,17 @@ namespace ScrambledPass
     /// </summary>
     public partial class App : Application
     {
-        public DataBank dataBank = new DataBank();
-        public FileOperations fileO = new FileOperations();
-
         public bool appReady = false;
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            MainWindow app = new MainWindow();
+            ApplicationViewModel context = new ApplicationViewModel();
+            Logic.Refs.viewControl = context;
+            app.DataContext = context;
+            app.Show();
+        }
     }
 }

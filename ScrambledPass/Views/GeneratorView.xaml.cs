@@ -1,60 +1,61 @@
 ﻿using Microsoft.Win32;
+using ScrambledPass.Interfaces;
 using ScrambledPass.Logic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace ScrambledPass.View
+namespace ScrambledPass.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for GeneratorView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class GeneratorView : IPageViewModel
     {
         App app = (App)App.Current;
         int charMode = -1;
 
-        public MainWindow()
+        public GeneratorView()
         {
             InitializeComponent();
             InitialSetup();
 
-            SetCharPanelStatus(this, null);
-            SetWordsPanelStatus(this, null);
+            CBRandomCharactersPanel_Click(this, null);
+            CBRandomWordsPanel_Click(this, null);
         }
 
+        #region Methods
         private void InitialSetup()
         {
-            DataContext = Refs.dataBank;
             Refs.fileOperations.LoadTranslations();
             Refs.fileOperations.LoadSettings();
-            RefreshUI();
+
+            txtb_wordCount.Text = Refs.dataBank.GetSetting("defWordCount");
+            txtb_charCount.Text = Refs.dataBank.GetSetting("defCharCount");
 
             if (Refs.dataBank.GetSetting("rememberLastWordList") == "True")
                 Refs.passGen.PrepareWordList(Refs.dataBank.GetSetting("lastWordList"));
             else
                 Refs.passGen.PrepareWordList(string.Empty);
 
-            pnl_layout.Visibility = Visibility.Visible;
-            pnl_settings.Visibility = Visibility.Collapsed;
-
             app.appReady = true;
         }
 
-        private void SetWordsPanelStatus(object sender, RoutedEventArgs e)
+        private void SetWordsPanelStatus()
         {
             pnl_words.IsEnabled = (bool)chkb_randWords.IsChecked;
             pnl_words.Visibility = (bool)chkb_randWords.IsChecked ? Visibility.Visible : Visibility.Collapsed;
             CheckPasswordRules();
         }
 
-        private void SetCharPanelStatus(object sender, RoutedEventArgs e)
+        private void SetCharPanelStatus()
         {
             pnl_chars.IsEnabled = (bool)chkb_randChars.IsChecked;
             pnl_chars.Visibility = (bool)chkb_randChars.IsChecked ? Visibility.Visible : Visibility.Collapsed;
             CheckPasswordRules();
         }
 
-        private void GeneratePassword(object sender, RoutedEventArgs e)
+        private void GeneratePassword()
         {
             if (pnl_chars.IsEnabled)
                 txtb_passTarget.Text = Refs.passGen.GeneratePassword(CheckWordProps(), charMode, CheckCharsProps(), (bool)chkb_randLetterSize.IsChecked, (bool)chkb_randLower.IsChecked, (bool)chkb_randUpper.IsChecked, (bool)chkb_randNumbers.IsChecked, (bool)chkb_randSpcChar.IsChecked);
@@ -72,7 +73,6 @@ namespace ScrambledPass.View
                 rb_randPos.IsChecked = true;
             }
         }
-
         private int CheckWordProps()
         {
             if (!pnl_words.IsEnabled)
@@ -99,12 +99,12 @@ namespace ScrambledPass.View
             return charCount;
         }
 
-        private void SetCharacterMode(object sender, RoutedEventArgs e)
+        private void SetCharacterMode(string characterMode)
         {
-            int.TryParse((sender as System.Windows.Controls.RadioButton).Tag as string, out charMode);
+            int.TryParse(characterMode, out charMode);
         }
 
-        private void UpdatePasswordStrength(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void UpdatePasswordStrength()
         {
             double passEntropy = Refs.passGen.CalculateEntropy(txtb_passTarget.Text);
             string strengthTxt = "";
@@ -132,7 +132,7 @@ namespace ScrambledPass.View
             lbl_passStrength.Content = string.Format("{0}: {1}", (string)FindResource("UIPassStrength"), strengthTxt);
         }
 
-        private void LoadCustomWordList(object sender, RoutedEventArgs e)
+        private void LoadCustomWordList()
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
 
@@ -140,70 +140,57 @@ namespace ScrambledPass.View
                 Refs.passGen.PrepareWordList(fileDialog.FileName);
         }
 
-        private void LoadDefaultWordList(object sender, RoutedEventArgs e)
+        private void LoadDefaultWordList()
         {
             Refs.passGen.PrepareWordList(string.Empty);
         }
 
-        private void SelectLanguage(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void ToggleSettingsMenu()
         {
-            string currentLanguage = cb_language.SelectedItem.ToString();
-            int codePosition = currentLanguage.IndexOf('[') + 1;
-            string cultureCode = currentLanguage.Substring(codePosition, currentLanguage.Length - (codePosition + 1));
-            Refs.dataBank.SetSetting("languageID", cultureCode);
-            Refs.fileOperations.SaveSettings();
-            Refs.localizationHandler.SwitchLanguage(cultureCode);
+            Refs.viewControl.CurrentPageViewModel = Refs.viewControl.PageViewModels[1]; // switch to binding
+        }
+        #endregion
+
+        #region UI Events
+        private void CBRandomWordsPanel_Click(object sender, RoutedEventArgs e)
+        {
+            SetWordsPanelStatus();
         }
 
-        private void ToggleCustomWordListReload(object sender, RoutedEventArgs e)
+        private void CBRandomCharactersPanel_Click(object sender, RoutedEventArgs e)
         {
-            Refs.dataBank.SetSetting("rememberLastWordList", chkb_loadCustomWordList.IsChecked.ToString());
-            Refs.fileOperations.SaveSettings();
+            SetCharPanelStatus();
         }
 
-        private void ToggleSettingsMenu(object sender, RoutedEventArgs e)
+        private void BtnGeneratePassword_Click(object sender, RoutedEventArgs e)
         {
-            pnl_layout.Visibility = (pnl_layout.Visibility == Visibility.Visible) ? Visibility.Collapsed : Visibility.Visible;
-            pnl_settings.Visibility = (pnl_settings.Visibility == Visibility.Visible) ? Visibility.Collapsed : Visibility.Visible;
+            GeneratePassword();
+        }
+                
+        private void RBCharacterMode_Checked(object sender, RoutedEventArgs e)
+        {
+            SetCharacterMode((sender as System.Windows.Controls.RadioButton).Tag as string);
         }
 
-        private void RestoreDefaultSettings(object sender, RoutedEventArgs e)
+        private void TAPassword_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Refs.dataBank.DefaultSettings();
-            RefreshUI();
+            UpdatePasswordStrength();
         }
 
-        private void RefreshUI()
+        private void BtnLoadCustomWordList_Click(object sender, RoutedEventArgs e)
         {
-            int languageID = Refs.dataBank.LanguageIndex(Refs.dataBank.GetSetting("languageID"));
-            cb_language.SelectedIndex = languageID;
-
-
-            if (Refs.dataBank.GetSetting("rememberLastWordList") == "True")
-                chkb_loadCustomWordList.IsChecked = true;
-            else
-                chkb_loadCustomWordList.IsChecked = false;
-
-            txtb_wordCount.Text = txtb_defWordCount.Text = Refs.dataBank.GetSetting("defWordCount");
-            txtb_charCount.Text = txtb_defCharCount.Text = Refs.dataBank.GetSetting("defCharCount");
+            LoadCustomWordList();
         }
 
-        private void SetDefWordCount(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void BtnLoadDefWordList_Click(object sender, RoutedEventArgs e)
         {
-            if (app.appReady)
-            {
-                Refs.dataBank.SetSetting("defWordCount", txtb_defWordCount.Text);
-                Refs.fileOperations.SaveSettings();
-            }
+            LoadDefaultWordList();
         }
 
-        private void SetDefCharCount(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void BtnSettings_Click(object sender, RoutedEventArgs e)
         {
-            if (app.appReady)
-            {
-                Refs.dataBank.SetSetting("defCharCount", txtb_defCharCount.Text);
-                Refs.fileOperations.SaveSettings();
-            }
+            ToggleSettingsMenu();
         }
+        #endregion
     }
 }

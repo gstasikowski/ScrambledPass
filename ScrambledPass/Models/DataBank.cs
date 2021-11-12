@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ScrambledPass.Model
+namespace ScrambledPass.Models
 {
     public class DataBank
     {
@@ -14,8 +14,7 @@ namespace ScrambledPass.Model
         List<string> wordList = new List<string>();
         char[] specialChars = { ' ', '.', ',', ';', '/', '\\', '\'', '[', ']', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '|', ':', '\"', '<', '>', '?' };
         
-        ObservableCollection<string> langList = new ObservableCollection<string>();
-        List<string> languageList = new List<string>();
+        ObservableCollection<string> languageList = new ObservableCollection<string>();
 
         public string DefaultConfigPath
         {
@@ -73,28 +72,23 @@ namespace ScrambledPass.Model
             get { return specialChars.Length; }
         }
 
-        public ObservableCollection<string> CmbContent
+        public ObservableCollection<string> LanguageList
         { 
-            get { return langList; }
-            set { langList = value; } 
+            get { return languageList; }
+            set { languageList = value; } 
         }
         
         public void AddAvailableLanguage(string languageCode)
         {
-            if (!langList.Contains(languageCode))
-            { langList.Add(languageCode); }
-        }
-
-        public List<string> LanguageList
-        {
-            get { return languageList; }
+            if (!languageList.Contains(languageCode))
+            { languageList.Add(languageCode); }
         }
 
         public int LanguageIndex(string languageCode)
         {
-            for (int i = 0; i < langList.Count; i++)
+            for (int i = 0; i < languageList.Count; i++)
             {
-                if (langList[i].Contains(languageCode))
+                if (languageList[i].Contains(languageCode))
                     return i;
             }
 

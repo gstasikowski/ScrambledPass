@@ -1,8 +1,11 @@
-﻿namespace ScrambledPass.Logic
+﻿using ScrambledPass.Models;
+
+namespace ScrambledPass.Logic
 {
-    class Refs
+    public static class Refs
     {
-        public static Model.DataBank dataBank = new Model.DataBank();
+        public static ApplicationViewModel viewControl;
+        public static DataBank dataBank = new DataBank();
         public static FileOperations fileOperations = new FileOperations();
         public static LocalizationHandler localizationHandler = new LocalizationHandler();
         public static Generator passGen = new Generator();
