@@ -155,36 +155,24 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\anticlockwise-rotation-b.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <None Include="bin\ScrambledPass-0.5.1\Resources\openFile.PNG" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\anticlockwise-rotation-w.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <None Include="bin\ScrambledPass-0.5.1\Resources\settings.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\cog-b.png">
+    <None Include="Resources\settings.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\cog-w.png">
+    <None Include="Resources\open_file.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\open-folder-w.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Views\open_file.PNG" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\open-folder-b.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -42,24 +42,21 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5,10,5,5">
                 <Button x:Name="btn_generate" Content="{DynamicResource UIGenerate}" ToolTip="{DynamicResource TipPasswordGeneration}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="75" Click="BtnGeneratePassword_Click"/>
-                <Button ToolTip="{DynamicResource TipWordList}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="BtnLoadCustomWordList_Click" >
-                    <Button.BorderBrush>
-                        <ImageBrush ImageSource="/ScrambledPass;component/Resources/open-folder-w.png" Stretch="Uniform"/>
-                    </Button.BorderBrush>
+                <Button ToolTip="{DynamicResource TipWordList}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="BtnLoadCustomWordList_Click" BorderBrush="#00707070" >
                     <Button.Background>
-                        <ImageBrush ImageSource="/ScrambledPass;component/Resources/open-folder-b.png" Stretch="Uniform"/>
+                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/open_file.PNG" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
                 <Button ToolTip="{DynamicResource TipDefaultWordList}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="BtnLoadDefWordList_Click" BorderBrush="#00707070">
                     <Button.Background>
-                        <ImageBrush ImageSource="/ScrambledPass;component/Resources/anticlockwise-rotation-b.png" Stretch="Uniform"/>
+                        <ImageBrush ImageSource="/ScrambledPass;component/Resources/reload.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
                 <Separator Margin="0" Width="270" Visibility="Hidden"/>
                 <CheckBox x:Name="chkb_ClrClipboard" Content="Clear clipboard after 20s" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Visibility="Collapsed"/>
                 <Button ToolTip="{DynamicResource TipSettings}" Height="20" Width="20" Click="BtnSettings_Click" BorderBrush="#00707070" >
                     <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="/ScrambledPass;component/Resources/cog-b.png"/>
+                        <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/settings.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
             </StackPanel>
