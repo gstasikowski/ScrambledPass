@@ -1,7 +1,7 @@
 ﻿<Window x:Class="ScrambledPass.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ScrambledPass" Height="auto" Width="450" MaxHeight="360" ResizeMode="NoResize">
+        Title="ScrambledPass" Height="auto" Width="450" MaxHeight="360" ResizeMode="CanMinimize" VerticalContentAlignment="Stretch" SizeToContent="Height">
     <Grid>
         <ContentControl Content="{Binding CurrentPageViewModel}"/>
     </Grid>

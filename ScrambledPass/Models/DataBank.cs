@@ -37,6 +37,8 @@ namespace ScrambledPass.Models
             SetSetting("rememberLastWordList", "False");
             SetSetting("defWordCount", "5");
             SetSetting("defCharCount", "5");
+            SetSetting("clearClipboard", "False");
+            SetSetting("clearClipboardDelay", "15");
         }
 
         public Dictionary<string, string> GetAllSettings()

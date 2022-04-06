@@ -21,6 +21,8 @@
     <system:String x:Key="UILoadWordList">Wczytaj ostatnią użytą listę wyrazów przy starcie</system:String>
     <system:String x:Key="UIDefWordCount">Domyślna ilość słów</system:String>
     <system:String x:Key="UIDefCharacterCount">Domyślna ilość znaków</system:String>
+    <system:String x:Key="UIClearClipboard">Czyść schowek</system:String>
+    <system:String x:Key="UIClearClipboardDelay">Opóźnienie</system:String>
     <system:String x:Key="UIBack">Wróć</system:String>
     <!-- Tooltips -->
     <system:String x:Key="TipWords">Generuj nowe hasło korzystając z listy wyrazów.</system:String>
@@ -29,6 +31,8 @@
     <system:String x:Key="TipWordList">Wczytaj własną listę wyrazów.</system:String>
     <system:String x:Key="TipDefaultWordList">Wczytaj domyślną listę wyrazów.</system:String>
     <system:String x:Key="TipSettings">Otwórz panel ustawień.</system:String>
+    <system:String x:Key="TipClearClipboard">Wyczyść chowek po skopiowaniu wygenerowanego hasła.</system:String>
+    <system:String x:Key="TipClearClipboardDelay">Opóźnienie (w sekundach) po którym nastąpi wyczyszczenie schowka.</system:String>
     <system:String x:Key="TipDefaultSettings">Przywróć domyślne ustawienia.</system:String>
     <!-- ErrorMessages -->
     <system:String x:Key="ErrorDefault">Nieznany błąd. Spróbuj ponownie.</system:String>

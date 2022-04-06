@@ -74,6 +74,7 @@
     <Compile Include="Interfaces\IPageViewModel.cs" />
     <Compile Include="Logic\ErrorHandler.cs" />
     <Compile Include="Logic\FileOperations.cs" />
+    <Compile Include="Helpers\GeneralHelpers.cs" />
     <Compile Include="Models\ApplicationViewModel.cs" />
     <Compile Include="Views\GeneratorView.xaml.cs">
       <DependentUpon>GeneratorView.xaml</DependentUpon>

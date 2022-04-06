@@ -7,7 +7,7 @@
         d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel>
-            <CheckBox x:Name="chkb_randWords" Content="{DynamicResource UIWords}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True" Click="CBRandomWordsPanel_Click"/>
+            <CheckBox x:Name="chkb_randWords" Content="{DynamicResource UIWords}" ToolTip="{DynamicResource TipWords}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True" Click="CBRandomWordsPanel_Click"/>
             <StackPanel x:Name="pnl_words" HorizontalAlignment="Left" Height="50" Margin="30,0,0,0" VerticalAlignment="Top" Width="248">
                 <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
                     <Label x:Name="lbl_wordCount" Content="{DynamicResource UIWordCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -15,7 +15,7 @@
                 </StackPanel>
                 <CheckBox x:Name="chkb_randLetterSize" Content="{DynamicResource UIRandomizeLetterSize}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
             </StackPanel>
-            <CheckBox x:Name="chkb_randChars" Content="{DynamicResource UICharacters}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Click="CBRandomCharactersPanel_Click" IsChecked="True"/>
+            <CheckBox x:Name="chkb_randChars" Content="{DynamicResource UICharacters}" ToolTip="{DynamicResource TipCharacters}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Click="CBRandomCharactersPanel_Click" IsChecked="True"/>
             <StackPanel x:Name="pnl_chars" Orientation="Horizontal">
                 <StackPanel x:Name="pnl_charsOptions" HorizontalAlignment="Left" Height="115" Margin="30,0,0,0" VerticalAlignment="Top" Width="270">
                     <CheckBox x:Name="chkb_randLower" Content="a-z" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -41,8 +41,8 @@
                 <Label x:Name="lbl_passStrength" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="420" Padding="5,5,15,-11" HorizontalContentAlignment="Right"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5,10,5,5">
-                <Button x:Name="btn_generate" Content="{DynamicResource UIGenerate}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="75" Click="BtnGeneratePassword_Click"/>
-                <Button HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="BtnLoadCustomWordList_Click" >
+                <Button x:Name="btn_generate" Content="{DynamicResource UIGenerate}" ToolTip="{DynamicResource TipPasswordGeneration}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="75" Click="BtnGeneratePassword_Click"/>
+                <Button ToolTip="{DynamicResource TipWordList}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="BtnLoadCustomWordList_Click" >
                     <Button.BorderBrush>
                         <ImageBrush ImageSource="/ScrambledPass;component/Resources/open-folder-w.png" Stretch="Uniform"/>
                     </Button.BorderBrush>
@@ -50,14 +50,14 @@
                         <ImageBrush ImageSource="/ScrambledPass;component/Resources/open-folder-b.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Button HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="BtnLoadDefWordList_Click" ToolTip="Reload default word list" BorderBrush="#00707070">
+                <Button ToolTip="{DynamicResource TipDefaultWordList}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="20" Width="20" Click="BtnLoadDefWordList_Click" BorderBrush="#00707070">
                     <Button.Background>
                         <ImageBrush ImageSource="/ScrambledPass;component/Resources/anticlockwise-rotation-b.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
                 <Separator Margin="0" Width="270" Visibility="Hidden"/>
                 <CheckBox x:Name="chkb_ClrClipboard" Content="Clear clipboard after 20s" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Visibility="Collapsed"/>
-                <Button Height="20" Width="20" Click="BtnSettings_Click" BorderBrush="#00707070" >
+                <Button ToolTip="{DynamicResource TipSettings}" Height="20" Width="20" Click="BtnSettings_Click" BorderBrush="#00707070" >
                     <Button.Background>
                         <ImageBrush Stretch="Uniform" ImageSource="/ScrambledPass;component/Resources/cog-b.png"/>
                     </Button.Background>

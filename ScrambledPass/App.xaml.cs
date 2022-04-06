@@ -14,6 +14,9 @@ namespace ScrambledPass
         {
             base.OnStartup(e);
 
+            Logic.Refs.fileOperations.LoadTranslations();
+            Logic.Refs.fileOperations.LoadSettings();
+
             MainWindow app = new MainWindow();
             ApplicationViewModel context = new ApplicationViewModel();
             Logic.Refs.viewControl = context;

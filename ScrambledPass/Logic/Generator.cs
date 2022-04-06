@@ -7,7 +7,6 @@ namespace ScrambledPass.Logic
     public class Generator
     {
         Random randIndex = new Random();
-
         List<char> availableCharList = new List<char>();
 
         public Generator()
@@ -15,6 +14,7 @@ namespace ScrambledPass.Logic
 
         }
 
+        #region Methods (public)
         public string GeneratePassword(int wordCount, int charMode, int charCount, bool randCharSize, bool letters, bool bigLetters, bool numbers, bool specialChars)
         {
             string newPassword = "";
@@ -57,6 +57,28 @@ namespace ScrambledPass.Logic
                 Refs.dataBank.WordList.AddRange(Refs.fileOperations.LoadCustomWordList(filePath));
         }
 
+        public double CalculateEntropy(string password)
+        {
+            int uniqueSymbols = 0;
+
+            if (password.Any(char.IsLower))
+                uniqueSymbols += 26;
+
+            if (password.Any(char.IsUpper))
+                uniqueSymbols += 26;
+
+            if (password.Any(char.IsDigit))
+                uniqueSymbols += 10;
+
+            if (password.Any(char.IsSymbol) || password.Any(char.IsPunctuation))
+                uniqueSymbols += Refs.dataBank.SpecialCharsCount;
+
+            double entropy = Math.Log(Math.Pow(uniqueSymbols, password.Length));
+            return Math.Round(entropy, 2);
+        }
+        #endregion Methods (public)
+
+        #region Methods (private)
         void PrepareCharList(int wordCount, bool letters, bool bigLetters, bool numbers, bool specialChars)
         {
             availableCharList.Clear();
@@ -155,25 +177,6 @@ namespace ScrambledPass.Logic
 
             return newPassword;
         }
-
-        public double CalculateEntropy(string password)
-        {
-            int uniqueSymbols = 0;
-
-            if (password.Any(char.IsLower))
-                uniqueSymbols += 26;
-
-            if (password.Any(char.IsUpper))
-                uniqueSymbols += 26;
-
-            if (password.Any(char.IsDigit))
-                uniqueSymbols += 10;
-
-            if (password.Any(char.IsSymbol) || password.Any(char.IsPunctuation))
-                uniqueSymbols += Refs.dataBank.SpecialCharsCount;
-
-            double entropy = Math.Log(Math.Pow(uniqueSymbols, password.Length));
-            return Math.Round(entropy, 2);
-        }
+        #endregion Methods (private)
     }
 }

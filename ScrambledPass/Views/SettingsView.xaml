@@ -21,8 +21,15 @@
                 <Label x:Name="lbl_defCharCount" Content="{DynamicResource UIDefCharacterCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <TextBox x:Name="txtb_defCharCount" HorizontalAlignment="Left" Height="23" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefCharCount"/>
             </StackPanel>
+            <StackPanel>
+                <CheckBox x:Name="chkb_clearClipboard" Content="{DynamicResource UIClearClipboard}" Checked="ToggleClipboardClearing" Unchecked="ToggleClipboardClearing" Margin="3,0,0,0" />
+                <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
+                    <Label x:Name="lbl_clearClipboardDelay" Content="{DynamicResource UIClearClipboardDelay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtb_clearClipboardDelay" HorizontalAlignment="Left" Height="23" Text="25" VerticalAlignment="Center" Width="40" TextChanged="SetClipboardClearingDelay"/>
+                </StackPanel>
+            </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,5" >
-                <Button x:Name="btn_defaultSettings" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="RestoreDefaultSettings" Margin="0,0,10,0" BorderBrush="#00707070" >
+                <Button x:Name="btn_defaultSettings" ToolTip="{DynamicResource TipDefaultSettings}" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="RestoreDefaultSettings" Margin="0,0,10,0" BorderBrush="#00707070" >
                     <Button.Background>
                         <ImageBrush ImageSource="/ScrambledPass;component/Resources/reload.png" Stretch="Uniform"/>
                     </Button.Background>

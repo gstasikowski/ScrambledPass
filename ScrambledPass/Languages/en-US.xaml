@@ -21,6 +21,8 @@
     <system:String x:Key="UILoadWordList">Load last used wordlist on startup</system:String>
     <system:String x:Key="UIDefWordCount">Default word count</system:String>
     <system:String x:Key="UIDefCharacterCount">Default character count</system:String>
+    <system:String x:Key="UIClearClipboard">Clear clipboard</system:String>
+    <system:String x:Key="UIClearClipboardDelay">Clearing delay</system:String>
     <system:String x:Key="UIBack">Back</system:String>
     <!-- Tooltips -->
     <system:String x:Key="TipWords">Generate new password using a word list.</system:String>
@@ -29,6 +31,8 @@
     <system:String x:Key="TipWordList">Load custom word list.</system:String>
     <system:String x:Key="TipDefaultWordList">Load default word list.</system:String>
     <system:String x:Key="TipSettings">Open settings panel.</system:String>
+    <system:String x:Key="TipClearClipboard">Clear clipboard after copying/cutting generated password.</system:String>
+    <system:String x:Key="TipClearClipboardDelay">Delay (in seconds) after which the clipboard will be wiped.</system:String>
     <system:String x:Key="TipDefaultSettings">Restore default settings.</system:String>
     <!-- ErrorMessages -->
     <system:String x:Key="ErrorDefault">Unkown error has occured. Please try again.</system:String>

@@ -74,7 +74,8 @@ namespace ScrambledPass.Logic
             else
             {
                 Refs.dataBank.DefaultSettings();
-                SaveSettings(); }
+                SaveSettings();
+            }
 
             Refs.localizationHandler.SwitchLanguage(Refs.dataBank.GetSetting("languageID"));
         }

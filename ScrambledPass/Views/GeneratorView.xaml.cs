@@ -27,9 +27,6 @@ namespace ScrambledPass.Views
         #region Methods
         private void InitialSetup()
         {
-            Refs.fileOperations.LoadTranslations();
-            Refs.fileOperations.LoadSettings();
-
             txtb_wordCount.Text = Refs.dataBank.GetSetting("defWordCount");
             txtb_charCount.Text = Refs.dataBank.GetSetting("defCharCount");
 
@@ -38,7 +35,7 @@ namespace ScrambledPass.Views
             else
                 Refs.passGen.PrepareWordList(string.Empty);
 
-            app.appReady = true;
+            DataObject.AddCopyingHandler(txtb_passTarget, ClipboardProtection);
         }
 
         private void SetWordsPanelStatus()
@@ -78,10 +75,10 @@ namespace ScrambledPass.Views
             if (!pnl_words.IsEnabled)
                 return 0;
 
-            int wordCount = 0;
+            int wordCount = 5;
 
             if (!int.TryParse(txtb_wordCount.Text, out wordCount))
-            { new ErrorHandler("parserError"); }
+            { new ErrorHandler("ErrorParser"); }
 
             return wordCount;
         }
@@ -91,10 +88,10 @@ namespace ScrambledPass.Views
             if (!pnl_chars.IsEnabled)
                 return 0;
 
-            int charCount = 0;
+            int charCount = 1;
 
             if (!int.TryParse(txtb_charCount.Text, out charCount))
-            { new ErrorHandler("parserError"); }
+            { new ErrorHandler("ErrorParser"); }
 
             return charCount;
         }
@@ -149,7 +146,12 @@ namespace ScrambledPass.Views
         {
             Refs.viewControl.CurrentPageViewModel = Refs.viewControl.PageViewModels[1]; // switch to binding
         }
-        #endregion
+
+        private void ClipboardProtection(object sender, DataObjectEventArgs e)
+        {
+            _ = new Helpers.GeneralHelpers().ClearClipboardAsync();
+        }
+        #endregion Methods
 
         #region UI Events
         private void CBRandomWordsPanel_Click(object sender, RoutedEventArgs e)
@@ -191,6 +193,6 @@ namespace ScrambledPass.Views
         {
             ToggleSettingsMenu();
         }
-        #endregion
+        #endregion  UI Events
     }
 }

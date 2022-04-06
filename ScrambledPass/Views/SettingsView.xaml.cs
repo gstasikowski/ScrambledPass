@@ -29,15 +29,17 @@ namespace ScrambledPass.Views
             cb_language.SelectedIndex = Refs.dataBank.LanguageIndex(Refs.dataBank.GetSetting("languageID"));
             SelectLanguage();
 
-            // word list
-            if (Refs.dataBank.GetSetting("rememberLastWordList") == "True")
-                chkb_loadCustomWordList.IsChecked = true;
-            else
-                chkb_loadCustomWordList.IsChecked = false;
+            // toggles
+            chkb_loadCustomWordList.IsChecked = Refs.dataBank.GetSetting("rememberLastWordList") == "True";
+            chkb_clearClipboard.IsChecked = Refs.dataBank.GetSetting("clearClipboard") == "True";
+            txtb_clearClipboardDelay.IsEnabled = (bool)chkb_clearClipboard.IsChecked;
 
-            // word/char counts
+            // textboxes (content)
             txtb_defWordCount.Text = Refs.dataBank.GetSetting("defWordCount");
             txtb_defCharCount.Text = Refs.dataBank.GetSetting("defCharCount");
+            txtb_clearClipboardDelay.Text = Refs.dataBank.GetSetting("clearClipboardDelay");
+
+            app.appReady = true;
         }
 
         private void SelectLanguage()
@@ -49,7 +51,7 @@ namespace ScrambledPass.Views
             Refs.localizationHandler.SwitchLanguage(cultureCode);
             Refs.fileOperations.SaveSettings();
         }
-        #endregion
+        #endregion Methods
 
         #region UI Events
         private void SelectLanguage(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -91,6 +93,25 @@ namespace ScrambledPass.Views
                 Refs.fileOperations.SaveSettings();
             }
         }
-        #endregion
+
+        private void ToggleClipboardClearing(object sender, RoutedEventArgs e)
+        {
+            if (app.appReady)
+            {
+                txtb_clearClipboardDelay.IsEnabled = (bool)chkb_clearClipboard.IsChecked;
+                Refs.dataBank.SetSetting("clearClipboard", chkb_clearClipboard.IsChecked.ToString());
+                Refs.fileOperations.SaveSettings();
+            }
+        }
+
+        private void SetClipboardClearingDelay(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (app.appReady)
+            {
+                Refs.dataBank.SetSetting("clearClipboardDelay", txtb_clearClipboardDelay.Text);
+                Refs.fileOperations.SaveSettings();
+            }
+        }
+        #endregion UI Events
     }
 }

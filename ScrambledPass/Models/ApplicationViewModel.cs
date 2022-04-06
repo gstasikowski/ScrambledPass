@@ -12,8 +12,8 @@ namespace ScrambledPass.Models
         private ICommand _changePageCommand;
         private IPageViewModel _currentPageViewModel;
         private List<IPageViewModel> _pageViewModels;
-        #endregion
-        
+        #endregion Fields
+
         public ApplicationViewModel()
         {
             PageViewModels.Add(new Views.GeneratorView());
@@ -59,7 +59,7 @@ namespace ScrambledPass.Models
                 }
             }
         }
-        #endregion
+        #endregion Commands & properties
 
         #region Methods
         private void ChangeViewModel(IPageViewModel viewModel)
@@ -69,6 +69,6 @@ namespace ScrambledPass.Models
 
             CurrentPageViewModel = PageViewModels.FirstOrDefault(vm => vm == viewModel);
         }
-        #endregion
+        #endregion Methods
     }
 }
