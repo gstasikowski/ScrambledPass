@@ -25,9 +25,16 @@ namespace ScrambledPass.Views
 
             foreach (string language in Refs.dataBank.LanguageList)
             { cb_language.Items.Add(language.Substring(0, language.IndexOf('[') - 1)); }
-            
+
             cb_language.SelectedIndex = Refs.dataBank.LanguageIndex(Refs.dataBank.GetSetting("languageID"));
             SelectLanguage();
+
+            // theme
+            foreach (string theme in Refs.dataBank.ThemeList)
+            { cb_theme.Items.Add(theme); }
+
+            cb_theme.SelectedIndex = Refs.dataBank.ThemeIndex(Refs.dataBank.GetSetting("theme"));
+            SelectTheme();
 
             // toggles
             chkb_loadCustomWordList.IsChecked = Refs.dataBank.GetSetting("rememberLastWordList") == "True";
@@ -48,7 +55,15 @@ namespace ScrambledPass.Views
             int codePosition = currentLanguage.IndexOf('[') + 1;
             string cultureCode = currentLanguage.Substring(codePosition, currentLanguage.Length - (codePosition + 1));
             Refs.dataBank.SetSetting("languageID", cultureCode);
-            Refs.localizationHandler.SwitchLanguage(cultureCode);
+            Refs.resourceHandler.SwitchLanguage(cultureCode);
+            Refs.fileOperations.SaveSettings();
+        }
+
+        private void SelectTheme()
+        {
+            string currentTheme = Refs.dataBank.ThemeList[cb_theme.SelectedIndex];
+            Refs.dataBank.SetSetting("theme", currentTheme);
+            Refs.resourceHandler.SwitchTheme(currentTheme);
             Refs.fileOperations.SaveSettings();
         }
         #endregion Methods
@@ -57,6 +72,10 @@ namespace ScrambledPass.Views
         private void SelectLanguage(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             SelectLanguage();
+        }
+        private void SelectTheme(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            SelectTheme();
         }
 
         private void ToggleCustomWordListReload(object sender, RoutedEventArgs e)

@@ -18,6 +18,7 @@
     <system:String x:Key="UIPassGreat">świetne</system:String>
     <system:String x:Key="UIGenerate">Generuj</system:String>
     <system:String x:Key="UILanguage">Język</system:String>
+    <system:String x:Key="UITheme">Motyw</system:String>
     <system:String x:Key="UILoadWordList">Wczytaj ostatnią użytą listę wyrazów przy starcie</system:String>
     <system:String x:Key="UIDefWordCount">Domyślna ilość słów</system:String>
     <system:String x:Key="UIDefCharacterCount">Domyślna ilość znaków</system:String>

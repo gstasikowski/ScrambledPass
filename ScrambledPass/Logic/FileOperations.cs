@@ -77,7 +77,7 @@ namespace ScrambledPass.Logic
                 SaveSettings();
             }
 
-            Refs.localizationHandler.SwitchLanguage(Refs.dataBank.GetSetting("languageID"));
+            Refs.resourceHandler.SwitchLanguage(Refs.dataBank.GetSetting("languageID"));
         }
 
         public void SaveSettings()
@@ -101,6 +101,15 @@ namespace ScrambledPass.Logic
                 string cultureCode = filePath.Substring(filePath.LastIndexOf('\\') + 1).Replace(".xaml", "");
                 var tempCulture = System.Globalization.CultureInfo.GetCultureInfo(cultureCode);
                 Refs.dataBank.AddAvailableLanguage(string.Format("{0} [{1}]", tempCulture.DisplayName, tempCulture.Name));
+            }
+        }
+
+        public void LoadThemes()
+        {
+            foreach (string filePath in Directory.EnumerateFiles(Refs.dataBank.DefaultThemePath))
+            {
+                string themeName = filePath.Substring(filePath.LastIndexOf('\\') + 1).Replace(".xaml", "");
+                Refs.dataBank.AddAvailableTheme(themeName);
             }
         }
     }

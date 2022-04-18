@@ -12,7 +12,6 @@ namespace ScrambledPass.Views
     /// </summary>
     public partial class GeneratorView : IPageViewModel
     {
-        App app = (App)App.Current;
         int charMode = -1;
 
         public GeneratorView()
@@ -110,19 +109,19 @@ namespace ScrambledPass.Views
             if (passEntropy > 0.0)
             {
                 strengthTxt = (string)FindResource("UIPassWeak");
-                lbl_passStrength.Foreground = Brushes.Red;
+                lbl_passStrength.Foreground = (Brush)FindResource("PasswordWeak");
             }
 
             if (passEntropy >= 65.0)
             {
                 strengthTxt = (string)FindResource("UIPassGood");
-                lbl_passStrength.Foreground = Brushes.Blue;
+                lbl_passStrength.Foreground = (Brush)FindResource("PasswordGood");
             }
 
             if (passEntropy >= 100.0)
             {
                 strengthTxt = (string)FindResource("UIPassGreat");
-                lbl_passStrength.Foreground = Brushes.Green;
+                lbl_passStrength.Foreground = (Brush)FindResource("PasswordGreat");
             }
 
             lbl_passEntropy.Content = string.Format("{0}: {1} bit", (string)FindResource("UIEntropy"), passEntropy);

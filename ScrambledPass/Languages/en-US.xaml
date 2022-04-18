@@ -18,6 +18,7 @@
     <system:String x:Key="UIPassGreat">great</system:String>
     <system:String x:Key="UIGenerate">Generate</system:String>
     <system:String x:Key="UILanguage">Language</system:String>
+    <system:String x:Key="UITheme">Theme</system:String>
     <system:String x:Key="UILoadWordList">Load last used wordlist on startup</system:String>
     <system:String x:Key="UIDefWordCount">Default word count</system:String>
     <system:String x:Key="UIDefCharacterCount">Default character count</system:String>

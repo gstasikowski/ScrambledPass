@@ -34,7 +34,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Bottom" Margin="0" HorizontalAlignment="Right">
                 <Label x:Name="lbl_pass" Content="{DynamicResource UIPassword}" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtb_passTarget" Height="23" Margin="10,10,10,0" VerticalAlignment="Center" Width="350" TextChanged="TAPassword_TextChanged" Background="White" HorizontalAlignment="Left"/>
+                <TextBox x:Name="txtb_passTarget" Height="23" Margin="10,10,10,0" VerticalAlignment="Center" Width="350" TextChanged="TAPassword_TextChanged" HorizontalAlignment="Left"/>
             </StackPanel>
             <StackPanel Margin="0,-5,10,0" HorizontalAlignment="Right">
                 <Label x:Name="lbl_passEntropy" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="420" Padding="5,5,15,-11" HorizontalContentAlignment="Right"/>

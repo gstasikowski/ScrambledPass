@@ -5,15 +5,13 @@ using System.Windows;
 
 namespace ScrambledPass.Logic
 {
-    public class LocalizationHandler
+    public class ResourceHandler
     {
-        private static void SetLocalization(CultureInfo cultureInfo)
+        private static void LoadResource(string filePath, string fileName)
         {
-            string filePath = Refs.dataBank.DefaultLanguagePath;
-
             var dict = new ResourceDictionary
             {
-                Source = new Uri(string.Format("pack://{0}{1}.xaml", filePath, cultureInfo.Name))
+                Source = new Uri(string.Format("pack://{0}{1}.xaml", filePath, fileName))
             };
 
             var existingDict = Application.Current.Resources.MergedDictionaries.FirstOrDefault(
@@ -30,7 +28,12 @@ namespace ScrambledPass.Logic
         public void SwitchLanguage(string cultureCode)
         {
             CultureInfo cultureInfo = CultureInfo.GetCultureInfo(cultureCode);
-            SetLocalization(cultureInfo);
+            LoadResource(Refs.dataBank.DefaultLanguagePath, cultureInfo.Name);
+        }
+
+        public void SwitchTheme(string newTheme)
+        {
+            LoadResource(Refs.dataBank.DefaultThemePath, newTheme);
         }
     }
 }

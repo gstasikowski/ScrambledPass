@@ -7,7 +7,7 @@ namespace ScrambledPass.Logic
         public static ApplicationViewModel viewControl;
         public static DataBank dataBank = new DataBank();
         public static FileOperations fileOperations = new FileOperations();
-        public static LocalizationHandler localizationHandler = new LocalizationHandler();
+        public static ResourceHandler resourceHandler = new ResourceHandler();
         public static Generator passGen = new Generator();
     }
 }
