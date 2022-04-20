@@ -61,7 +61,10 @@ namespace ScrambledPass.Views
 
         private void CheckPasswordRules()
         {
-            btn_generate.IsEnabled = (bool)chkb_randWords.IsChecked || (bool)chkb_randChars.IsChecked;
+            
+
+            btn_generate.IsEnabled = (bool)chkb_randWords.IsChecked || 
+                ((bool)chkb_randChars.IsChecked && ((bool)chkb_randLower.IsChecked || (bool)chkb_randUpper.IsChecked || (bool)chkb_randNumbers.IsChecked || (bool)chkb_randSpcChar.IsChecked));
             rb_replaceRandChar.IsEnabled = rb_replaceWhiteChar.IsEnabled = (bool)chkb_randWords.IsChecked;
 
             if (!(bool)chkb_randWords.IsChecked)

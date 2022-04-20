@@ -17,11 +17,11 @@
             </StackPanel>
             <CheckBox x:Name="chkb_randChars" Content="{DynamicResource UICharacters}" ToolTip="{DynamicResource TipCharacters}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Click="CBRandomCharactersPanel_Click" IsChecked="True"/>
             <StackPanel x:Name="pnl_chars" Orientation="Horizontal">
-                <StackPanel x:Name="pnl_charsOptions" HorizontalAlignment="Left" Height="115" Margin="30,0,0,0" VerticalAlignment="Top" Width="270">
-                    <CheckBox x:Name="chkb_randLower" Content="a-z" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="chkb_randUpper" Content="A-Z" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="chkb_randNumbers" Content="0-9" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="chkb_randSpcChar" Content="{DynamicResource UISymbols}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <StackPanel x:Name="pnl_charsOptions" HorizontalAlignment="Left" Height="120" Margin="30,0,0,0" VerticalAlignment="Top" Width="270">
+                    <CheckBox x:Name="chkb_randLower" Content="a-z" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CBRandomCharactersPanel_Click"/>
+                    <CheckBox x:Name="chkb_randUpper" Content="A-Z" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CBRandomCharactersPanel_Click"/>
+                    <CheckBox x:Name="chkb_randNumbers" Content="0-9" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CBRandomCharactersPanel_Click"/>
+                    <CheckBox x:Name="chkb_randSpcChar" Content="{DynamicResource UISymbols}" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CBRandomCharactersPanel_Click"/>
                     <Separator Height="10" Margin="0"/>
                     <RadioButton x:Name="rb_replaceWhiteChar" Content="{DynamicResource UIReplaceSpacing}" IsChecked="True" GroupName="charPositioning" Tag="0" Checked="RBCharacterMode_Checked"/>
                     <RadioButton x:Name="rb_replaceRandChar" Content="{DynamicResource UIReplaceCharacters}" GroupName="charPositioning" Tag="1" Checked="RBCharacterMode_Checked"/>
@@ -32,9 +32,9 @@
                     <TextBox x:Name="txtb_charCount" HorizontalAlignment="Right" Height="22" Text="5" VerticalAlignment="Center" Width="25" Margin="0,4"/>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Bottom" Margin="0" HorizontalAlignment="Right">
-                <Label x:Name="lbl_pass" Content="{DynamicResource UIPassword}" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtb_passTarget" Height="23" Margin="10,10,10,0" VerticalAlignment="Center" Width="350" TextChanged="TAPassword_TextChanged" HorizontalAlignment="Left"/>
+            <StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Center" Margin="0" HorizontalAlignment="Right">
+                <Label x:Name="lbl_pass" Content="{DynamicResource UIPassword}" HorizontalAlignment="Left" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtb_passTarget" Height="23" Margin="10,0" VerticalAlignment="Center" Width="350" TextChanged="TAPassword_TextChanged" HorizontalAlignment="Left"/>
             </StackPanel>
             <StackPanel Margin="0,-5,10,0" HorizontalAlignment="Right">
                 <Label x:Name="lbl_passEntropy" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="420" Padding="5,5,15,-11" HorizontalContentAlignment="Right"/>
@@ -53,7 +53,6 @@
                     </Button.Background>
                 </Button>
                 <Separator Margin="0" Width="270" Visibility="Hidden"/>
-                <CheckBox x:Name="chkb_ClrClipboard" Content="Clear clipboard after 20s" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Visibility="Collapsed"/>
                 <Button ToolTip="{DynamicResource TipSettings}" Height="20" Width="20" Click="BtnSettings_Click" BorderBrush="#00707070" >
                     <Button.Background>
                         <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/settings.png" Stretch="Uniform"/>
