@@ -26,73 +26,72 @@ namespace ScrambledPass.Views
         #region Methods
         private void InitialSetup()
         {
-            txtb_wordCount.Text = Refs.dataBank.GetSetting("defWordCount");
-            txtb_charCount.Text = Refs.dataBank.GetSetting("defCharCount");
+            txtWordCount.Text = Refs.dataBank.GetSetting("defaultWordCount");
+            txtCharCount.Text = Refs.dataBank.GetSetting("defaultCharCount");
 
             if (Refs.dataBank.GetSetting("rememberLastWordList") == "True")
-                Refs.passGen.PrepareWordList(Refs.dataBank.GetSetting("lastWordList"));
+                Refs.generator.PrepareWordList(Refs.dataBank.GetSetting("lastWordList"));
             else
-                Refs.passGen.PrepareWordList(string.Empty);
+                Refs.generator.PrepareWordList(string.Empty);
 
-            DataObject.AddCopyingHandler(txtb_passTarget, ClipboardProtection);
+            DataObject.AddCopyingHandler(txtPassword, ClipboardProtection);
         }
 
         private void SetWordsPanelStatus()
         {
-            pnl_words.IsEnabled = (bool)chkb_randWords.IsChecked;
-            pnl_words.Visibility = (bool)chkb_randWords.IsChecked ? Visibility.Visible : Visibility.Collapsed;
+            pnlWords.IsEnabled = (bool)chkRandomWords.IsChecked;
+            pnlWords.Visibility = (bool)chkRandomWords.IsChecked ? Visibility.Visible : Visibility.Collapsed;
             CheckPasswordRules();
         }
 
         private void SetCharPanelStatus()
         {
-            pnl_chars.IsEnabled = (bool)chkb_randChars.IsChecked;
-            pnl_chars.Visibility = (bool)chkb_randChars.IsChecked ? Visibility.Visible : Visibility.Collapsed;
+            pnlChars.IsEnabled = (bool)chkRandomChars.IsChecked;
+            pnlChars.Visibility = (bool)chkRandomChars.IsChecked ? Visibility.Visible : Visibility.Collapsed;
             CheckPasswordRules();
         }
 
         private void GeneratePassword()
         {
-            if (pnl_chars.IsEnabled)
-                txtb_passTarget.Text = Refs.passGen.GeneratePassword(CheckWordProps(), charMode, CheckCharsProps(), (bool)chkb_randLetterSize.IsChecked, (bool)chkb_randLower.IsChecked, (bool)chkb_randUpper.IsChecked, (bool)chkb_randNumbers.IsChecked, (bool)chkb_randSpcChar.IsChecked);
+            if (pnlChars.IsEnabled)
+                txtPassword.Text = Refs.generator.GeneratePassword(CheckWordCount(), charMode, CheckCharCount(), (bool)chkRandomLetterSize.IsChecked, (bool)chkRandomLower.IsChecked, (bool)chkRandomUpper.IsChecked, (bool)chkRandomNumbers.IsChecked, (bool)chkRandomSpecialChar.IsChecked);
             else
-                txtb_passTarget.Text = Refs.passGen.GeneratePassword(CheckWordProps(), -1, 0, (bool)chkb_randLetterSize.IsChecked, false, false, false, false);
+                txtPassword.Text = Refs.generator.GeneratePassword(CheckWordCount(), -1, 0, (bool)chkRandomLetterSize.IsChecked, false, false, false, false);
         }
 
         private void CheckPasswordRules()
         {
-            
+            btnGenerate.IsEnabled = (bool)chkRandomWords.IsChecked || 
+                ((bool)chkRandomChars.IsChecked && ((bool)chkRandomLower.IsChecked || (bool)chkRandomUpper.IsChecked || (bool)chkRandomNumbers.IsChecked || (bool)chkRandomSpecialChar.IsChecked));
+            rbReplaceRandomChar.IsEnabled = rbReplaceWhiteChar.IsEnabled = (bool)chkRandomWords.IsChecked;
 
-            btn_generate.IsEnabled = (bool)chkb_randWords.IsChecked || 
-                ((bool)chkb_randChars.IsChecked && ((bool)chkb_randLower.IsChecked || (bool)chkb_randUpper.IsChecked || (bool)chkb_randNumbers.IsChecked || (bool)chkb_randSpcChar.IsChecked));
-            rb_replaceRandChar.IsEnabled = rb_replaceWhiteChar.IsEnabled = (bool)chkb_randWords.IsChecked;
-
-            if (!(bool)chkb_randWords.IsChecked)
+            if (!(bool)chkRandomWords.IsChecked)
             {
-                rb_randPos.IsChecked = true;
+                rbRandomPos.IsChecked = true;
             }
         }
-        private int CheckWordProps()
+
+        private int CheckWordCount()
         {
-            if (!pnl_words.IsEnabled)
+            if (!pnlWords.IsEnabled)
                 return 0;
 
-            int wordCount = 5;
+            int wordCount;
 
-            if (!int.TryParse(txtb_wordCount.Text, out wordCount))
+            if (!int.TryParse(txtWordCount.Text, out wordCount))
             { new ErrorHandler("ErrorParser"); }
 
             return wordCount;
         }
 
-        private int CheckCharsProps()
+        private int CheckCharCount()
         {
-            if (!pnl_chars.IsEnabled)
+            if (!pnlChars.IsEnabled)
                 return 0;
 
-            int charCount = 1;
+            int charCount;
 
-            if (!int.TryParse(txtb_charCount.Text, out charCount))
+            if (!int.TryParse(txtCharCount.Text, out charCount))
             { new ErrorHandler("ErrorParser"); }
 
             return charCount;
@@ -105,30 +104,30 @@ namespace ScrambledPass.Views
 
         private void UpdatePasswordStrength()
         {
-            double passEntropy = Refs.passGen.CalculateEntropy(txtb_passTarget.Text);
+            double passEntropy = Refs.generator.CalculateEntropy(txtPassword.Text);
             string strengthTxt = "";
-            lbl_passStrength.Foreground = Brushes.White;
+            lblPasswordStrength.Foreground = Brushes.White;
 
             if (passEntropy > 0.0)
             {
-                strengthTxt = (string)FindResource("UIPassWeak");
-                lbl_passStrength.Foreground = (Brush)FindResource("PasswordWeak");
+                strengthTxt = (string)FindResource("UIPasswordWeak");
+                lblPasswordStrength.Foreground = (Brush)FindResource("PasswordWeak");
             }
 
             if (passEntropy >= 65.0)
             {
-                strengthTxt = (string)FindResource("UIPassGood");
-                lbl_passStrength.Foreground = (Brush)FindResource("PasswordGood");
+                strengthTxt = (string)FindResource("UIPasswordGood");
+                lblPasswordStrength.Foreground = (Brush)FindResource("PasswordGood");
             }
 
             if (passEntropy >= 100.0)
             {
-                strengthTxt = (string)FindResource("UIPassGreat");
-                lbl_passStrength.Foreground = (Brush)FindResource("PasswordGreat");
+                strengthTxt = (string)FindResource("UIPasswordGreat");
+                lblPasswordStrength.Foreground = (Brush)FindResource("PasswordGreat");
             }
 
-            lbl_passEntropy.Content = string.Format("{0}: {1} bit", (string)FindResource("UIEntropy"), passEntropy);
-            lbl_passStrength.Content = string.Format("{0}: {1}", (string)FindResource("UIPassStrength"), strengthTxt);
+            lblPasswordEntropy.Content = string.Format("{0}: {1} bit", (string)FindResource("UIEntropy"), passEntropy);
+            lblPasswordStrength.Content = string.Format("{0}: {1}", (string)FindResource("UIPasswordStrength"), strengthTxt);
         }
 
         private void LoadCustomWordList()
@@ -136,12 +135,12 @@ namespace ScrambledPass.Views
             OpenFileDialog fileDialog = new OpenFileDialog();
 
             if (fileDialog.ShowDialog() == true)
-                Refs.passGen.PrepareWordList(fileDialog.FileName);
+                Refs.generator.PrepareWordList(fileDialog.FileName);
         }
 
         private void LoadDefaultWordList()
         {
-            Refs.passGen.PrepareWordList(string.Empty);
+            Refs.generator.PrepareWordList(string.Empty);
         }
 
         private void ToggleSettingsMenu()

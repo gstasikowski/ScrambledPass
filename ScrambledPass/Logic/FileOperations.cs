@@ -7,21 +7,16 @@ using System.Xml.Serialization;
 
 namespace ScrambledPass.Logic
 {
-    public class FileOperations
+    public static class FileOperations
     {
-        public FileOperations()
-        {
-
-        }
-
-        public List<string> LoadDefaultWordList()
+        public static List<string> LoadDefaultWordList()
         {
             List<string> wordList = new List<string>();
             try
             {
                 var assembly = Assembly.GetExecutingAssembly();
 
-                using (Stream stream = assembly.GetManifestResourceStream(Refs.dataBank.DefaultWordList))
+                using (Stream stream = assembly.GetManifestResourceStream(Refs.dataBank.DefaultWordListFile))
                 using (StreamReader reader = new StreamReader(stream))
                 {
                     string newWord = "";
@@ -37,12 +32,12 @@ namespace ScrambledPass.Logic
             }
             catch
             { new ErrorHandler("ErrorFileNotFound"); }
-
+            
             Refs.dataBank.SetSetting("lastWordList", string.Empty);
             return wordList;
         }
 
-        public List<string> LoadCustomWordList(string filePath)
+        public static List<string> LoadCustomWordList(string filePath)
         {
             List<string> wordList = new List<string>();
 
@@ -59,9 +54,9 @@ namespace ScrambledPass.Logic
             return wordList;
         }
 
-        public void LoadSettings()
+        public static void LoadSettings()
         {
-            string configFilePath = Refs.dataBank.DefaultConfigPath + "Config.xml";
+            string configFilePath = Refs.dataBank.DefaultConfigFile;
 
             if (File.Exists(configFilePath))
             {
@@ -80,12 +75,12 @@ namespace ScrambledPass.Logic
             Refs.resourceHandler.SwitchLanguage(Refs.dataBank.GetSetting("languageID"));
         }
 
-        public void SaveSettings()
+        public static void SaveSettings()
         {
             Dictionary<string, string> appSettings = Refs.dataBank.GetAllSettings();
 
             FileStream fileStream;
-            fileStream = new FileStream(Refs.dataBank.DefaultConfigPath + "Config.xml", FileMode.Create);
+            fileStream = new FileStream(Refs.dataBank.DefaultConfigFile, FileMode.Create);
 
             XElement rootElement = new XElement("Config", appSettings.Select(kv => new XElement(kv.Key, kv.Value)));
             XmlSerializer serializer = new XmlSerializer(rootElement.GetType());
@@ -94,17 +89,17 @@ namespace ScrambledPass.Logic
             fileStream.Close();
         }
 
-        public void LoadTranslations()
+        public static void LoadTranslations()
         {
             foreach (string filePath in Directory.EnumerateFiles(Refs.dataBank.DefaultLanguagePath))
             {
                 string cultureCode = filePath.Substring(filePath.LastIndexOf('\\') + 1).Replace(".xaml", "");
-                var tempCulture = System.Globalization.CultureInfo.GetCultureInfo(cultureCode);
-                Refs.dataBank.AddAvailableLanguage(string.Format("{0} [{1}]", tempCulture.DisplayName, tempCulture.Name));
+                var newCulture = System.Globalization.CultureInfo.GetCultureInfo(cultureCode);
+                Refs.dataBank.AddAvailableLanguage(string.Format("{0} [{1}]", newCulture.DisplayName, newCulture.Name));
             }
         }
 
-        public void LoadThemes()
+        public static void LoadThemes()
         {
             foreach (string filePath in Directory.EnumerateFiles(Refs.dataBank.DefaultThemePath))
             {

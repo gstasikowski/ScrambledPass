@@ -10,7 +10,7 @@ namespace ScrambledPass.Views
         public ErrorMessage(string message)
         {
             InitializeComponent();
-            lbl_message.Content = message;
+            lblMessage.Content = message;
         }
 
         private void CloseWindow(object sender, RoutedEventArgs e)

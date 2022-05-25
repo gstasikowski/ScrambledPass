@@ -21,50 +21,50 @@ namespace ScrambledPass.Views
         private void LoadSettings()
         {
             // language
-            cb_language.Items.Clear();
+            cboLanguage.Items.Clear();
 
             foreach (string language in Refs.dataBank.LanguageList)
-            { cb_language.Items.Add(language.Substring(0, language.IndexOf('[') - 1)); }
+            { cboLanguage.Items.Add(language.Substring(0, language.IndexOf('[') - 1)); }
 
-            cb_language.SelectedIndex = Refs.dataBank.LanguageIndex(Refs.dataBank.GetSetting("languageID"));
+            cboLanguage.SelectedIndex = Refs.dataBank.LanguageIndex(Refs.dataBank.GetSetting("languageID"));
             SelectLanguage();
 
             // theme
             foreach (string theme in Refs.dataBank.ThemeList)
-            { cb_theme.Items.Add(theme); }
+            { cboTheme.Items.Add(theme); }
 
-            cb_theme.SelectedIndex = Refs.dataBank.ThemeIndex(Refs.dataBank.GetSetting("theme"));
+            cboTheme.SelectedIndex = Refs.dataBank.ThemeIndex(Refs.dataBank.GetSetting("theme"));
             SelectTheme();
 
             // toggles
-            chkb_loadCustomWordList.IsChecked = Refs.dataBank.GetSetting("rememberLastWordList") == "True";
-            chkb_clearClipboard.IsChecked = Refs.dataBank.GetSetting("clearClipboard") == "True";
-            txtb_clearClipboardDelay.IsEnabled = (bool)chkb_clearClipboard.IsChecked;
+            chkLoadCustomWordList.IsChecked = Refs.dataBank.GetSetting("rememberLastWordList") == "True";
+            chkClearClipboard.IsChecked = Refs.dataBank.GetSetting("clearClipboard") == "True";
+            txtClearClipboardDelay.IsEnabled = (bool)chkClearClipboard.IsChecked;
 
             // textboxes (content)
-            txtb_defWordCount.Text = Refs.dataBank.GetSetting("defWordCount");
-            txtb_defCharCount.Text = Refs.dataBank.GetSetting("defCharCount");
-            txtb_clearClipboardDelay.Text = Refs.dataBank.GetSetting("clearClipboardDelay");
+            txtDefaultWordCount.Text = Refs.dataBank.GetSetting("defaultWordCount");
+            txtDefaultCharCount.Text = Refs.dataBank.GetSetting("defaultCharCount");
+            txtClearClipboardDelay.Text = Refs.dataBank.GetSetting("clearClipboardDelay");
 
             app.appReady = true;
         }
 
         private void SelectLanguage()
         {
-            string currentLanguage = Refs.dataBank.LanguageList[cb_language.SelectedIndex];
+            string currentLanguage = Refs.dataBank.LanguageList[cboLanguage.SelectedIndex];
             int codePosition = currentLanguage.IndexOf('[') + 1;
             string cultureCode = currentLanguage.Substring(codePosition, currentLanguage.Length - (codePosition + 1));
             Refs.dataBank.SetSetting("languageID", cultureCode);
             Refs.resourceHandler.SwitchLanguage(cultureCode);
-            Refs.fileOperations.SaveSettings();
+            FileOperations.SaveSettings();
         }
 
         private void SelectTheme()
         {
-            string currentTheme = Refs.dataBank.ThemeList[cb_theme.SelectedIndex];
+            string currentTheme = Refs.dataBank.ThemeList[cboTheme.SelectedIndex];
             Refs.dataBank.SetSetting("theme", currentTheme);
             Refs.resourceHandler.SwitchTheme(currentTheme);
-            Refs.fileOperations.SaveSettings();
+            FileOperations.SaveSettings();
         }
         #endregion Methods
 
@@ -80,8 +80,8 @@ namespace ScrambledPass.Views
 
         private void ToggleCustomWordListReload(object sender, RoutedEventArgs e)
         {
-            Refs.dataBank.SetSetting("rememberLastWordList", chkb_loadCustomWordList.IsChecked.ToString());
-            Refs.fileOperations.SaveSettings();
+            Refs.dataBank.SetSetting("rememberLastWordList", chkLoadCustomWordList.IsChecked.ToString());
+            FileOperations.SaveSettings();
         }
 
         private void CloseSettingsView(object sender, RoutedEventArgs e)
@@ -99,8 +99,8 @@ namespace ScrambledPass.Views
         {
             if (app.appReady)
             {
-                Refs.dataBank.SetSetting("defWordCount", txtb_defWordCount.Text);
-                Refs.fileOperations.SaveSettings();
+                Refs.dataBank.SetSetting("defaultWordCount", txtDefaultWordCount.Text);
+                FileOperations.SaveSettings();
             }
         }
 
@@ -108,8 +108,8 @@ namespace ScrambledPass.Views
         {
             if (app.appReady)
             {
-                Refs.dataBank.SetSetting("defCharCount", txtb_defCharCount.Text);
-                Refs.fileOperations.SaveSettings();
+                Refs.dataBank.SetSetting("defaultCharCount", txtDefaultCharCount.Text);
+                FileOperations.SaveSettings();
             }
         }
 
@@ -117,9 +117,9 @@ namespace ScrambledPass.Views
         {
             if (app.appReady)
             {
-                txtb_clearClipboardDelay.IsEnabled = (bool)chkb_clearClipboard.IsChecked;
-                Refs.dataBank.SetSetting("clearClipboard", chkb_clearClipboard.IsChecked.ToString());
-                Refs.fileOperations.SaveSettings();
+                txtClearClipboardDelay.IsEnabled = (bool)chkClearClipboard.IsChecked;
+                Refs.dataBank.SetSetting("clearClipboard", chkClearClipboard.IsChecked.ToString());
+                FileOperations.SaveSettings();
             }
         }
 
@@ -127,8 +127,8 @@ namespace ScrambledPass.Views
         {
             if (app.appReady)
             {
-                Refs.dataBank.SetSetting("clearClipboardDelay", txtb_clearClipboardDelay.Text);
-                Refs.fileOperations.SaveSettings();
+                Refs.dataBank.SetSetting("clearClipboardDelay", txtClearClipboardDelay.Text);
+                FileOperations.SaveSettings();
             }
         }
         #endregion UI Events

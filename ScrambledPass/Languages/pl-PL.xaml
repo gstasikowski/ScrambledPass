@@ -12,10 +12,10 @@
     <system:String x:Key="UIRandomPosition">Dodaj w losowej pozycji</system:String>
     <system:String x:Key="UIPassword">Hasło</system:String>
     <system:String x:Key="UIEntropy">Entropia</system:String>
-    <system:String x:Key="UIPassStrength">Siła hasła</system:String>
-    <system:String x:Key="UIPassWeak">słabe</system:String>
-    <system:String x:Key="UIPassGood">dobre</system:String>
-    <system:String x:Key="UIPassGreat">świetne</system:String>
+    <system:String x:Key="UIPasswordStrength">Siła hasła</system:String>
+    <system:String x:Key="UIPasswordWeak">słabe</system:String>
+    <system:String x:Key="UIPasswordGood">dobre</system:String>
+    <system:String x:Key="UIPasswordGreat">świetne</system:String>
     <system:String x:Key="UIGenerate">Generuj</system:String>
     <system:String x:Key="UILanguage">Język</system:String>
     <system:String x:Key="UITheme">Motyw</system:String>

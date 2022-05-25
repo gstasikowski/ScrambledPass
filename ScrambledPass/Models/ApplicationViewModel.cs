@@ -29,7 +29,7 @@ namespace ScrambledPass.Models
             {
                 if (_changePageCommand == null)
                 {
-                    _changePageCommand = new RelayCommand(p => ChangeViewModel((IPageViewModel)p), p => p is IPageViewModel);
+                    _changePageCommand = new RelayCommand(page => ChangeViewModel((IPageViewModel)page), page => page is IPageViewModel);
                 }
 
                 return _changePageCommand;

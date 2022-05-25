@@ -10,26 +10,26 @@
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,10">
                 <Label x:Name="lbl_language" Content="{DynamicResource UILanguage}"/>
-                <ComboBox x:Name="cb_language" SelectionChanged="SelectLanguage"/>
+                <ComboBox x:Name="cboLanguage" SelectionChanged="SelectLanguage"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                 <Label x:Name="lbl_theme" Content="{DynamicResource UITheme}"/>
-                <ComboBox x:Name="cb_theme" SelectionChanged="SelectTheme"/>
+                <ComboBox x:Name="cboTheme" SelectionChanged="SelectTheme"/>
             </StackPanel>
-            <CheckBox x:Name="chkb_loadCustomWordList" Content="{DynamicResource UILoadWordList}" Checked="ToggleCustomWordListReload" Unchecked="ToggleCustomWordListReload" Margin="3,0,0,0" />
+            <CheckBox x:Name="chkLoadCustomWordList" Content="{DynamicResource UILoadWordList}" Checked="ToggleCustomWordListReload" Unchecked="ToggleCustomWordListReload" Margin="3,0,0,0" />
             <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
                 <Label x:Name="lbl_defWordCount" Content="{DynamicResource UIDefWordCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtb_defWordCount" HorizontalAlignment="Left" Height="23" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefWordCount"/>
+                <TextBox x:Name="txtDefaultWordCount" HorizontalAlignment="Left" Height="23" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefWordCount"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
                 <Label x:Name="lbl_defCharCount" Content="{DynamicResource UIDefCharacterCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtb_defCharCount" HorizontalAlignment="Left" Height="23" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefCharCount"/>
+                <TextBox x:Name="txtDefaultCharCount" HorizontalAlignment="Left" Height="23" Text="5" VerticalAlignment="Center" Width="40" TextChanged="SetDefCharCount"/>
             </StackPanel>
             <StackPanel>
-                <CheckBox x:Name="chkb_clearClipboard" Content="{DynamicResource UIClearClipboard}" Checked="ToggleClipboardClearing" Unchecked="ToggleClipboardClearing" Margin="3,0,0,0" />
+                <CheckBox x:Name="chkClearClipboard" Content="{DynamicResource UIClearClipboard}" Checked="ToggleClipboardClearing" Unchecked="ToggleClipboardClearing" Margin="3,0,0,0" />
                 <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
                     <Label x:Name="lbl_clearClipboardDelay" Content="{DynamicResource UIClearClipboardDelay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtb_clearClipboardDelay" HorizontalAlignment="Left" Height="23" Text="25" VerticalAlignment="Center" Width="40" TextChanged="SetClipboardClearingDelay"/>
+                    <TextBox x:Name="txtClearClipboardDelay" HorizontalAlignment="Left" Height="23" Text="25" VerticalAlignment="Center" Width="40" TextChanged="SetClipboardClearingDelay"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,5" >
