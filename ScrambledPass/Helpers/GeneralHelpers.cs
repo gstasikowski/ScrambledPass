@@ -8,7 +8,7 @@ namespace ScrambledPass.Helpers
         public async Task ClearClipboardAsync()
         {
             if (Logic.Refs.dataBank.GetSetting("clearClipboard") == "False")
-                return;
+            { return; }
 
             int clearDelay = 15;
 

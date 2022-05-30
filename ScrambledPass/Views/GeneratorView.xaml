@@ -21,7 +21,7 @@
                     <CheckBox x:Name="chkRandomLower" Content="a-z" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CBRandomCharactersPanel_Click"/>
                     <CheckBox x:Name="chkRandomUpper" Content="A-Z" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CBRandomCharactersPanel_Click"/>
                     <CheckBox x:Name="chkRandomNumbers" Content="0-9" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CBRandomCharactersPanel_Click"/>
-                    <CheckBox x:Name="chkRandomSpecialChar" Content="{DynamicResource UISymbols}" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CBRandomCharactersPanel_Click"/>
+                    <CheckBox x:Name="chkRandomSymbols" Content="{DynamicResource UISymbols}" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CBRandomCharactersPanel_Click"/>
                     <Separator Height="10" Margin="0"/>
                     <RadioButton x:Name="rbReplaceWhiteChar" Content="{DynamicResource UIReplaceSpacing}" IsChecked="True" GroupName="charPositioning" Tag="0" Checked="RBCharacterMode_Checked"/>
                     <RadioButton x:Name="rbReplaceRandomChar" Content="{DynamicResource UIReplaceCharacters}" GroupName="charPositioning" Tag="1" Checked="RBCharacterMode_Checked"/>

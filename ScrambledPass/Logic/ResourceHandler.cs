@@ -31,9 +31,9 @@ namespace ScrambledPass.Logic
             LoadResource(Refs.dataBank.DefaultLanguagePath, cultureInfo.Name);
         }
 
-        public void SwitchTheme(string newTheme)
+        public void SwitchTheme(string themeName)
         {
-            LoadResource(Refs.dataBank.DefaultThemePath, newTheme);
+            LoadResource(Refs.dataBank.DefaultThemePath, themeName);
         }
     }
 }

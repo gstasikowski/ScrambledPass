@@ -24,15 +24,13 @@ namespace ScrambledPass.Views
             cboLanguage.Items.Clear();
 
             foreach (string language in Refs.dataBank.LanguageList)
-            { cboLanguage.Items.Add(language.Substring(0, language.IndexOf('[') - 1)); }
+            { cboLanguage.Items.Add(language.Substring(0, language.IndexOf('(') - 1)); }
 
             cboLanguage.SelectedIndex = Refs.dataBank.LanguageIndex(Refs.dataBank.GetSetting("languageID"));
             SelectLanguage();
 
             // theme
-            foreach (string theme in Refs.dataBank.ThemeList)
-            { cboTheme.Items.Add(theme); }
-
+            cboTheme.ItemsSource = Refs.dataBank.ThemeList;
             cboTheme.SelectedIndex = Refs.dataBank.ThemeIndex(Refs.dataBank.GetSetting("theme"));
             SelectTheme();
 
@@ -61,9 +59,9 @@ namespace ScrambledPass.Views
 
         private void SelectTheme()
         {
-            string currentTheme = Refs.dataBank.ThemeList[cboTheme.SelectedIndex];
-            Refs.dataBank.SetSetting("theme", currentTheme);
-            Refs.resourceHandler.SwitchTheme(currentTheme);
+            string selectedTheme = Refs.dataBank.ThemeList[cboTheme.SelectedIndex];
+            Refs.dataBank.SetSetting("theme", selectedTheme);
+            Refs.resourceHandler.SwitchTheme(selectedTheme);
             FileOperations.SaveSettings();
         }
         #endregion Methods

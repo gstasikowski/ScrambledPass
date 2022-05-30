@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="ErrorMessage" Height="450" Width="800" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Closing="Window_Closing">
-    <Grid MinWidth="200" MinHeight="100" Margin="10">
-        <StackPanel>
+    <Grid>
+        <StackPanel Margin="10">
             <Label x:Name="lblMessage" Content="placeholder error message" HorizontalContentAlignment="Center" Margin="0,10,0,0" HorizontalAlignment="Center"></Label>
             <Button HorizontalAlignment="Center" Width="30" Height="20" Content="OK" Margin="0,10,0,0" Click="CloseWindow"></Button>
         </StackPanel>

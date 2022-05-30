@@ -16,7 +16,6 @@ namespace ScrambledPass.Logic
             catch
             { message = (string)app.FindResource("ErrorDefault") + message; }
 
-            Application.Current.MainWindow.IsEnabled = false;
             Views.ErrorMessage messageWindow = new Views.ErrorMessage(message);
             messageWindow.Show();
         }

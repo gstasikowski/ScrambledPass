@@ -11,6 +11,7 @@ namespace ScrambledPass.Views
         {
             InitializeComponent();
             lblMessage.Content = message;
+            Application.Current.MainWindow.IsEnabled = false;
         }
 
         private void CloseWindow(object sender, RoutedEventArgs e)

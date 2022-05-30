@@ -12,7 +12,7 @@ namespace ScrambledPass.Views
     /// </summary>
     public partial class GeneratorView : IPageViewModel
     {
-        int charMode = -1;
+        private int symbolMode = -1;
 
         public GeneratorView()
         {
@@ -30,9 +30,9 @@ namespace ScrambledPass.Views
             txtCharCount.Text = Refs.dataBank.GetSetting("defaultCharCount");
 
             if (Refs.dataBank.GetSetting("rememberLastWordList") == "True")
-                Refs.generator.PrepareWordList(Refs.dataBank.GetSetting("lastWordList"));
+            { Refs.generator.PrepareWordList(Refs.dataBank.GetSetting("lastWordList")); }
             else
-                Refs.generator.PrepareWordList(string.Empty);
+            { Refs.generator.PrepareWordList(string.Empty); }
 
             DataObject.AddCopyingHandler(txtPassword, ClipboardProtection);
         }
@@ -54,27 +54,26 @@ namespace ScrambledPass.Views
         private void GeneratePassword()
         {
             if (pnlChars.IsEnabled)
-                txtPassword.Text = Refs.generator.GeneratePassword(CheckWordCount(), charMode, CheckCharCount(), (bool)chkRandomLetterSize.IsChecked, (bool)chkRandomLower.IsChecked, (bool)chkRandomUpper.IsChecked, (bool)chkRandomNumbers.IsChecked, (bool)chkRandomSpecialChar.IsChecked);
+            { txtPassword.Text = Refs.generator.GeneratePassword(CheckWordCount(), symbolMode, CheckCharCount(), (bool)chkRandomLetterSize.IsChecked, (bool)chkRandomLower.IsChecked, (bool)chkRandomUpper.IsChecked, (bool)chkRandomNumbers.IsChecked, (bool)chkRandomSymbols.IsChecked); }
             else
-                txtPassword.Text = Refs.generator.GeneratePassword(CheckWordCount(), -1, 0, (bool)chkRandomLetterSize.IsChecked, false, false, false, false);
+            { txtPassword.Text = Refs.generator.GeneratePassword(CheckWordCount(), -1, 0, (bool)chkRandomLetterSize.IsChecked, false, false, false, false); }
         }
 
         private void CheckPasswordRules()
         {
             btnGenerate.IsEnabled = (bool)chkRandomWords.IsChecked || 
-                ((bool)chkRandomChars.IsChecked && ((bool)chkRandomLower.IsChecked || (bool)chkRandomUpper.IsChecked || (bool)chkRandomNumbers.IsChecked || (bool)chkRandomSpecialChar.IsChecked));
+                ((bool)chkRandomChars.IsChecked && ((bool)chkRandomLower.IsChecked || (bool)chkRandomUpper.IsChecked || (bool)chkRandomNumbers.IsChecked || (bool)chkRandomSymbols.IsChecked));
+            
             rbReplaceRandomChar.IsEnabled = rbReplaceWhiteChar.IsEnabled = (bool)chkRandomWords.IsChecked;
 
             if (!(bool)chkRandomWords.IsChecked)
-            {
-                rbRandomPos.IsChecked = true;
-            }
+            { rbRandomPos.IsChecked = true; }
         }
 
         private int CheckWordCount()
         {
             if (!pnlWords.IsEnabled)
-                return 0;
+            { return 0; }
 
             int wordCount;
 
@@ -87,7 +86,7 @@ namespace ScrambledPass.Views
         private int CheckCharCount()
         {
             if (!pnlChars.IsEnabled)
-                return 0;
+            { return 0; }
 
             int charCount;
 
@@ -99,7 +98,7 @@ namespace ScrambledPass.Views
 
         private void SetCharacterMode(string characterMode)
         {
-            int.TryParse(characterMode, out charMode);
+            int.TryParse(characterMode, out symbolMode);
         }
 
         private void UpdatePasswordStrength()
@@ -135,7 +134,7 @@ namespace ScrambledPass.Views
             OpenFileDialog fileDialog = new OpenFileDialog();
 
             if (fileDialog.ShowDialog() == true)
-                Refs.generator.PrepareWordList(fileDialog.FileName);
+            { Refs.generator.PrepareWordList(fileDialog.FileName); }
         }
 
         private void LoadDefaultWordList()

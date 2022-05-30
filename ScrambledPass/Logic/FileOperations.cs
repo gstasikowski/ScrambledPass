@@ -9,6 +9,13 @@ namespace ScrambledPass.Logic
 {
     public static class FileOperations
     {
+        public static void LoadResources()
+        {
+            LoadTranslations();
+            LoadThemes();
+            LoadSettings();
+        }
+
         public static List<string> LoadDefaultWordList()
         {
             List<string> wordList = new List<string>();

@@ -14,7 +14,7 @@ namespace ScrambledPass.Models
         
         Dictionary<string, string> settings = new Dictionary<string, string>();
         List<string> wordList = new List<string>();
-        static readonly char[] specialChars = { ' ', '.', ',', ';', '/', '\\', '\'', '[', ']', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '|', ':', '\"', '<', '>', '?' };
+        static readonly char[] symbols = { ' ', '.', ',', ';', '/', '\\', '\'', '[', ']', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '|', ':', '\"', '<', '>', '?' };
 
         private ObservableCollection<string> languageList = new ObservableCollection<string>();
         private ObservableCollection<string> themeList = new ObservableCollection<string>();
@@ -46,14 +46,14 @@ namespace ScrambledPass.Models
             get { return wordList; }
         }
 
-        public char[] SpecialChars
+        public char[] Symbols
         {
-            get { return specialChars; }
+            get { return symbols; }
         }
 
         public int SpecialCharsCount
         {
-            get { return specialChars.Length; }
+            get { return symbols.Length; }
         }
 
         public ObservableCollection<string> LanguageList

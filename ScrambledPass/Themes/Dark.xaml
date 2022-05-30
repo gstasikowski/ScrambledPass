@@ -20,9 +20,9 @@
     <Color x:Key="GBorder">#FF999999</Color>
     <Color x:Key="GBorderHover">#FF055CC1</Color>
     <Color x:Key="GText">#FFD6F1F1</Color>
-    
+
     <!-- Controls -->
-    <Style TargetType="{x:Type StackPanel}">
+    <Style TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{DynamicResource Background}" />
     </Style>
     <Style TargetType="{x:Type Button}">
