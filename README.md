@@ -1,5 +1,9 @@
 # ScrambledPass
  Rewrite of an old password generator project with more sensible code structure.
 
- Generate passwords using word list and/or random characters.
- Includes password entropy and (biased) strength indicator.
+**Features:**
+- configurable (word list & count, special characters...)
+- custom word lists
+- password entropy and (biased) strength indicator
+- multi language support (loaded on boot, can add your own)
+- themes
