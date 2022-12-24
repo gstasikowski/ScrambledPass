@@ -1,6 +1,3 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -11,9 +8,24 @@ namespace ScrambledPass.Logic
     {
         public static void LoadResources()
         {
-            LoadTranslations();
-            LoadThemes();
             LoadSettings();
+            PrepareWordList();
+        }
+
+        public static void PrepareWordList()
+        {
+            string wordlistFilePath = Refs.dataBank.GetSetting("lastWordList");
+
+            Refs.dataBank.WordList.Clear();
+            
+            if (wordlistFilePath == string.Empty)
+            {
+                Refs.dataBank.WordList.AddRange(FileOperations.LoadDefaultWordList());
+            }
+            else
+            {
+                Refs.dataBank.WordList.AddRange(FileOperations.LoadCustomWordList(wordlistFilePath));
+            }
         }
 
         public static List<string> LoadDefaultWordList()
@@ -27,7 +39,7 @@ namespace ScrambledPass.Logic
                 using (StreamReader reader = new StreamReader(stream))
                 {
                     string newWord = "";
-
+                    
                     do
                     {
                         newWord = reader.ReadLine();
@@ -47,7 +59,7 @@ namespace ScrambledPass.Logic
         public static List<string> LoadCustomWordList(string filePath)
         {
             List<string> wordList = new List<string>();
-
+Console.WriteLine("filePath: {0}", filePath);
             if (File.Exists(filePath))
             {
                 wordList.Clear();
@@ -71,7 +83,9 @@ namespace ScrambledPass.Logic
                 XElement rootElement = XElement.Parse(configFile);
 
                 foreach (var element in rootElement.Elements())
-                { Refs.dataBank.SetSetting(element.Name.LocalName, element.Value); }
+                {
+                    Refs.dataBank.SetSetting(element.Name.LocalName, element.Value);
+                }
             }
             else
             {
@@ -79,7 +93,7 @@ namespace ScrambledPass.Logic
                 SaveSettings();
             }
 
-            Refs.resourceHandler.SwitchLanguage(Refs.dataBank.GetSetting("languageID"));
+            //Refs.resourceHandler.SwitchLanguage(Refs.dataBank.GetSetting("languageID"));
         }
 
         public static void SaveSettings()
@@ -94,25 +108,6 @@ namespace ScrambledPass.Logic
             serializer.Serialize(fileStream, rootElement);
 
             fileStream.Close();
-        }
-
-        public static void LoadTranslations()
-        {
-            foreach (string filePath in Directory.EnumerateFiles(Refs.dataBank.DefaultLanguagePath))
-            {
-                string cultureCode = filePath.Substring(filePath.LastIndexOf('\\') + 1).Replace(".xaml", "");
-                var newCulture = System.Globalization.CultureInfo.GetCultureInfo(cultureCode);
-                Refs.dataBank.AddAvailableLanguage(string.Format("{0} [{1}]", newCulture.DisplayName, newCulture.Name));
-            }
-        }
-
-        public static void LoadThemes()
-        {
-            foreach (string filePath in Directory.EnumerateFiles(Refs.dataBank.DefaultThemePath))
-            {
-                string themeName = filePath.Substring(filePath.LastIndexOf('\\') + 1).Replace(".xaml", "");
-                Refs.dataBank.AddAvailableTheme(themeName);
-            }
         }
     }
 }

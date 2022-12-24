@@ -1,5 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace ScrambledPass.Models
@@ -7,64 +5,64 @@ namespace ScrambledPass.Models
     public class DataBank
     {
         #region Variables
-        static string defaultWordListFile = "ScrambledPass.Resources.defaultWordList.txt";
-        readonly string defaultConfigFile = AppDomain.CurrentDomain.BaseDirectory + "Config.xml";
-        readonly string defaultLanguagePath = AppDomain.CurrentDomain.BaseDirectory + "Languages\\";
-        readonly string defaultThemePath = AppDomain.CurrentDomain.BaseDirectory + "Themes\\";
+        private readonly static string _defaultWordListFile = "ScrambledPass.defaultWordList.txt";
+        private readonly string _defaultConfigFile = AppDomain.CurrentDomain.BaseDirectory + "Config.xml";
+        private readonly string _defaultLanguagePath = AppDomain.CurrentDomain.BaseDirectory + "Languages\\";
+        private readonly string _defaultThemePath = AppDomain.CurrentDomain.BaseDirectory + "Themes\\";
         
-        Dictionary<string, string> settings = new Dictionary<string, string>();
-        List<string> wordList = new List<string>();
-        static readonly char[] symbols = { ' ', '.', ',', ';', '/', '\\', '\'', '[', ']', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '|', ':', '\"', '<', '>', '?' };
+        private Dictionary<string, string> _settings = new Dictionary<string, string>();
+        private List<string> _wordList = new List<string>();
+        private static readonly char[] _symbols = { ' ', '.', ',', ';', '/', '\\', '\'', '[', ']', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '|', ':', '\"', '<', '>', '?' };
 
-        private ObservableCollection<string> languageList = new ObservableCollection<string>();
-        private ObservableCollection<string> themeList = new ObservableCollection<string>();
+        private ObservableCollection<string> _languages = new ObservableCollection<string>();
+        private ObservableCollection<string> _themes = new ObservableCollection<string>();
         #endregion Variables
 
         #region Properties
         public string DefaultWordListFile
         {
-            get { return defaultWordListFile; }
+            get { return _defaultWordListFile; }
         }
 
         public string DefaultConfigFile
         {
-            get { return defaultConfigFile; }
+            get { return _defaultConfigFile; }
         }
 
         public string DefaultLanguagePath
         {
-            get { return defaultLanguagePath; }
+            get { return _defaultLanguagePath; }
         }
 
         public string DefaultThemePath
         {
-            get { return defaultThemePath; }
+            get { return _defaultThemePath; }
         }
 
         public List<string> WordList
         {
-            get { return wordList; }
+            get { return _wordList; }
         }
 
         public char[] Symbols
         {
-            get { return symbols; }
+            get { return _symbols; }
         }
 
         public int SpecialCharsCount
         {
-            get { return symbols.Length; }
+            get { return _symbols.Length; }
         }
 
         public ObservableCollection<string> LanguageList
         {
-            get { return languageList; }
-            set { languageList = value; }
+            get { return _languages; }
+            set { _languages = value; }
         }
         public ObservableCollection<string> ThemeList
         {
-            get { return themeList; }
-            set { themeList = value; }
+            get { return _themes; }
+            set { _themes = value; }
         }
         #endregion Properties
 
@@ -83,44 +81,44 @@ namespace ScrambledPass.Models
 
         public Dictionary<string, string> GetAllSettings()
         {
-            return settings;
+            return _settings;
         }
 
         public string GetSetting(string key)
         {
-            return settings[key];
+            return _settings[key];
         }
 
         public void SetSetting(string key, string value)
         {
-            if (settings.ContainsKey(key))
-            { settings[key] = value; }
+            if (_settings.ContainsKey(key))
+            { _settings[key] = value; }
             else
-            { settings.Add(key, value); }
+            { _settings.Add(key, value); }
         }
 
         
         public void AddAvailableLanguage(string languageCode)
         {
-            if (!languageList.Contains(languageCode))
-            { languageList.Add(languageCode); }
+            if (!_languages.Contains(languageCode))
+            { _languages.Add(languageCode); }
         }
 
         public int LanguageIndex(string languageCode)
         {
-            int languageIndex = languageList.IndexOf(languageCode);
+            int languageIndex = _languages.IndexOf(languageCode);
             return (languageIndex > -1) ? languageIndex : 0;
         }
 
         public void AddAvailableTheme(string themeName)
         {
-            if (!themeList.Contains(themeName))
-            { themeList.Add(themeName); }
+            if (!_themes.Contains(themeName))
+            { _themes.Add(themeName); }
         }
 
         public int ThemeIndex(string themeName)
         {
-            int themeIndex = themeList.IndexOf(themeName);
+            int themeIndex = _themes.IndexOf(themeName);
             return (themeIndex > -1) ? themeIndex : 0;
         }
         #endregion Methods
