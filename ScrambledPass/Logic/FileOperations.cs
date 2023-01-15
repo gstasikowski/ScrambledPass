@@ -50,7 +50,9 @@ namespace ScrambledPass.Logic
                 }
             }
             catch
-            { new ErrorHandler("ErrorFileNotFound"); }
+            {
+                new ErrorHandler("ErrorFileNotFound");
+            }
             
             Refs.dataBank.SetSetting("lastWordList", string.Empty);
             return wordList;
@@ -59,7 +61,7 @@ namespace ScrambledPass.Logic
         public static List<string> LoadCustomWordList(string filePath)
         {
             List<string> wordList = new List<string>();
-Console.WriteLine("filePath: {0}", filePath);
+            
             if (File.Exists(filePath))
             {
                 wordList.Clear();
@@ -68,7 +70,9 @@ Console.WriteLine("filePath: {0}", filePath);
                 Refs.dataBank.SetSetting("lastWordList", filePath);
             }
             else
-            { new ErrorHandler("ErrorFileNotFound"); }
+            {
+                new ErrorHandler("ErrorFileNotFound");
+            }
 
             return wordList;
         }
@@ -92,8 +96,6 @@ Console.WriteLine("filePath: {0}", filePath);
                 Refs.dataBank.DefaultSettings();
                 SaveSettings();
             }
-
-            //Refs.resourceHandler.SwitchLanguage(Refs.dataBank.GetSetting("languageID"));
         }
 
         public static void SaveSettings()

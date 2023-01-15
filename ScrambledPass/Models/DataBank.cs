@@ -92,16 +92,22 @@ namespace ScrambledPass.Models
         public void SetSetting(string key, string value)
         {
             if (_settings.ContainsKey(key))
-            { _settings[key] = value; }
+            {
+                _settings[key] = value;
+            }
             else
-            { _settings.Add(key, value); }
+            {
+                _settings.Add(key, value);
+            }
         }
 
         
         public void AddAvailableLanguage(string languageCode)
         {
             if (!_languages.Contains(languageCode))
-            { _languages.Add(languageCode); }
+            {
+                _languages.Add(languageCode);
+            }
         }
 
         public int LanguageIndex(string languageCode)
@@ -113,7 +119,9 @@ namespace ScrambledPass.Models
         public void AddAvailableTheme(string themeName)
         {
             if (!_themes.Contains(themeName))
-            { _themes.Add(themeName); }
+            {
+                _themes.Add(themeName);
+            }
         }
 
         public int ThemeIndex(string themeName)

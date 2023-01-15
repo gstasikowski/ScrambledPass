@@ -35,7 +35,7 @@
 			);
 			Console.WriteLine("What do you want to do?\n1 - Generate password\n2 - Set word count\n3 - Toggle letter size randomization\n4 - Set symbol count\n5 - Set symbol mode\n6 - Toggle random letters\n7 - Toggle big letters\n8 - Toggle numbers\n9 - Toggle symbols\n10 - Randomize settings\n11 - Exit");
 			Console.Write("\n> ");
-			string option = Console.ReadLine();
+			string? option = Console.ReadLine();
 
 			switch (option)
 			{
@@ -121,13 +121,13 @@
 
 		private static void ParseUserIntInput(ref int variable)
 		{
-			string key = Console.ReadLine();
+			string? key = Console.ReadLine();
 			int.TryParse(key, out variable);
 		}
 
 		private static bool ParseUserBoolInput()
 		{
-			string key = Console.ReadLine();
+			string? key = Console.ReadLine();
 			return (key == "Y") ? true : false;
 		}
     }

@@ -46,7 +46,8 @@ namespace ScrambledPass.Logic
                 useBigLetters,
                 useNumbers,
                 useSymbols,
-                ref newPassword);
+                ref newPassword
+            );
 
             return newPassword.Trim();
         }
@@ -56,16 +57,24 @@ namespace ScrambledPass.Logic
             int uniqueSymbols = 0;
 
             if (password.Any(char.IsLower))
+            {
                 uniqueSymbols += 26;
+            }
 
             if (password.Any(char.IsUpper))
+            {
                 uniqueSymbols += 26;
+            }
 
             if (password.Any(char.IsDigit))
+            {
                 uniqueSymbols += 10;
+            }
 
             if (password.Any(char.IsSymbol) || password.Any(char.IsPunctuation))
+            {
                 uniqueSymbols += Refs.dataBank.SpecialCharsCount;
+            }
 
             double entropy = Math.Log(Math.Pow(uniqueSymbols, password.Length));
             return Math.Round(entropy, 2);
@@ -86,26 +95,36 @@ namespace ScrambledPass.Logic
             if (useLetters)
             {
                 for (int i = 0; i < 26; i++)
+                {
                     _availableCharacters.Add((char)('a' + i));
+                }
             }
 
             if (useBigLetters)
             {
                 for (int i = 0; i < 26; i++)
+                {
                     _availableCharacters.Add((char)('A' + i));
+                }
             }
 
             if (useNumbers)
             {
                 for (int i = 48; i < 58; i++)
+                {
                     _availableCharacters.Add((char)i);
+                }
             }
 
             if (useSymbols)
+            {
                 _availableCharacters.AddRange(Refs.dataBank.Symbols);
+            }
 
             if (wordCount > 0 && !useSymbols)
+            {
                 _availableCharacters.Add(' ');
+            }
         }
 
         private void InsertWords(int wordCount, ref string newPassword)
@@ -156,7 +175,9 @@ namespace ScrambledPass.Logic
         private char GetRandomSymbol()
         {
             if (_availableCharacters.Count < 1)
+            {
                 return ' ';
+            }
 
             return _availableCharacters[_randomIndex.Next(0, _availableCharacters.Count)];
         }
@@ -172,7 +193,9 @@ namespace ScrambledPass.Logic
                 string newSpacing = "";
 
                 for (int i = 0; i < spacingWidth; i++)
+                {
                     newSpacing += GetRandomSymbol();
+                }
 
                 newPassword = newPassword.Substring(0, spacePosition) + newSpacing + newPassword.Substring(spacePosition + 1);
                 spacePosition = newPassword.IndexOf(' ', spacePosition + newSpacing.Length + 1);
@@ -200,7 +223,9 @@ namespace ScrambledPass.Logic
             char[] newPassword = password.ToCharArray();
 
             for (int i = 0; i < characterCount; i++)
+            {
                 newPassword[_randomIndex.Next(0, newPassword.Length)] = GetRandomSymbol();
+            }
 
             return new string(newPassword);
         }
@@ -214,9 +239,13 @@ namespace ScrambledPass.Logic
                 int charPosition = (newPassword.Length > 0) ? _randomIndex.Next(0, newPassword.Length) : 0;
 
                 if (charPosition > 0)
+                {
                     newPassword = newPassword.Substring(0, charPosition) + GetRandomSymbol() + newPassword.Substring(charPosition);
+                }
                 else
+                {
                     newPassword = GetRandomSymbol() + newPassword;
+                }
             }
 
             return newPassword;
