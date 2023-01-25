@@ -13,12 +13,22 @@ namespace ScrambledPass.Models
         private Dictionary<string, string> _settings = new Dictionary<string, string>();
         private List<string> _wordList = new List<string>();
         private static readonly char[] _symbols = { ' ', '.', ',', ';', '/', '\\', '\'', '[', ']', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '|', ':', '\"', '<', '>', '?' };
+        
+        private Dictionary<string, string> _errorMessages = new Dictionary<string, string>(){
+            { "ErrorFileNotFound", "File not found." },
+            { "WordListEmpty", "Word list is empty." }
+        };
 
         private ObservableCollection<string> _languages = new ObservableCollection<string>();
         private ObservableCollection<string> _themes = new ObservableCollection<string>();
         #endregion Variables
 
         #region Properties
+        public string AppPath
+        {
+            get { return AppDomain.CurrentDomain.BaseDirectory; }
+        }
+
         public string DefaultWordListFile
         {
             get { return _defaultWordListFile; }
@@ -101,6 +111,10 @@ namespace ScrambledPass.Models
             }
         }
 
+        public string GetErrorMessage(string key)
+        {
+            return _errorMessages[key];
+        }
         
         public void AddAvailableLanguage(string languageCode)
         {

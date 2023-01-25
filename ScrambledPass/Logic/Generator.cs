@@ -131,7 +131,7 @@ namespace ScrambledPass.Logic
         {
             if (Refs.dataBank.WordList.Count < 1)
             {
-                new ErrorHandler("emptyWorldFile");
+                new ErrorHandler("WordListEmpty");
             }
 
             for (int i = 0; i < wordCount; i++)

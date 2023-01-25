@@ -36,7 +36,68 @@ namespace ScrambledPass.UnitTests
                         useSymbols
                     );
 
-            Assert.True(newPassword.Split(' ').Count() == wordCount);
+            Assert.True(
+                newPassword.Split(' ').Count() == wordCount 
+                && !PasswordContainsNumbers(newPassword)
+                && !PasswordContainsSymbols(newPassword)
+            );
+        }
+
+        private bool PasswordContainsLetters(string password)
+        {
+            for (int i = 0; i < 26; i++)
+            {
+                if (password.Contains((char)('a' + i)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool PasswordContainsBigLetters(string password)
+        {
+            for (int i = 0; i < 26; i++)
+            {
+                if (password.Contains((char)('A' + i)))
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        private bool PasswordContainsNumbers(string password)
+        {
+            for (int number = 0; number < 10; number++)
+            {
+                if (password.Contains(number.ToString()))
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        private bool PasswordContainsSymbols(string password)
+        {
+            foreach (char symbol in Refs.dataBank.Symbols)
+            {
+                if (symbol == ' ' || symbol == '.' || symbol == '&')
+                {
+                    continue;
+                }
+
+                if (password.Contains(symbol))
+                {
+                    return true;
+                }
+            }
+            
+            return false;
         }
     }
 }

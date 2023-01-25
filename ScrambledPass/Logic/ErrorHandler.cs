@@ -2,11 +2,12 @@ namespace ScrambledPass.Logic
 {
     public class ErrorHandler
     {
-        public ErrorHandler(string errorCode) => new ErrorHandler(errorCode, string.Empty);
+        public ErrorHandler(string errorCode) => new ErrorHandler(errorCode, string.Empty, null);
 
-        public ErrorHandler(string errorCode, string exceptionMessage)
+        public ErrorHandler(string errorCode, string? customMessage, Exception? innerException)
         {
-            throw new Exception(errorCode);
+            string errorMessage = string.Format($"{0}/n{1}", Refs.dataBank.GetErrorMessage(errorCode), customMessage);
+            throw new Exception(errorCode, innerException);
         }
     }
 }

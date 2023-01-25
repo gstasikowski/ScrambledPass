@@ -44,14 +44,15 @@ namespace ScrambledPass.Logic
                     {
                         newWord = reader.ReadLine();
                         wordList.Add(newWord);
-                    } while (!string.IsNullOrEmpty(newWord));
-
+                    } while (!string.IsNullOrEmpty(newWord)); 
+                    
+                    wordList.RemoveAt(wordList.Count-1);
                     reader.Close();
                 }
             }
-            catch
+            catch (FileNotFoundException e)
             {
-                new ErrorHandler("ErrorFileNotFound");
+                new ErrorHandler("ErrorFileNotFound", null, e.InnerException);
             }
             
             Refs.dataBank.SetSetting("lastWordList", string.Empty);
