@@ -3,7 +3,10 @@ using ScrambledPass.Logic;
 namespace ScrambledPass.UnitTests
 {
     public class PasswordGenerationTests
-    {        
+    {
+        private const int SymbolMode = 2;
+        private const int SymbolCount = 10;
+
         public PasswordGenerationTests()
         {
             Refs.dataBank.SetSetting(key: "lastWordList", value: string.Empty);
@@ -40,6 +43,90 @@ namespace ScrambledPass.UnitTests
                 newPassword.Split(' ').Count() == wordCount 
                 && !PasswordContainsNumbers(newPassword)
                 && !PasswordContainsSymbols(newPassword)
+            );
+        }
+
+        [Fact]
+        public void Should_generate_letter_only_password()
+        {
+            string newPassword = Refs.generator.GeneratePassword(
+                        0,
+                        SymbolMode,
+                        SymbolCount,
+                        false,
+                        true,
+                        false,
+                        false,
+                        false
+                    );
+
+            Assert.True(PasswordContainsLetters(newPassword)
+                && !PasswordContainsBigLetters(newPassword)
+                && !PasswordContainsNumbers(newPassword)
+                && !PasswordContainsSymbols(newPassword)
+            );
+        }
+
+        [Fact]
+        public void Should_generate_capital_letter_only_password()
+        {
+            string newPassword = Refs.generator.GeneratePassword(
+                        0,
+                        SymbolMode,
+                        SymbolCount,
+                        false,
+                        false,
+                        true,
+                        false,
+                        false
+                    );
+
+            Assert.True(!PasswordContainsLetters(newPassword)
+                && PasswordContainsBigLetters(newPassword)
+                && !PasswordContainsNumbers(newPassword)
+                && !PasswordContainsSymbols(newPassword)
+            );
+        }
+
+        [Fact]
+        public void Should_generate_number_only_password()
+        {
+            string newPassword = Refs.generator.GeneratePassword(
+                        0,
+                        SymbolMode,
+                        SymbolCount,
+                        false,
+                        false,
+                        false,
+                        true,
+                        false
+                    );
+
+            Assert.True(!PasswordContainsLetters(newPassword)
+                && !PasswordContainsBigLetters(newPassword)
+                && PasswordContainsNumbers(newPassword)
+                && !PasswordContainsSymbols(newPassword)
+            );
+        }
+
+        [Fact]
+        public void Should_generate_symbol_only_password()
+        {
+            string newPassword = Refs.generator.GeneratePassword(
+                        0,
+                        SymbolMode,
+                        SymbolCount,
+                        false,
+                        false,
+                        false,
+                        false,
+                        true
+                    );
+
+            Assert.True(!PasswordContainsLetters(newPassword)
+                && !PasswordContainsBigLetters(newPassword)
+                && !PasswordContainsNumbers(newPassword)
+                && PasswordContainsSymbols(newPassword)
             );
         }
 
@@ -86,7 +173,7 @@ namespace ScrambledPass.UnitTests
         {
             foreach (char symbol in Refs.dataBank.Symbols)
             {
-                if (symbol == ' ' || symbol == '.' || symbol == '&')
+                if (symbol == ' ' || symbol == '.' || symbol == '&' || symbol == '\'')
                 {
                     continue;
                 }
