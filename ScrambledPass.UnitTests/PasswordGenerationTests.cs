@@ -23,7 +23,7 @@ namespace ScrambledPass.UnitTests
             int symbolCount,
             bool randomizeLetterSize,
             bool useLetters,
-            bool useBigLetters,
+            bool useCapitalLetters,
             bool useNumbers,
             bool useSymbols
         )
@@ -34,7 +34,7 @@ namespace ScrambledPass.UnitTests
                         symbolCount,
                         randomizeLetterSize,
                         useLetters,
-                        useBigLetters,
+                        useCapitalLetters,
                         useNumbers,
                         useSymbols
                     );
@@ -50,18 +50,19 @@ namespace ScrambledPass.UnitTests
         public void Should_generate_letter_only_password()
         {
             string newPassword = Refs.generator.GeneratePassword(
-                        0,
-                        SymbolMode,
-                        SymbolCount,
-                        false,
-                        true,
-                        false,
-                        false,
-                        false
+                        wordCount: 0,
+                        symbolMode: SymbolMode,
+                        symbolCount: SymbolCount,
+                        randomCharacterSize: false,
+                        useLetters: true,
+                        useCapitalLetters: false,
+                        useNumbers: false,
+                        useSymbols: false
                     );
 
-            Assert.True(PasswordContainsLetters(newPassword)
-                && !PasswordContainsBigLetters(newPassword)
+            Assert.True(
+                PasswordContainsLetters(newPassword)
+                && !PasswordContainsCapitalLetters(newPassword)
                 && !PasswordContainsNumbers(newPassword)
                 && !PasswordContainsSymbols(newPassword)
             );
@@ -71,18 +72,19 @@ namespace ScrambledPass.UnitTests
         public void Should_generate_capital_letter_only_password()
         {
             string newPassword = Refs.generator.GeneratePassword(
-                        0,
-                        SymbolMode,
-                        SymbolCount,
-                        false,
-                        false,
-                        true,
-                        false,
-                        false
+                        wordCount: 0,
+                        symbolMode: SymbolMode,
+                        symbolCount: SymbolCount,
+                        randomCharacterSize: false,
+                        useLetters: false,
+                        useCapitalLetters: true,
+                        useNumbers: false,
+                        useSymbols: false
                     );
 
-            Assert.True(!PasswordContainsLetters(newPassword)
-                && PasswordContainsBigLetters(newPassword)
+            Assert.True(
+                !PasswordContainsLetters(newPassword)
+                && PasswordContainsCapitalLetters(newPassword)
                 && !PasswordContainsNumbers(newPassword)
                 && !PasswordContainsSymbols(newPassword)
             );
@@ -92,18 +94,19 @@ namespace ScrambledPass.UnitTests
         public void Should_generate_number_only_password()
         {
             string newPassword = Refs.generator.GeneratePassword(
-                        0,
-                        SymbolMode,
-                        SymbolCount,
-                        false,
-                        false,
-                        false,
-                        true,
-                        false
+                        wordCount: 0,
+                        symbolMode: SymbolMode,
+                        symbolCount: SymbolCount,
+                        randomCharacterSize: false,
+                        useLetters: false,
+                        useCapitalLetters: false,
+                        useNumbers: true,
+                        useSymbols: false
                     );
 
-            Assert.True(!PasswordContainsLetters(newPassword)
-                && !PasswordContainsBigLetters(newPassword)
+            Assert.True(
+                !PasswordContainsLetters(newPassword)
+                && !PasswordContainsCapitalLetters(newPassword)
                 && PasswordContainsNumbers(newPassword)
                 && !PasswordContainsSymbols(newPassword)
             );
@@ -113,18 +116,19 @@ namespace ScrambledPass.UnitTests
         public void Should_generate_symbol_only_password()
         {
             string newPassword = Refs.generator.GeneratePassword(
-                        0,
-                        SymbolMode,
-                        SymbolCount,
-                        false,
-                        false,
-                        false,
-                        false,
-                        true
+                        wordCount: 0,
+                        symbolMode: SymbolMode,
+                        symbolCount: SymbolCount,
+                        randomCharacterSize: false,
+                        useLetters: false,
+                        useCapitalLetters: false,
+                        useNumbers: false,
+                        useSymbols: true
                     );
 
-            Assert.True(!PasswordContainsLetters(newPassword)
-                && !PasswordContainsBigLetters(newPassword)
+            Assert.True(
+                !PasswordContainsLetters(newPassword)
+                && !PasswordContainsCapitalLetters(newPassword)
                 && !PasswordContainsNumbers(newPassword)
                 && PasswordContainsSymbols(newPassword)
             );
@@ -143,7 +147,7 @@ namespace ScrambledPass.UnitTests
             return false;
         }
 
-        private bool PasswordContainsBigLetters(string password)
+        private bool PasswordContainsCapitalLetters(string password)
         {
             for (int i = 0; i < 26; i++)
             {

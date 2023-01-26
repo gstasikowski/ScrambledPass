@@ -15,7 +15,7 @@
 			int symbolCount = 10;
 			bool randomizeLetterSize = false;
 			bool useLetters = true;
-			bool useBigLetters = true;
+			bool useCapitalLetters = true;
 			bool useNumbers = true;
 			bool useSymbols = true;
 
@@ -23,17 +23,17 @@
 			Console.Clear();
 			Console.WriteLine("Current settings\n----------------");
 			Console.WriteLine(
-				"Word count: {0} | Symbol mode: {1} | Symbol count: {2}\nRandomize letter size: {3} | Use random letters: {4} | Use random capital letters: {5}\nUse random numbers: {6} | Use random symbols: {7}",
+				"Word count: {0} | Symbol mode: {1} | Symbol count: {2}\nRandomize letter size: {3} | Use random letters: {4} | Use random capital letters: {5}\nUse random numbers: {6} | Use random symbols: {7}\n",
 				wordCount,
-                	symbolMode,
-                    symbolCount,
-                    randomizeLetterSize,
-                    useLetters,
-                    useBigLetters,
-                    useNumbers,
-                    useSymbols
+                symbolMode,
+                symbolCount,
+                randomizeLetterSize,
+                useLetters,
+                useCapitalLetters,
+                useNumbers,
+                useSymbols
 			);
-			Console.WriteLine("What do you want to do?\n1 - Generate password\n2 - Set word count\n3 - Toggle letter size randomization\n4 - Set symbol count\n5 - Set symbol mode\n6 - Toggle random letters\n7 - Toggle big letters\n8 - Toggle numbers\n9 - Toggle symbols\n10 - Randomize settings\n11 - Exit");
+			Console.WriteLine("What do you want to do?\n1 - Generate password\n2 - Set word count\n3 - Toggle letter size randomization\n4 - Set symbol count\n5 - Set symbol mode\n6 - Toggle random letters\n7 - Toggle captial letters\n8 - Toggle numbers\n9 - Toggle symbols\n10 - Randomize settings\n11 - Exit");
 			Console.Write("\n> ");
 			string? option = Console.ReadLine();
 
@@ -47,12 +47,13 @@
                         symbolCount,
                         randomizeLetterSize,
                         useLetters,
-                        useBigLetters,
+                        useCapitalLetters,
                         useNumbers,
                         useSymbols
                     );
 
                     Console.WriteLine(newPassword);
+					DisplayPasswordEntropy(newPassword);
 					Console.ReadKey();
 					break;
 
@@ -82,8 +83,8 @@
 					break;
 
 				case "7":
-					Console.WriteLine("Insert random big letters [Y\\N]:");
-					useBigLetters = ParseUserBoolInput();
+					Console.WriteLine("Insert random capital letters [Y\\N]:");
+					useCapitalLetters = ParseUserBoolInput();
 					break;
 
 				case "8":
@@ -103,7 +104,7 @@
                     symbolCount = randomizer.Next(20);
                     randomizeLetterSize = randomizer.Next(1) > 0;
                     useLetters = randomizer.Next(1) > 0;
-                    useBigLetters = randomizer.Next(1) > 0;
+                    useCapitalLetters = randomizer.Next(1) > 0;
                     useNumbers = randomizer.Next(1) > 0;
                     useSymbols = randomizer.Next(1) > 0;
 					break;
@@ -129,6 +130,36 @@
 		{
 			string? key = Console.ReadLine();
 			return (key == "Y") ? true : false;
+		}
+
+		private static void DisplayPasswordEntropy(string password)
+		{
+			double entropy = Logic.Helpers.CalculateEntropy(password);
+
+			SetEntropyColors(entropy);
+			System.Console.WriteLine($"Password entropy: {entropy}");
+            System.Console.ForegroundColor = ConsoleColor.White;
+		}
+
+		private static void SetEntropyColors(double entropy)
+		{
+
+            if (entropy >= 100.0)
+            {
+                System.Console.ForegroundColor = ConsoleColor.Green;
+				return;
+            }
+
+            if (entropy >= 65.0)
+            {
+                System.Console.ForegroundColor = ConsoleColor.Blue;
+				return;
+            }
+
+			if (entropy > 0.0)
+            {
+                System.Console.ForegroundColor = ConsoleColor.Red;
+            }
 		}
     }
 }

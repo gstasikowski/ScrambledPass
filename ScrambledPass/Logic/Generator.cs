@@ -15,9 +15,9 @@ namespace ScrambledPass.Logic
             int wordCount,
             int symbolMode,
             int symbolCount,
-            bool randomCharSize,
+            bool randomCharacterSize,
             bool useLetters,
-            bool useBigLetters,
+            bool useCapitalLetters,
             bool useNumbers,
             bool useSymbols
         )
@@ -27,14 +27,14 @@ namespace ScrambledPass.Logic
             PrepareCharacterList(
                 wordCount,
                 useLetters,
-                useBigLetters,
+                useCapitalLetters,
                 useNumbers,
                 useSymbols
             );
 
             InsertWords(wordCount, ref newPassword);
 
-            if (randomCharSize)
+            if (randomCharacterSize)
             {
                 newPassword = RandomizeLetterSize(newPassword);
             }
@@ -43,7 +43,7 @@ namespace ScrambledPass.Logic
                 symbolMode,
                 symbolCount,
                 useLetters,
-                useBigLetters,
+                useCapitalLetters,
                 useNumbers,
                 useSymbols,
                 ref newPassword
@@ -51,41 +51,13 @@ namespace ScrambledPass.Logic
 
             return newPassword.Trim();
         }
-
-        public double CalculateEntropy(string password)
-        {
-            int uniqueSymbols = 0;
-
-            if (password.Any(char.IsLower))
-            {
-                uniqueSymbols += 26;
-            }
-
-            if (password.Any(char.IsUpper))
-            {
-                uniqueSymbols += 26;
-            }
-
-            if (password.Any(char.IsDigit))
-            {
-                uniqueSymbols += 10;
-            }
-
-            if (password.Any(char.IsSymbol) || password.Any(char.IsPunctuation))
-            {
-                uniqueSymbols += Refs.dataBank.SpecialCharsCount;
-            }
-
-            double entropy = Math.Log(Math.Pow(uniqueSymbols, password.Length));
-            return Math.Round(entropy, 2);
-        }
         #endregion Methods (public)
 
         #region Methods (private)
         private void PrepareCharacterList(
             int wordCount,
             bool useLetters,
-            bool useBigLetters,
+            bool useCapitalLetters,
             bool useNumbers,
             bool useSymbols
         )
@@ -100,7 +72,7 @@ namespace ScrambledPass.Logic
                 }
             }
 
-            if (useBigLetters)
+            if (useCapitalLetters)
             {
                 for (int i = 0; i < 26; i++)
                 {
@@ -144,13 +116,13 @@ namespace ScrambledPass.Logic
             int symbolMode,
             int symbolCount,
             bool useLetters,
-            bool useBigLetters,
+            bool useCapitalLetters,
             bool useNumbers,
             bool useSymbols,
             ref string newPassword
         )
         {
-            if (useLetters || useBigLetters || useNumbers || useSymbols)
+            if (useLetters || useCapitalLetters || useNumbers || useSymbols)
             {
                 switch (symbolMode)
                 {
