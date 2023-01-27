@@ -38,15 +38,14 @@ namespace ScrambledPass.Logic
                 using (Stream stream = assembly.GetManifestResourceStream(Refs.dataBank.DefaultWordListFile))
                 using (StreamReader reader = new StreamReader(stream))
                 {
-                    string newWord = "";
+                    string? newWord = reader.ReadLine();
                     
-                    do
+                    while (!string.IsNullOrEmpty(newWord))
                     {
-                        newWord = reader.ReadLine();
                         wordList.Add(newWord);
-                    } while (!string.IsNullOrEmpty(newWord)); 
+                        newWord = reader.ReadLine();
+                    }
                     
-                    wordList.RemoveAt(wordList.Count-1);
                     reader.Close();
                 }
             }

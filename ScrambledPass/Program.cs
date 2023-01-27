@@ -21,17 +21,23 @@
 
 			MenuStart:
 			Console.Clear();
-			Console.WriteLine("Current settings\n----------------");
+			Console.WriteLine("Current settings\n――――――――――――――――");
 			Console.WriteLine(
-				"Word count: {0} | Symbol mode: {1} | Symbol count: {2}\nRandomize letter size: {3} | Use random letters: {4} | Use random capital letters: {5}\nUse random numbers: {6} | Use random symbols: {7}\n",
-				wordCount,
-                symbolMode,
-                symbolCount,
-                randomizeLetterSize,
-                useLetters,
-                useCapitalLetters,
-                useNumbers,
-                useSymbols
+				"{0, -35} {1, -35} {2, -35}",
+				$"Word count: {wordCount} ",
+				$"⏐ Symbol mode: {symbolMode}",
+				$"⏐ Symbol count: {symbolCount}"
+			);
+			System.Console.WriteLine(
+				"{0, -35} {1, -35} {2, -35}",
+				$"Randomize letter size: {randomizeLetterSize}",
+				$"⏐ Use random letters: {useLetters}",
+				$"⏐ Use random capital letters: {useCapitalLetters}"
+			);
+			System.Console.WriteLine(
+				"{0, -35} {1, -35}",
+				$"Use random numbers: {useNumbers}",
+				$"⏐ Use random symbols: {useSymbols}\n"
 			);
 			Console.WriteLine("What do you want to do?\n1 - Generate password\n2 - Set word count\n3 - Toggle letter size randomization\n4 - Set symbol count\n5 - Set symbol mode\n6 - Toggle random letters\n7 - Toggle captial letters\n8 - Toggle numbers\n9 - Toggle symbols\n10 - Randomize settings\n11 - Exit");
 			Console.Write("\n> ");
