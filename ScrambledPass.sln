@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrambledPass", "ScrambledP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrambledPass.UnitTests", "ScrambledPass.UnitTests\ScrambledPass.UnitTests.csproj", "{37987B42-CA9F-4A54-8479-098077E63820}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrambledPass.ConsoleApp", "ScrambledPass.ConsoleApp\ScrambledPass.ConsoleApp.csproj", "{EC691C0A-1553-4CBD-9CCF-F66E8A845BDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{37987B42-CA9F-4A54-8479-098077E63820}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37987B42-CA9F-4A54-8479-098077E63820}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37987B42-CA9F-4A54-8479-098077E63820}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC691C0A-1553-4CBD-9CCF-F66E8A845BDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC691C0A-1553-4CBD-9CCF-F66E8A845BDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC691C0A-1553-4CBD-9CCF-F66E8A845BDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC691C0A-1553-4CBD-9CCF-F66E8A845BDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

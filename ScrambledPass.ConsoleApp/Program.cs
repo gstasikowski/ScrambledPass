@@ -1,4 +1,6 @@
-﻿namespace ScrambledPass.Logic
+﻿using ScrambledPass.Logic;
+
+namespace ScrambledPass.ConsoleApp
 {
     class Program
     {
