@@ -1,12 +1,12 @@
-﻿using ScrambledPass.Logic;
-
-namespace ScrambledPass.ConsoleApp
+﻿namespace ScrambledPass.ConsoleApp
 {
     class Program
     {
+		private static Core _core = new Core();
+
         public static void Main(string[] args)
         {
-            Logic.FileOperations.LoadResources();
+            _core.fileOperations.LoadResources();
             ShowMenu();
 		}
 
@@ -49,7 +49,7 @@ namespace ScrambledPass.ConsoleApp
 			{
 				case "1":
 					Console.WriteLine("\nHere's your new password:");
-                    string newPassword = Refs.generator.GeneratePassword(
+                    string newPassword = _core.generator.GeneratePassword(
                         wordCount,
                         symbolMode,
                         symbolCount,
@@ -142,7 +142,7 @@ namespace ScrambledPass.ConsoleApp
 
 		private static void DisplayPasswordEntropy(string password)
 		{
-			double entropy = Logic.Helpers.CalculateEntropy(password);
+			double entropy = Logic.Helpers.CalculateEntropy(password, ref _core.dataBank);
 
 			SetEntropyColors(entropy);
 			System.Console.WriteLine($"Password entropy: {entropy}");

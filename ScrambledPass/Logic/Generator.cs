@@ -1,14 +1,19 @@
 using ScrambledPass.Helpers;
+using ScrambledPass.Models;
 
 namespace ScrambledPass.Logic
 {
     public class Generator
     {
+        private DataBank _dataBank;
+
         private Random _randomIndex = new Random();
         private List<char> _availableCharacters = new List<char>();
 
-        public Generator()
-        {}
+        public Generator(DataBank dataBank)
+        {
+            _dataBank = dataBank;
+        }
 
         #region Methods (public)
         public string GeneratePassword(
@@ -90,7 +95,7 @@ namespace ScrambledPass.Logic
 
             if (useSymbols)
             {
-                _availableCharacters.AddRange(Refs.dataBank.Symbols);
+                _availableCharacters.AddRange(_dataBank.Symbols);
             }
 
             if (wordCount > 0 && !useSymbols)
@@ -101,14 +106,14 @@ namespace ScrambledPass.Logic
 
         private void InsertWords(int wordCount, ref string newPassword)
         {
-            if (Refs.dataBank.WordList.Count < 1)
+            if (_dataBank.WordList.Count < 1)
             {
                 new ErrorHandler("WordListEmpty");
             }
 
             for (int i = 0; i < wordCount; i++)
             {
-                newPassword += Refs.dataBank.WordList[_randomIndex.Next(0, Refs.dataBank.WordList.Count)] + " ";
+                newPassword += _dataBank.WordList[_randomIndex.Next(0, _dataBank.WordList.Count)] + " ";
             }
         }
 

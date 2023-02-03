@@ -6,7 +6,7 @@ namespace ScrambledPass.Logic
 
         public ErrorHandler(string errorCode, string? customMessage, Exception? innerException)
         {
-            string errorMessage = string.Format($"{0}/n{1}", Refs.dataBank.GetErrorMessage(errorCode), customMessage);
+            string errorMessage = string.Format("{0}/n{1}", errorCode, customMessage);
             throw new Exception(errorCode, innerException);
         }
     }

@@ -1,41 +1,49 @@
 using System.Reflection;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using ScrambledPass.Models;
 
 namespace ScrambledPass.Logic
 {
-    public static class FileOperations
+    public class FileOperations
     {
-        public static void LoadResources()
+        private DataBank _dataBank;
+
+        public FileOperations(DataBank dataBank)
+        {
+            _dataBank = dataBank;
+        }
+
+        public void LoadResources()
         {
             LoadSettings();
             PrepareWordList();
         }
 
-        public static void PrepareWordList()
+        public void PrepareWordList()
         {
-            string wordlistFilePath = Refs.dataBank.GetSetting("lastWordList");
+            string wordlistFilePath = _dataBank.GetSetting("lastWordList");
 
-            Refs.dataBank.WordList.Clear();
+            _dataBank.WordList.Clear();
             
             if (wordlistFilePath == string.Empty)
             {
-                Refs.dataBank.WordList.AddRange(FileOperations.LoadDefaultWordList());
+                _dataBank.WordList.AddRange(LoadDefaultWordList());
             }
             else
             {
-                Refs.dataBank.WordList.AddRange(FileOperations.LoadCustomWordList(wordlistFilePath));
+                _dataBank.WordList.AddRange(LoadCustomWordList(wordlistFilePath));
             }
         }
 
-        public static List<string> LoadDefaultWordList()
+        public List<string> LoadDefaultWordList()
         {
             List<string> wordList = new List<string>();
             try
             {
                 var assembly = Assembly.GetExecutingAssembly();
 
-                using (Stream stream = assembly.GetManifestResourceStream(Refs.dataBank.DefaultWordListFile))
+                using (Stream stream = assembly.GetManifestResourceStream(_dataBank.DefaultWordListFile))
                 using (StreamReader reader = new StreamReader(stream))
                 {
                     string? newWord = reader.ReadLine();
@@ -54,11 +62,11 @@ namespace ScrambledPass.Logic
                 new ErrorHandler("ErrorFileNotFound", null, e.InnerException);
             }
             
-            Refs.dataBank.SetSetting("lastWordList", string.Empty);
+            _dataBank.SetSetting("lastWordList", string.Empty);
             return wordList;
         }
 
-        public static List<string> LoadCustomWordList(string filePath)
+        public List<string> LoadCustomWordList(string filePath)
         {
             List<string> wordList = new List<string>();
             
@@ -67,7 +75,7 @@ namespace ScrambledPass.Logic
                 wordList.Clear();
                 wordList.AddRange(File.ReadAllLines(filePath));
 
-                Refs.dataBank.SetSetting("lastWordList", filePath);
+                _dataBank.SetSetting("lastWordList", filePath);
             }
             else
             {
@@ -77,9 +85,9 @@ namespace ScrambledPass.Logic
             return wordList;
         }
 
-        public static void LoadSettings()
+        public void LoadSettings()
         {
-            string configFilePath = Refs.dataBank.DefaultConfigFile;
+            string configFilePath = _dataBank.DefaultConfigFile;
 
             if (File.Exists(configFilePath))
             {
@@ -88,22 +96,22 @@ namespace ScrambledPass.Logic
 
                 foreach (var element in rootElement.Elements())
                 {
-                    Refs.dataBank.SetSetting(element.Name.LocalName, element.Value);
+                    _dataBank.SetSetting(element.Name.LocalName, element.Value);
                 }
             }
             else
             {
-                Refs.dataBank.DefaultSettings();
+                _dataBank.DefaultSettings();
                 SaveSettings();
             }
         }
 
-        public static void SaveSettings()
+        public void SaveSettings()
         {
-            Dictionary<string, string> appSettings = Refs.dataBank.GetAllSettings();
+            Dictionary<string, string> appSettings = _dataBank.GetAllSettings();
 
             FileStream fileStream;
-            fileStream = new FileStream(Refs.dataBank.DefaultConfigFile, FileMode.Create);
+            fileStream = new FileStream(_dataBank.DefaultConfigFile, FileMode.Create);
 
             XElement rootElement = new XElement("Config", appSettings.Select(kv => new XElement(kv.Key, kv.Value)));
             XmlSerializer serializer = new XmlSerializer(rootElement.GetType());

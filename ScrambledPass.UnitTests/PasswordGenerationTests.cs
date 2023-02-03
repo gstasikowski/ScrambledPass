@@ -1,5 +1,3 @@
-using ScrambledPass.Logic;
-
 namespace ScrambledPass.UnitTests
 {
     public class PasswordGenerationTests
@@ -7,10 +5,13 @@ namespace ScrambledPass.UnitTests
         private const int SymbolMode = 2;
         private const int SymbolCount = 10;
 
+        private Core _core;
+
         public PasswordGenerationTests()
         {
-            Refs.dataBank.SetSetting(key: "lastWordList", value: string.Empty);
-            Logic.FileOperations.PrepareWordList();
+            _core = new Core();
+            _core.dataBank.SetSetting(key: "lastWordList", value: string.Empty);
+            _core.fileOperations.PrepareWordList();
         }
 
         [Theory]
@@ -28,7 +29,7 @@ namespace ScrambledPass.UnitTests
             bool useSymbols
         )
         {
-            string newPassword = Refs.generator.GeneratePassword(
+            string newPassword = _core.generator.GeneratePassword(
                         wordCount,
                         symbolMode,
                         symbolCount,
@@ -49,7 +50,7 @@ namespace ScrambledPass.UnitTests
         [Fact]
         public void Should_generate_letter_only_password()
         {
-            string newPassword = Refs.generator.GeneratePassword(
+            string newPassword = _core.generator.GeneratePassword(
                         wordCount: 0,
                         symbolMode: SymbolMode,
                         symbolCount: SymbolCount,
@@ -71,7 +72,7 @@ namespace ScrambledPass.UnitTests
         [Fact]
         public void Should_generate_capital_letter_only_password()
         {
-            string newPassword = Refs.generator.GeneratePassword(
+            string newPassword = _core.generator.GeneratePassword(
                         wordCount: 0,
                         symbolMode: SymbolMode,
                         symbolCount: SymbolCount,
@@ -93,7 +94,7 @@ namespace ScrambledPass.UnitTests
         [Fact]
         public void Should_generate_number_only_password()
         {
-            string newPassword = Refs.generator.GeneratePassword(
+            string newPassword = _core.generator.GeneratePassword(
                         wordCount: 0,
                         symbolMode: SymbolMode,
                         symbolCount: SymbolCount,
@@ -115,7 +116,7 @@ namespace ScrambledPass.UnitTests
         [Fact]
         public void Should_generate_symbol_only_password()
         {
-            string newPassword = Refs.generator.GeneratePassword(
+            string newPassword = _core.generator.GeneratePassword(
                         wordCount: 0,
                         symbolMode: SymbolMode,
                         symbolCount: SymbolCount,
@@ -175,7 +176,7 @@ namespace ScrambledPass.UnitTests
 
         private bool PasswordContainsSymbols(string password)
         {
-            foreach (char symbol in Refs.dataBank.Symbols)
+            foreach (char symbol in _core.dataBank.Symbols)
             {
                 if (symbol == ' ' || symbol == '.' || symbol == '&' || symbol == '\'')
                 {
