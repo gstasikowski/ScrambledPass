@@ -27,7 +27,7 @@
 			Console.WriteLine(
 				"{0, -35} {1, -35} {2, -35}",
 				$"Word count: {wordCount} ",
-				$"⏐ Symbol mode: {symbolMode}",
+				$"⏐ Symbol mode: {symbolMode + 1}",
 				$"⏐ Symbol count: {symbolCount}"
 			);
 			System.Console.WriteLine(
@@ -41,7 +41,7 @@
 				$"Use random numbers: {useNumbers}",
 				$"⏐ Use random symbols: {useSymbols}\n"
 			);
-			Console.WriteLine("What do you want to do?\n1 - Generate password\n2 - Set word count\n3 - Toggle letter size randomization\n4 - Set symbol count\n5 - Set symbol mode\n6 - Toggle random letters\n7 - Toggle captial letters\n8 - Toggle numbers\n9 - Toggle symbols\n10 - Randomize settings\n11 - Exit");
+			Console.WriteLine("What do you want to do?\n1 - Generate password\n2 - Set word count\n3 - Set symbol count\n4 - Set symbol mode\n5 - Toggle letter size randomization\n6 - Toggle random letters\n7 - Toggle captial letters\n8 - Toggle numbers\n9 - Toggle symbols\n10 - Randomize settings\n11 - Exit");
 			Console.Write("\n> ");
 			string? option = Console.ReadLine();
 
@@ -71,38 +71,34 @@
 					break;
 
 				case "3":
-					Console.WriteLine("Randomize letter size [Y\\N]:");
-					randomizeLetterSize = ParseUserBoolInput();
-					break;
-
-				case "4":
 					Console.WriteLine("Amount of symbols to put in new password:");
 					ParseUserIntInput(ref symbolCount);
 					break;
 
-				case "5":
+				case "4":
 					Console.WriteLine("Select symbol mode:\n1 - Replace spaces with symbols\n2 - Replace random characters with symbols\n3 - Insert symbols in random places");
 					ParseUserIntInput(ref symbolMode);
+					symbolMode = (symbolMode > 0 && symbolMode <= 3) ? symbolMode - 1 : 0;
+					break;
+
+				case "5":
+					randomizeLetterSize = !randomizeLetterSize;
 					break;
 
 				case "6":
-					Console.WriteLine("Insert random letters [Y\\N]:");
-					useLetters = ParseUserBoolInput();
+					useLetters = !useLetters;
 					break;
 
 				case "7":
-					Console.WriteLine("Insert random capital letters [Y\\N]:");
-					useCapitalLetters = ParseUserBoolInput();
+					useCapitalLetters = !useCapitalLetters;
 					break;
 
 				case "8":
-					Console.WriteLine("Insert random numbers [Y\\N]:");
-					useNumbers = ParseUserBoolInput();
+					useNumbers = !useNumbers;
 					break;
 
 				case "9":
-					Console.WriteLine("Insert random symbols [Y\\N]:");
-					useSymbols = ParseUserBoolInput();
+					useSymbols = !useSymbols;
 					break;
 
 				case "10":
@@ -132,12 +128,6 @@
 		{
 			string? key = Console.ReadLine();
 			int.TryParse(key, out variable);
-		}
-
-		private static bool ParseUserBoolInput()
-		{
-			string? key = Console.ReadLine();
-			return (key == "Y") ? true : false;
 		}
 
 		private static void DisplayPasswordEntropy(string password)
