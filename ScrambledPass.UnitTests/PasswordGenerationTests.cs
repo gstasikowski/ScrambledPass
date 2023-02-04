@@ -4,6 +4,7 @@ namespace ScrambledPass.UnitTests
     {
         private const int SymbolMode = 2;
         private const int SymbolCount = 10;
+        private static char[] _skippedCharacters = {' ', '.', '&', '\''};
 
         private Core _core;
 
@@ -62,8 +63,8 @@ namespace ScrambledPass.UnitTests
                     );
 
             Assert.True(
-                PasswordContainsLetters(newPassword)
-                && !PasswordContainsCapitalLetters(newPassword)
+                PasswordContainsLowercaseLetters(newPassword)
+                && !PasswordContainsUppercaseLetters(newPassword)
                 && !PasswordContainsNumbers(newPassword)
                 && !PasswordContainsSymbols(newPassword)
             );
@@ -84,8 +85,8 @@ namespace ScrambledPass.UnitTests
                     );
 
             Assert.True(
-                !PasswordContainsLetters(newPassword)
-                && PasswordContainsCapitalLetters(newPassword)
+                !PasswordContainsLowercaseLetters(newPassword)
+                && PasswordContainsUppercaseLetters(newPassword)
                 && !PasswordContainsNumbers(newPassword)
                 && !PasswordContainsSymbols(newPassword)
             );
@@ -106,8 +107,8 @@ namespace ScrambledPass.UnitTests
                     );
 
             Assert.True(
-                !PasswordContainsLetters(newPassword)
-                && !PasswordContainsCapitalLetters(newPassword)
+                !PasswordContainsLowercaseLetters(newPassword)
+                && !PasswordContainsUppercaseLetters(newPassword)
                 && PasswordContainsNumbers(newPassword)
                 && !PasswordContainsSymbols(newPassword)
             );
@@ -128,62 +129,38 @@ namespace ScrambledPass.UnitTests
                     );
 
             Assert.True(
-                !PasswordContainsLetters(newPassword)
-                && !PasswordContainsCapitalLetters(newPassword)
+                !PasswordContainsLowercaseLetters(newPassword)
+                && !PasswordContainsUppercaseLetters(newPassword)
                 && !PasswordContainsNumbers(newPassword)
                 && PasswordContainsSymbols(newPassword)
             );
         }
 
-        private bool PasswordContainsLetters(string password)
+        private bool PasswordContainsLowercaseLetters(string password)
         {
-            for (int i = 0; i < 26; i++)
-            {
-                if (password.Contains((char)('a' + i)))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return password.Any(char.IsLower);
         }
 
-        private bool PasswordContainsCapitalLetters(string password)
+        private bool PasswordContainsUppercaseLetters(string password)
         {
-            for (int i = 0; i < 26; i++)
-            {
-                if (password.Contains((char)('A' + i)))
-                {
-                    return true;
-                }
-            }
-            
-            return false;
+            return password.Any(char.IsUpper);
         }
 
         private bool PasswordContainsNumbers(string password)
         {
-            for (int number = 0; number < 10; number++)
-            {
-                if (password.Contains(number.ToString()))
-                {
-                    return true;
-                }
-            }
-            
-            return false;
+            return password.Any(char.IsNumber);
         }
 
         private bool PasswordContainsSymbols(string password)
         {
             foreach (char symbol in _core.dataBank.Symbols)
             {
-                if (symbol == ' ' || symbol == '.' || symbol == '&' || symbol == '\'')
+                if (_skippedCharacters.Any(x => x == symbol))
                 {
                     continue;
                 }
 
-                if (password.Contains(symbol))
+                if (password.Any(x => x == symbol))
                 {
                     return true;
                 }
