@@ -44,7 +44,7 @@ namespace ScrambledPass.Logic
             {
                 RandomizeLetterSize(ref passwordBuilder);
             }
-            
+
             InsertSymbols(
                 symbolMode,
                 symbolCount,

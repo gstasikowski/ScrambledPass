@@ -4,7 +4,7 @@ namespace ScrambledPass.UnitTests
     {
         private const int SymbolMode = 2;
         private const int SymbolCount = 10;
-        private static char[] _skippedCharacters = {' ', '.', '&', '\''};
+        private static char[] _skippedCharacters = { ' ', '.', '&', '\'' };
 
         private Core _core;
 
@@ -42,7 +42,7 @@ namespace ScrambledPass.UnitTests
                     );
 
             Assert.True(
-                newPassword.Split(' ').Count() == wordCount 
+                newPassword.Split(' ').Count() == wordCount
                 && !PasswordContainsNumbers(newPassword)
                 && !PasswordContainsSymbols(newPassword)
             );
@@ -165,7 +165,7 @@ namespace ScrambledPass.UnitTests
                     return true;
                 }
             }
-            
+
             return false;
         }
     }

@@ -40,14 +40,14 @@ namespace ScrambledPass.UnitTests
 
             return -1;
         }
-        
+
         [Fact]
         public void Should_load_default_wordlist()
         {
             SetupWordlist(string.Empty);
             int wordListCount = _core.dataBank.WordList.Count;
             int lineCount = GetWordListLineCount(_defaultWordListPath);
-            
+
             Assert.True(wordListCount == lineCount);
         }
 
@@ -57,7 +57,7 @@ namespace ScrambledPass.UnitTests
             SetupWordlist(_customWordFilePath);
             int wordListCount = _core.dataBank.WordList.Count;
             int lineCount = GetWordListLineCount(_customWordFilePath);
-            
+
             Assert.True(wordListCount == lineCount);
         }
     }

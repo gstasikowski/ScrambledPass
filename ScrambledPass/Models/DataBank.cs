@@ -9,11 +9,11 @@ namespace ScrambledPass.Models
         private readonly string _defaultConfigFile = AppDomain.CurrentDomain.BaseDirectory + "Config.xml";
         private readonly string _defaultLanguagePath = AppDomain.CurrentDomain.BaseDirectory + "Languages\\";
         private readonly string _defaultThemePath = AppDomain.CurrentDomain.BaseDirectory + "Themes\\";
-        
+
         private Dictionary<string, string> _settings = new Dictionary<string, string>();
         private List<string> _wordList = new List<string>();
         private static readonly char[] _symbols = { ' ', '.', ',', ';', '/', '\\', '\'', '[', ']', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '|', ':', '\"', '<', '>', '?' };
-        
+
         private ObservableCollection<string> _languages = new ObservableCollection<string>();
         private ObservableCollection<string> _themes = new ObservableCollection<string>();
         #endregion Variables
@@ -105,7 +105,7 @@ namespace ScrambledPass.Models
                 _settings.Add(key, value);
             }
         }
-        
+
         public void AddAvailableLanguage(string languageCode)
         {
             if (!_languages.Contains(languageCode))

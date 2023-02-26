@@ -25,7 +25,7 @@ namespace ScrambledPass.Logic
             string wordlistFilePath = _dataBank.GetSetting("lastWordList");
 
             _dataBank.WordList.Clear();
-            
+
             if (wordlistFilePath == string.Empty)
             {
                 _dataBank.WordList.AddRange(LoadDefaultWordList());
@@ -47,13 +47,13 @@ namespace ScrambledPass.Logic
                 using (StreamReader reader = new StreamReader(stream))
                 {
                     string? newWord = reader.ReadLine();
-                    
+
                     while (!string.IsNullOrEmpty(newWord))
                     {
                         wordList.Add(newWord);
                         newWord = reader.ReadLine();
                     }
-                    
+
                     reader.Close();
                 }
             }
@@ -61,7 +61,7 @@ namespace ScrambledPass.Logic
             {
                 new ErrorHandler("ErrorFileNotFound", null, e.InnerException);
             }
-            
+
             _dataBank.SetSetting("lastWordList", string.Empty);
             return wordList;
         }
@@ -69,7 +69,7 @@ namespace ScrambledPass.Logic
         public List<string> LoadCustomWordList(string filePath)
         {
             List<string> wordList = new List<string>();
-            
+
             if (File.Exists(filePath))
             {
                 wordList.Clear();

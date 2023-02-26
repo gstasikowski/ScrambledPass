@@ -1,47 +1,53 @@
 ﻿namespace ScrambledPass.ConsoleApp
 {
-    class Program
-    {
+	class Program
+	{
 		private static Core _core = new Core();
+		private static GeneratorSettings settings = new GeneratorSettings();
 
-        public static void Main(string[] args)
-        {
-            _core.fileOperations.LoadResources();
-            ShowMenu();
+		public static void Main(string[] args)
+		{
+			_core.fileOperations.LoadResources();
+			DisplayMainMenu();
 		}
 
-        private static void ShowMenu()
-        {
-			int wordCount = 0;
-			int symbolMode = 0;
-			int symbolCount = 10;
-			bool randomizeLetterSize = false;
-			bool useLetters = true;
-			bool useCapitalLetters = true;
-			bool useNumbers = true;
-			bool useSymbols = true;
+		private static void DisplayMainMenu()
+		{
+			PrintGeneratorSettings();
+			PrintMenuOptions();
+		}
 
-			MenuStart:
+		private static void DisplayGeneratorMenu()
+		{
+			PrintGeneratorSettings();
+			PrintGeneratorOptions();
+		}
+
+		private static void PrintGeneratorSettings()
+		{
 			Console.Clear();
 			Console.WriteLine("Current settings\n――――――――――――――――");
 			Console.WriteLine(
 				"{0, -35} {1, -35} {2, -35}",
-				$"Word count: {wordCount} ",
-				$"⏐ Symbol mode: {symbolMode + 1}",
-				$"⏐ Symbol count: {symbolCount}"
+				$"Word count: {settings.wordCount} ",
+				$"⏐ Symbol count: {settings.symbolCount}",
+				$"⏐ Symbol mode: {settings.symbolMode + 1}"
 			);
 			System.Console.WriteLine(
 				"{0, -35} {1, -35} {2, -35}",
-				$"Randomize letter size: {randomizeLetterSize}",
-				$"⏐ Use random letters: {useLetters}",
-				$"⏐ Use random capital letters: {useCapitalLetters}"
+				$"Randomize letter size: {settings.randomizeLetterSize}",
+				$"⏐ Use random letters: {settings.useLetters}",
+				$"⏐ Use random capital letters: {settings.useCapitalLetters}"
 			);
 			System.Console.WriteLine(
 				"{0, -35} {1, -35}",
-				$"Use random numbers: {useNumbers}",
-				$"⏐ Use random symbols: {useSymbols}\n"
+				$"Use random numbers: {settings.useNumbers}",
+				$"⏐ Use random symbols: {settings.useSymbols}\n"
 			);
-			Console.WriteLine("What do you want to do?\n1 - Generate password\n2 - Set word count\n3 - Set symbol count\n4 - Set symbol mode\n5 - Toggle letter size randomization\n6 - Toggle random letters\n7 - Toggle captial letters\n8 - Toggle numbers\n9 - Toggle symbols\n10 - Randomize settings\n11 - Exit");
+		}
+		private static void PrintMenuOptions()
+		{
+			Console.WriteLine("What do you want to do?\n[1] Generate password\n[2] Open generator settings\n[3] Check password entropy\n[0] Exit");
 			Console.Write("\n> ");
 			string? option = Console.ReadLine();
 
@@ -49,71 +55,33 @@
 			{
 				case "1":
 					Console.WriteLine("\nHere's your new password:");
-                    string newPassword = _core.generator.GeneratePassword(
-                        wordCount,
-                        symbolMode,
-                        symbolCount,
-                        randomizeLetterSize,
-                        useLetters,
-                        useCapitalLetters,
-                        useNumbers,
-                        useSymbols
-                    );
+					string newPassword = _core.generator.GeneratePassword(
+						settings.wordCount,
+						settings.symbolMode,
+						settings.symbolCount,
+						settings.randomizeLetterSize,
+						settings.useLetters,
+						settings.useCapitalLetters,
+						settings.useNumbers,
+						settings.useSymbols
+					);
 
-                    Console.WriteLine(newPassword);
+					Console.WriteLine(newPassword);
 					DisplayPasswordEntropy(newPassword);
 					Console.ReadKey();
 					break;
 
 				case "2":
-					Console.WriteLine("Amount of words to put in new password:");
-					ParseUserIntInput(ref wordCount);
+					DisplayGeneratorMenu();
 					break;
 
 				case "3":
-					Console.WriteLine("Amount of symbols to put in new password:");
-					ParseUserIntInput(ref symbolCount);
+					Console.WriteLine("Enter password to rate:");
+					string testPassword = Console.ReadLine();
+					DisplayPasswordEntropy(testPassword);
 					break;
 
-				case "4":
-					Console.WriteLine("Select symbol mode:\n1 - Replace spaces with symbols\n2 - Replace random characters with symbols\n3 - Insert symbols in random places");
-					ParseUserIntInput(ref symbolMode);
-					symbolMode = (symbolMode > 0 && symbolMode <= 3) ? symbolMode - 1 : 0;
-					break;
-
-				case "5":
-					randomizeLetterSize = !randomizeLetterSize;
-					break;
-
-				case "6":
-					useLetters = !useLetters;
-					break;
-
-				case "7":
-					useCapitalLetters = !useCapitalLetters;
-					break;
-
-				case "8":
-					useNumbers = !useNumbers;
-					break;
-
-				case "9":
-					useSymbols = !useSymbols;
-					break;
-
-				case "10":
-					Random randomizer = new Random();
-					wordCount = randomizer.Next(10);
-                    symbolMode = randomizer.Next(3);
-                    symbolCount = randomizer.Next(20);
-                    randomizeLetterSize = randomizer.Next(1) > 0;
-                    useLetters = randomizer.Next(1) > 0;
-                    useCapitalLetters = randomizer.Next(1) > 0;
-                    useNumbers = randomizer.Next(1) > 0;
-                    useSymbols = randomizer.Next(1) > 0;
-					break;
-
-				case "11":
+				case "0":
 					System.Environment.Exit(1);
 					break;
 
@@ -121,7 +89,66 @@
 					break;
 			}
 
-			goto MenuStart;
+			DisplayMainMenu();
+		}
+
+		private static void PrintGeneratorOptions()
+		{
+			Console.WriteLine("What do you want to do?\n[1] Set word count\n[2] Set symbol count\n[3] Set symbol mode\n[4] Toggle letter size randomization\n[5] Toggle random letters\n[6] Toggle captial letters\n[7] Toggle numbers\n[8] Toggle symbols\n[9] Randomize settings\n[0] Return");
+			Console.Write("\n> ");
+			string? option = Console.ReadLine();
+
+			switch (option)
+			{
+				case "1":
+					Console.WriteLine("Amount of words to put in new password:");
+					ParseUserIntInput(ref settings.wordCount);
+					break;
+
+				case "2":
+					Console.WriteLine("Amount of symbols to put in new password:");
+					ParseUserIntInput(ref settings.symbolCount);
+					break;
+
+				case "3":
+					Console.WriteLine("Select symbol mode:\n[1] Replace spaces with symbols\n[2] Replace random characters with symbols\n[3] Insert symbols in random places");
+					ParseUserIntInput(ref settings.symbolMode);
+					settings.symbolMode = (settings.symbolMode > 0 && settings.symbolMode <= 3) ? settings.symbolMode - 1 : 0;
+					break;
+
+				case "4":
+					settings.randomizeLetterSize = !settings.randomizeLetterSize;
+					break;
+
+				case "5":
+					settings.useLetters = !settings.useLetters;
+					break;
+
+				case "6":
+					settings.useCapitalLetters = !settings.useCapitalLetters;
+					break;
+
+				case "7":
+					settings.useNumbers = !settings.useNumbers;
+					break;
+
+				case "8":
+					settings.useSymbols = !settings.useSymbols;
+					break;
+
+				case "9":
+					settings.RandomizeSettings();
+					break;
+
+				case "0":
+					DisplayMainMenu();
+					break;
+
+				default:
+					break;
+			}
+
+			DisplayGeneratorMenu();
 		}
 
 		private static void ParseUserIntInput(ref int variable)
@@ -136,28 +163,29 @@
 
 			SetEntropyColors(entropy);
 			System.Console.WriteLine($"Password entropy: {entropy}");
-            System.Console.ForegroundColor = ConsoleColor.White;
+			System.Console.ForegroundColor = ConsoleColor.White;
+			Console.ReadKey();
 		}
 
 		private static void SetEntropyColors(double entropy)
 		{
 
-            if (entropy >= 100.0)
-            {
-                System.Console.ForegroundColor = ConsoleColor.Green;
+			if (entropy >= 100.0)
+			{
+				System.Console.ForegroundColor = ConsoleColor.Green;
 				return;
-            }
+			}
 
-            if (entropy >= 65.0)
-            {
-                System.Console.ForegroundColor = ConsoleColor.Blue;
+			if (entropy >= 65.0)
+			{
+				System.Console.ForegroundColor = ConsoleColor.Blue;
 				return;
-            }
+			}
 
 			if (entropy > 0.0)
-            {
-                System.Console.ForegroundColor = ConsoleColor.Red;
-            }
+			{
+				System.Console.ForegroundColor = ConsoleColor.Red;
+			}
 		}
-    }
+	}
 }
