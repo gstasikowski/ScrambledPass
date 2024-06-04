@@ -1,0 +1,65 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ScrambledPass.DesktopApp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Class="ScrambledPass.DesktopApp.Views.GeneratorView"
+        x:DataType="vm:GeneratorViewModel"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
+	<Grid>
+		<StackPanel>
+			<CheckBox x:Name="EnableRandomWords" Content="{Binding EnableRandomWords}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True" Click="ToggleWordPanel"/>
+			<StackPanel x:Name="WordsPanel" HorizontalAlignment="Left" Height="50" Margin="30,0,0,0" VerticalAlignment="Top" Width="248">
+				<StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
+					<Label x:Name="WordCountLabel" Content="{Binding WordCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+					<TextBox x:Name="WordCount" HorizontalAlignment="Left" Height="23" Text="5" VerticalAlignment="Center" Width="40"/>
+				</StackPanel>
+				<CheckBox x:Name="EnableRandomLetterSize" Content="{Binding EnableRandomLetterSize}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>
+			</StackPanel>
+			<CheckBox x:Name="EnableRandomCharacters" Content="{Binding EnableRandomCharacters}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" IsChecked="True" Click="ToggleSymbolPanel"/>
+			<StackPanel x:Name="pnlChars" Orientation="Horizontal">
+				<StackPanel x:Name="pnl_charsOptions" HorizontalAlignment="Left" Height="120" Margin="30,0,0,0" VerticalAlignment="Top" Width="270">
+					<CheckBox x:Name="chkRandomLower" Content="a-z" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+					<CheckBox x:Name="chkRandomUpper" Content="A-Z" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+					<CheckBox x:Name="chkRandomNumbers" Content="0-9" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+					<CheckBox x:Name="chkRandomSymbols" Content="UISymbols" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+					<Separator Height="10" Margin="0"/>
+					<RadioButton x:Name="rbReplaceWhiteChar" Content="{Binding UIReplaceSpacing}" IsChecked="True" GroupName="charPositioning" Tag="0" Checked="SetSymbolMode"/>
+					<RadioButton x:Name="rbReplaceRandomChar" Content="{Binding UIReplaceCharacters}" GroupName="charPositioning" Tag="1" Checked="SetSymbolMode"/>
+					<RadioButton x:Name="rbRandomPos" Content="{Binding UIRandomPosition}" GroupName="charPositioning" Tag="2" Checked="SetSymbolMode"/>
+				</StackPanel>
+				<StackPanel HorizontalAlignment="Right" Height="30" VerticalAlignment="Top" Width="127" Orientation="Horizontal" Margin="0,-15,-10,0">
+					<Label x:Name="lbl_charCount" Content="{Binding UICharacterCount}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+					<TextBox x:Name="txtCharCount" HorizontalAlignment="Right" Height="22" Text="5" VerticalAlignment="Center" Width="25" Margin="0,4"/>
+				</StackPanel>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal" Height="50" VerticalAlignment="Center" Margin="0" HorizontalAlignment="Right">
+				<Label x:Name="lbl_pass" Content="{Binding UIPassword}" HorizontalAlignment="Left" Margin="12,0,0,0" VerticalAlignment="Center"/>
+				<TextBox x:Name="txtPassword" Height="23" Margin="10,0" VerticalAlignment="Center" Width="350" HorizontalAlignment="Left"/>
+			</StackPanel>
+			<StackPanel Margin="0,-5,10,0" HorizontalAlignment="Right">
+				<Label x:Name="lblPasswordEntropy" Content="aaa" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="420" Padding="5,5,15,-11" HorizontalContentAlignment="Right"/>
+				<Label x:Name="lblPasswordStrength" Content="bbb" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="420" Padding="5,5,15,-11" HorizontalContentAlignment="Right"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal" Margin="5,100,5,5">
+				<Button x:Name="btnGenerate" Content="{Binding UIGenerate}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="75" Click="GeneratePassword"/>
+				<Button HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="20" Width="20" BorderBrush="#00707070" >
+						<Button.Background>
+							<ImageBrush Source="/Assets/Icons/open_file.PNG" Stretch="Uniform"/>
+						</Button.Background>
+				</Button>
+				<Button HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="20" Width="20" BorderBrush="#00707070">
+						<Button.Background>
+							<ImageBrush Source="/Assets/Icons/reload.png" Stretch="Uniform"/>
+						</Button.Background>
+				</Button>
+					<!-- <Separator Margin="0" Width="270" Visibility="Hidden"/> -->
+				<Button Height="20" Width="20" BorderBrush="#00707070" >
+						<Button.Background>
+							<ImageBrush Source="/Assets/Icons/settings.png" Stretch="Uniform"/>
+						</Button.Background>
+				</Button>
+            </StackPanel>
+		</StackPanel>
+	</Grid>
+</Window>
