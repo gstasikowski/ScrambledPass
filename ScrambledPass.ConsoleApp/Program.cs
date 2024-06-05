@@ -31,7 +31,7 @@
 				"{0, -35} {1, -35} {2, -35}",
 				$"Word count: {settings.wordCount} ",
 				$"⏐ Symbol count: {settings.symbolCount}",
-				$"⏐ Symbol mode: {settings.symbolMode + 1}"
+				$"⏐ Symbol mode: {(Helpers.SymbolMode)settings.symbolMode}"
 			);
 			System.Console.WriteLine(
 				"{0, -35} {1, -35} {2, -35}",
@@ -111,7 +111,7 @@
 					break;
 
 				case "3":
-					Console.WriteLine("Select symbol mode:\n[1] Replace spaces with symbols\n[2] Replace random characters with symbols\n[3] Insert symbols in random places");
+					Console.WriteLine("Select symbol mode:\n[1] Insert symbols in random places\n[2] Replace spaces with symbols\n[3] Replace random characters with symbols");
 					ParseUserIntInput(ref settings.symbolMode);
 					settings.symbolMode = (settings.symbolMode > 0 && settings.symbolMode <= 3) ? settings.symbolMode - 1 : 0;
 					break;
