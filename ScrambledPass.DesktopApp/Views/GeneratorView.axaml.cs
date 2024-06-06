@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Platform.Storage;
 using ScrambledPass.DesktopApp.ViewModels;
 
 namespace ScrambledPass.DesktopApp.Views;
@@ -126,5 +127,30 @@ public partial class GeneratorView : Window
 		}
 
 		PasswordStrength.Content = $"{((GeneratorViewModel)this.DataContext).UIPasswordStrength}: {strengthTxt}";
+	}
+
+	private async void OpenFilePicker(object sender, RoutedEventArgs e)
+	{
+		var topLevel = TopLevel.GetTopLevel(this);
+
+		var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+		{
+			Title = "Open Text File",
+			AllowMultiple = false,
+			FileTypeFilter = new[] { FilePickerFileTypes.TextPlain }
+		});
+
+		if (files.Count >= 1)
+		{
+			string filePath = files[0].Path.ToString().Replace("file://", string.Empty);
+			_core.dataBank.SetSetting("lastWordList", filePath);
+			_core.fileOperations.PrepareWordList();
+		}
+	}
+
+	private void ResetWordList(object sender, RoutedEventArgs e)
+	{
+		_core.dataBank.SetSetting("lastWordList", string.Empty);
+		_core.fileOperations.PrepareWordList();
 	}
 }
