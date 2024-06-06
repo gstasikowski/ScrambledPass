@@ -57,7 +57,7 @@
 						<ImageBrush Source="/Assets/Icons/open_file.PNG" Stretch="Uniform"/>
 					</Button.Background>
 			</Button>
-			<Button HorizontalAlignment="Right" Margin="10,0,0,0" Height="20" Width="20">
+			<Button HorizontalAlignment="Right" Margin="10,0,0,0" Height="20" Width="20" Click="ResetWordList">
 					<Button.Background>
 						<ImageBrush Source="/Assets/Icons/reload.png" Stretch="Uniform"/>
 					</Button.Background>
