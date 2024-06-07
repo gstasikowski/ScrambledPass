@@ -11,6 +11,21 @@ namespace ScrambledPass.Models
 		public bool UseNumbers;
 		public bool UseSymbols;
 
+		public GeneratorParameters()
+		{ }
+
+		public GeneratorParameters(int wordCount, int symbolMode, int symbolCount, bool randomizeLetterSize, bool useLetters, bool useCapitalLetters, bool useNumbers, bool useSymbols)
+		{
+			WordCount = wordCount;
+			SymbolMode = symbolMode;
+			SymbolCount = symbolCount;
+			RandomizeLetterSize = randomizeLetterSize;
+			UseLetters = useLetters;
+			UseCapitalLetters = useCapitalLetters;
+			UseNumbers = useNumbers;
+			UseSymbols = useSymbols;
+		}
+
 		public void RandomizeParameters()
 		{
 			Random randomizer = new Random();
