@@ -3,7 +3,7 @@
 	class Program
 	{
 		private static Core _core = new Core();
-		private static GeneratorSettings settings = new GeneratorSettings();
+		private static ScrambledPass.Models.GeneratorParameters settings = new ScrambledPass.Models.GeneratorParameters();
 
 		public static void Main(string[] args)
 		{
@@ -29,20 +29,20 @@
 			Console.WriteLine("Current settings\n――――――――――――――――");
 			Console.WriteLine(
 				"{0, -35} {1, -35} {2, -35}",
-				$"Word count: {settings.wordCount} ",
-				$"⏐ Symbol count: {settings.symbolCount}",
-				$"⏐ Symbol mode: {(Helpers.SymbolMode)settings.symbolMode}"
+				$"Word count: {settings.WordCount} ",
+				$"⏐ Symbol count: {settings.SymbolCount}",
+				$"⏐ Symbol mode: {(Helpers.SymbolMode)settings.SymbolMode}"
 			);
 			System.Console.WriteLine(
 				"{0, -35} {1, -35} {2, -35}",
-				$"Randomize letter size: {settings.randomizeLetterSize}",
-				$"⏐ Use random letters: {settings.useLetters}",
-				$"⏐ Use random capital letters: {settings.useCapitalLetters}"
+				$"Randomize letter size: {settings.RandomizeLetterSize}",
+				$"⏐ Use random letters: {settings.UseLetters}",
+				$"⏐ Use random capital letters: {settings.UseCapitalLetters}"
 			);
 			System.Console.WriteLine(
 				"{0, -35} {1, -35}",
-				$"Use random numbers: {settings.useNumbers}",
-				$"⏐ Use random symbols: {settings.useSymbols}\n"
+				$"Use random numbers: {settings.UseNumbers}",
+				$"⏐ Use random symbols: {settings.UseSymbols}\n"
 			);
 		}
 		private static void PrintMenuOptions()
@@ -55,16 +55,7 @@
 			{
 				case "1":
 					Console.WriteLine("\nHere's your new password:");
-					string newPassword = _core.generator.GeneratePassword(
-						settings.wordCount,
-						settings.symbolMode,
-						settings.symbolCount,
-						settings.randomizeLetterSize,
-						settings.useLetters,
-						settings.useCapitalLetters,
-						settings.useNumbers,
-						settings.useSymbols
-					);
+					string newPassword = _core.generator.GeneratePassword(settings);
 
 					Console.WriteLine(newPassword);
 					DisplayPasswordEntropy(newPassword);
@@ -102,42 +93,42 @@
 			{
 				case "1":
 					Console.WriteLine("Amount of words to put in new password:");
-					ParseUserIntInput(ref settings.wordCount);
+					ParseUserIntInput(ref settings.WordCount);
 					break;
 
 				case "2":
 					Console.WriteLine("Amount of symbols to put in new password:");
-					ParseUserIntInput(ref settings.symbolCount);
+					ParseUserIntInput(ref settings.SymbolCount);
 					break;
 
 				case "3":
 					Console.WriteLine("Select symbol mode:\n[1] Insert symbols in random places\n[2] Replace spaces with symbols\n[3] Replace random characters with symbols");
-					ParseUserIntInput(ref settings.symbolMode);
-					settings.symbolMode = (settings.symbolMode > 0 && settings.symbolMode <= 3) ? settings.symbolMode - 1 : 0;
+					ParseUserIntInput(ref settings.SymbolMode);
+					settings.SymbolMode = (settings.SymbolMode > 0 && settings.SymbolMode <= 3) ? settings.SymbolMode - 1 : 0;
 					break;
 
 				case "4":
-					settings.randomizeLetterSize = !settings.randomizeLetterSize;
+					settings.RandomizeLetterSize = !settings.RandomizeLetterSize;
 					break;
 
 				case "5":
-					settings.useLetters = !settings.useLetters;
+					settings.UseLetters = !settings.UseLetters;
 					break;
 
 				case "6":
-					settings.useCapitalLetters = !settings.useCapitalLetters;
+					settings.UseCapitalLetters = !settings.UseCapitalLetters;
 					break;
 
 				case "7":
-					settings.useNumbers = !settings.useNumbers;
+					settings.UseNumbers = !settings.UseNumbers;
 					break;
 
 				case "8":
-					settings.useSymbols = !settings.useSymbols;
+					settings.UseSymbols = !settings.UseSymbols;
 					break;
 
 				case "9":
-					settings.RandomizeSettings();
+					settings.RandomizeParameters();
 					break;
 
 				case "0":

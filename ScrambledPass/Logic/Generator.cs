@@ -17,41 +17,32 @@ namespace ScrambledPass.Logic
 		}
 
 		#region Methods (public)
-		public string GeneratePassword(
-			int wordCount,
-			int symbolMode,
-			int symbolCount,
-			bool randomCharacterSize,
-			bool useLetters,
-			bool useCapitalLetters,
-			bool useNumbers,
-			bool useSymbols
-		)
+		public string GeneratePassword(GeneratorParameters parameters)
 		{
 			StringBuilder passwordBuilder = new StringBuilder();
 
 			PrepareCharacterList(
-				wordCount,
-				useLetters,
-				useCapitalLetters,
-				useNumbers,
-				useSymbols
+				parameters.WordCount,
+				parameters.UseLetters,
+				parameters.UseCapitalLetters,
+				parameters.UseNumbers,
+				parameters.UseSymbols
 			);
 
-			InsertWords(wordCount, ref passwordBuilder);
+			InsertWords(parameters.WordCount, ref passwordBuilder);
 
-			if (randomCharacterSize)
+			if (parameters.RandomizeLetterSize)
 			{
 				RandomizeLetterSize(ref passwordBuilder);
 			}
 
 			InsertSymbols(
-				symbolMode,
-				symbolCount,
-				useLetters,
-				useCapitalLetters,
-				useNumbers,
-				useSymbols,
+				parameters.SymbolMode,
+				parameters.SymbolCount,
+				parameters.UseLetters,
+				parameters.UseCapitalLetters,
+				parameters.UseNumbers,
+				parameters.UseSymbols,
 				ref passwordBuilder
 			);
 
