@@ -4,24 +4,19 @@ using System.Runtime.InteropServices;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
+using ScrambledPass.DesktopApp.Controllers;
 using ScrambledPass.DesktopApp.ViewModels;
 
 namespace ScrambledPass.DesktopApp.Views;
 
 public partial class GeneratorView : Window
 {
-	private static Core _core = new Core();
+	private GeneratorController generatorController = new GeneratorController();
 
 	public GeneratorView()
 	{
 		InitializeComponent();
-		InitializeCoreApp();
 		SubscribeToEvents();
-	}
-
-	private void InitializeCoreApp()
-	{
-		_core.fileOperations.LoadResources();
 	}
 
 	private void SubscribeToEvents()
@@ -54,18 +49,16 @@ public partial class GeneratorView : Window
 
 	private void GeneratePassword(object sender, RoutedEventArgs e)
 	{
-		string newPassword = _core.generator.GeneratePassword(
-			wordCount: GetWordCount(),
-			symbolMode: SymbolMode.SelectedIndex,
-			symbolCount: UseRandomSymbols() ? GetCharacterCount() : 0,
-			randomCharacterSize: GetCheckBoxState(EnableRandomLetterSize),
-			useLetters: GetCheckBoxState(EnableRandomLowerLetters),
-			useCapitalLetters: GetCheckBoxState(EnableRandomUpperLetters),
-			useNumbers: GetCheckBoxState(EnableRandomNumbers),
-			useSymbols: GetCheckBoxState(EnableSymbols)
-		);
+		generatorController.Parameters.WordCount = GetWordCount();
+		generatorController.Parameters.SymbolMode = SymbolMode.SelectedIndex;
+		generatorController.Parameters.SymbolCount = UseRandomSymbols() ? GetCharacterCount() : 0;
+		generatorController.Parameters.RandomizeLetterSize = GetCheckBoxState(EnableRandomLetterSize);
+		generatorController.Parameters.UseLetters = GetCheckBoxState(EnableRandomLowerLetters);
+		generatorController.Parameters.UseCapitalLetters = GetCheckBoxState(EnableRandomUpperLetters);
+		generatorController.Parameters.UseNumbers = GetCheckBoxState(EnableRandomNumbers);
+		generatorController.Parameters.UseSymbols = GetCheckBoxState(EnableSymbols);
 
-		Password.Text = newPassword;
+		Password.Text = generatorController.GeneratePassword();
 	}
 
 	private int GetWordCount()
@@ -103,27 +96,31 @@ public partial class GeneratorView : Window
 	private void UpdatePasswordStrength(object sender, TextChangedEventArgs e)
 	{
 		string strengthTxt = "";
-		double passwordEntropy = Logic.Helpers.CalculateEntropy((sender as TextBox).Text, ref _core.dataBank);
+		double passwordEntropy = generatorController.CalculatePasswordEntropy((sender as TextBox).Text);
 		PasswordEntropy.Content = $"{((GeneratorViewModel)this.DataContext).UIEntropy}: {passwordEntropy}";
 
 		if (passwordEntropy > 0.0)
 		{
-			strengthTxt = "weak";
+			strengthTxt = ((GeneratorViewModel)this.DataContext).PasswordPoor;
 			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Red"));
 		}
 
-		if (passwordEntropy >= 65.0)
+		if (passwordEntropy >= 40.0)
 		{
-			strengthTxt = "good";
+			strengthTxt = ((GeneratorViewModel)this.DataContext).PasswordWeak;
 			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Yellow"));
+		}
 
+		if (passwordEntropy >= 75.0)
+		{
+			strengthTxt = ((GeneratorViewModel)this.DataContext).PasswordGood;
+			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Blue"));
 		}
 
 		if (passwordEntropy >= 100.0)
 		{
-			strengthTxt = "great";
+			strengthTxt = ((GeneratorViewModel)this.DataContext).PasswordGreat;
 			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Green"));
-
 		}
 
 		PasswordStrength.Content = $"{((GeneratorViewModel)this.DataContext).UIPasswordStrength}: {strengthTxt}";
@@ -143,14 +140,12 @@ public partial class GeneratorView : Window
 		if (files.Count >= 1)
 		{
 			string filePath = files[0].Path.ToString().Replace("file://", string.Empty);
-			_core.dataBank.SetSetting("lastWordList", filePath);
-			_core.fileOperations.PrepareWordList();
+			generatorController.ChangeWordList(filePath);
 		}
 	}
 
 	private void ResetWordList(object sender, RoutedEventArgs e)
 	{
-		_core.dataBank.SetSetting("lastWordList", string.Empty);
-		_core.fileOperations.PrepareWordList();
+		generatorController.ResetWordList();
 	}
 }

@@ -16,6 +16,10 @@ public class GeneratorViewModel : ViewModelBase
 	public string UIEntropy => "Entropy";
 	public string Symbols => "Special characters";
 	public string SymbolMode => "Symbol mode";
-	public string UIPasswordStrength => "Password strength";
+	public string UIPasswordStrength => "Password quality";
+	public string PasswordGreat => "great";
+	public string PasswordGood => "good";
+	public string PasswordWeak => "weak";
+	public string PasswordPoor => "poor";
 #pragma warning restore CA1822 // Mark members as static
 }
