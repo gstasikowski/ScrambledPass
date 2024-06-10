@@ -11,8 +11,6 @@ namespace ScrambledPass.DesktopApp.Views;
 
 public partial class GeneratorView : Window
 {
-	private GeneratorController _generatorController = new GeneratorController();
-
 	public GeneratorView()
 	{
 		InitializeComponent();
@@ -49,43 +47,12 @@ public partial class GeneratorView : Window
 
 	private void GeneratePassword(object sender, RoutedEventArgs e)
 	{
-		_generatorController.Parameters.WordCount = GetWordCount();
-		_generatorController.Parameters.SymbolMode = SymbolMode.SelectedIndex;
-		_generatorController.Parameters.SymbolCount = GetCharacterCount();
-		_generatorController.Parameters.RandomizeLetterSize = GetCheckBoxState(EnableRandomLetterSize);
-		_generatorController.Parameters.UseLetters = GetCheckBoxState(EnableRandomLowerLetters);
-		_generatorController.Parameters.UseCapitalLetters = GetCheckBoxState(EnableRandomUpperLetters);
-		_generatorController.Parameters.UseNumbers = GetCheckBoxState(EnableRandomNumbers);
-		_generatorController.Parameters.UseSymbols = GetCheckBoxState(EnableSymbols);
-
-		Password.Text = _generatorController.GeneratePassword();
+		Password.Text = ((GeneratorViewModel)this.DataContext).Generator.GeneratePassword();
 	}
 
-	private int GetWordCount()
+	private void RandomizeParameters(object sender, RoutedEventArgs e)
 	{
-		if (!EnableRandomWords.IsChecked ?? false)
-		{
-			return 0;
-		}
-
-		return (int)WordCount.Value;
-	}
-
-	private int GetCharacterCount()
-	{
-		if (!EnableRandomCharacters.IsChecked ?? false)
-		{
-			return 0;
-		}
-
-		return (int)CharacterCount.Value;
-	}
-
-	private int ValidateNumberValue(string? sourceText)
-	{
-		int numberValue = 0;
-		int.TryParse(sourceText, out numberValue);
-		return numberValue;
+		((GeneratorViewModel)this.DataContext).Generator.RandomizeParameters();
 	}
 
 	private bool GetCheckBoxState(CheckBox source)
@@ -93,15 +60,10 @@ public partial class GeneratorView : Window
 		return source.IsChecked ?? false;
 	}
 
-	private bool UseRandomSymbols()
-	{
-		return EnableRandomCharacters.IsChecked ?? false;
-	}
-
 	private void UpdatePasswordStrength(object sender, TextChangedEventArgs e)
 	{
 		string strengthTxt = "";
-		double passwordEntropy = _generatorController.CalculatePasswordEntropy((sender as TextBox).Text);
+		double passwordEntropy = ((GeneratorViewModel)this.DataContext).Generator.CalculatePasswordEntropy((sender as TextBox).Text);
 		PasswordEntropy.Content = $"{((GeneratorViewModel)this.DataContext).UIEntropy}: {passwordEntropy}";
 
 		if (passwordEntropy > 0.0)
@@ -145,12 +107,12 @@ public partial class GeneratorView : Window
 		if (files.Count >= 1)
 		{
 			string filePath = files[0].Path.ToString().Replace("file://", string.Empty);
-			_generatorController.ChangeWordList(filePath);
+			((GeneratorViewModel)this.DataContext).Generator.ChangeWordList(filePath);
 		}
 	}
 
 	private void ResetWordList(object sender, RoutedEventArgs e)
 	{
-		_generatorController.ResetWordList();
+		((GeneratorViewModel)this.DataContext).Generator.ResetWordList();
 	}
 }
