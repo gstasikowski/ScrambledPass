@@ -1,4 +1,6 @@
-﻿namespace ScrambledPass.DesktopApp.ViewModels;
+﻿using ScrambledPass.DesktopApp.Controllers;
+
+namespace ScrambledPass.DesktopApp.ViewModels;
 
 public class GeneratorViewModel : ViewModelBase
 {
@@ -13,6 +15,7 @@ public class GeneratorViewModel : ViewModelBase
 	public string UICharacterCount => "Character count";
 	public string UIPassword => "Password";
 	public string UIGenerate => "Generate";
+	public string UIRandomize => "Randomize parameters";
 	public string UIEntropy => "Entropy";
 	public string Symbols => "Special characters";
 	public string SymbolMode => "Symbol mode";
@@ -22,4 +25,16 @@ public class GeneratorViewModel : ViewModelBase
 	public string PasswordWeak => "weak";
 	public string PasswordPoor => "poor";
 #pragma warning restore CA1822 // Mark members as static
+
+	private AppLogic? _appLogic;
+
+	public AppLogic? Generator
+	{
+		get { return _appLogic; }
+	}
+
+	public GeneratorViewModel(AppLogic sourceController)
+	{
+		_appLogic = sourceController;
+	}
 }
