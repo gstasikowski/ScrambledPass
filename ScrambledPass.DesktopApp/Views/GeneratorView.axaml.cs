@@ -11,7 +11,7 @@ namespace ScrambledPass.DesktopApp.Views;
 
 public partial class GeneratorView : Window
 {
-	private GeneratorController generatorController = new GeneratorController();
+	private GeneratorController _generatorController = new GeneratorController();
 
 	public GeneratorView()
 	{
@@ -49,16 +49,16 @@ public partial class GeneratorView : Window
 
 	private void GeneratePassword(object sender, RoutedEventArgs e)
 	{
-		generatorController.Parameters.WordCount = GetWordCount();
-		generatorController.Parameters.SymbolMode = SymbolMode.SelectedIndex;
-		generatorController.Parameters.SymbolCount = UseRandomSymbols() ? GetCharacterCount() : 0;
-		generatorController.Parameters.RandomizeLetterSize = GetCheckBoxState(EnableRandomLetterSize);
-		generatorController.Parameters.UseLetters = GetCheckBoxState(EnableRandomLowerLetters);
-		generatorController.Parameters.UseCapitalLetters = GetCheckBoxState(EnableRandomUpperLetters);
-		generatorController.Parameters.UseNumbers = GetCheckBoxState(EnableRandomNumbers);
-		generatorController.Parameters.UseSymbols = GetCheckBoxState(EnableSymbols);
+		_generatorController.Parameters.WordCount = GetWordCount();
+		_generatorController.Parameters.SymbolMode = SymbolMode.SelectedIndex;
+		_generatorController.Parameters.SymbolCount = GetCharacterCount();
+		_generatorController.Parameters.RandomizeLetterSize = GetCheckBoxState(EnableRandomLetterSize);
+		_generatorController.Parameters.UseLetters = GetCheckBoxState(EnableRandomLowerLetters);
+		_generatorController.Parameters.UseCapitalLetters = GetCheckBoxState(EnableRandomUpperLetters);
+		_generatorController.Parameters.UseNumbers = GetCheckBoxState(EnableRandomNumbers);
+		_generatorController.Parameters.UseSymbols = GetCheckBoxState(EnableSymbols);
 
-		Password.Text = generatorController.GeneratePassword();
+		Password.Text = _generatorController.GeneratePassword();
 	}
 
 	private int GetWordCount()
@@ -68,12 +68,17 @@ public partial class GeneratorView : Window
 			return 0;
 		}
 
-		return ValidateNumberValue(WordCount.Text);
+		return (int)WordCount.Value;
 	}
 
 	private int GetCharacterCount()
 	{
-		return ValidateNumberValue(CharacterCount.Text);
+		if (!EnableRandomCharacters.IsChecked ?? false)
+		{
+			return 0;
+		}
+
+		return (int)CharacterCount.Value;
 	}
 
 	private int ValidateNumberValue(string? sourceText)
@@ -96,7 +101,7 @@ public partial class GeneratorView : Window
 	private void UpdatePasswordStrength(object sender, TextChangedEventArgs e)
 	{
 		string strengthTxt = "";
-		double passwordEntropy = generatorController.CalculatePasswordEntropy((sender as TextBox).Text);
+		double passwordEntropy = _generatorController.CalculatePasswordEntropy((sender as TextBox).Text);
 		PasswordEntropy.Content = $"{((GeneratorViewModel)this.DataContext).UIEntropy}: {passwordEntropy}";
 
 		if (passwordEntropy > 0.0)
@@ -140,12 +145,12 @@ public partial class GeneratorView : Window
 		if (files.Count >= 1)
 		{
 			string filePath = files[0].Path.ToString().Replace("file://", string.Empty);
-			generatorController.ChangeWordList(filePath);
+			_generatorController.ChangeWordList(filePath);
 		}
 	}
 
 	private void ResetWordList(object sender, RoutedEventArgs e)
 	{
-		generatorController.ResetWordList();
+		_generatorController.ResetWordList();
 	}
 }

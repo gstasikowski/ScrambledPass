@@ -10,9 +10,11 @@
 		Title="ScrambledPass">
 	<StackPanel>
 		<StackPanel>
+			<CheckBox x:Name="EnableRandomWords" Content="{Binding EnableRandomWords}" Margin="10,10,0,0" IsChecked="True" Click="ToggleWordPanel"/>
+			<StackPanel x:Name="WordPanel" HorizontalAlignment="Left" Height="50" Margin="30,0,0,0" Width="248" Spacing="5">
 			<StackPanel Orientation="Horizontal" Spacing="10">
-				<CheckBox x:Name="EnableRandomWords" Content="{Binding EnableRandomWords}" Margin="10,10,0,0" IsChecked="True" Click="ToggleWordPanel"/>
-				<TextBox x:Name="WordCount" Height="23" Text="5" VerticalAlignment="Center" Width="40"/>
+					<Label Content="{Binding UICharacterCount}" />
+					<NumericUpDown x:Name="WordCount" Height="23" Width="200" Value="5" FormatString="0" Minimum="1"/>
 			</StackPanel>
 			<StackPanel x:Name="WordPanel" HorizontalAlignment="Left" Height="50" Margin="30,0,0,0" Width="248">
 				<CheckBox x:Name="EnableRandomLetterSize" Content="{Binding EnableRandomLetterSize}" Margin="5,5,0,0" VerticalAlignment="Top"/>
@@ -21,10 +23,12 @@
 		<StackPanel>
 			<StackPanel Orientation="Horizontal" Spacing="10">
 				<CheckBox x:Name="EnableRandomCharacters" Content="{Binding EnableRandomCharacters}" Margin="10,10,0,0" IsChecked="True" Click="ToggleSymbolPanel"/>
-				<TextBox x:Name="CharacterCount" HorizontalAlignment="Right" Height="22" Text="5" Width="25" Margin="0,4"/>
+			<StackPanel x:Name="CharacterPanel" Margin="30,0,0,0" Spacing="10">
+				<StackPanel Orientation="Horizontal" Spacing="5">
+					<Label Content="{Binding UICharacterCount}" />
+					<NumericUpDown x:Name="CharacterCount" HorizontalAlignment="Left" Height="23" Width="200" Value="5" FormatString="0" Minimum="1"/>
 			</StackPanel>
-			<StackPanel x:Name="CharacterPanel" Margin="30,0,0,0" >
-					<StackPanel HorizontalAlignment="Left" Height="35" Orientation="Horizontal">
+				<StackPanel HorizontalAlignment="Left" Height="35" Orientation="Horizontal" Spacing="10">
 						<Label x:Name="SymbolModeLabel" Content="{Binding SymbolMode}" VerticalAlignment="Center"/>
 						<ComboBox x:Name="SymbolMode" SelectedIndex="0">
 							<ComboBoxItem Content="{Binding UIRandomPosition}"/>
