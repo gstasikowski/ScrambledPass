@@ -35,6 +35,6 @@ public class GeneratorController
 
 	public double CalculatePasswordEntropy(string password)
 	{
-		return Logic.Helpers.CalculateEntropy(password, ref _core.dataBank);
+		return ScrambledPass.Logic.Helpers.CalculateEntropy(password, ref _core.dataBank);
 	}
 }
