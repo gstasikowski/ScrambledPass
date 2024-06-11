@@ -5,119 +5,119 @@ using ScrambledPass.Models;
 
 namespace ScrambledPass.Logic
 {
-    public class FileOperations
-    {
-        private DataBank _dataBank;
+	public class FileOperations
+	{
+		private DataBank _dataBank;
 
-        public FileOperations(DataBank dataBank)
-        {
-            _dataBank = dataBank;
-        }
+		public FileOperations(DataBank dataBank)
+		{
+			_dataBank = dataBank;
+		}
 
-        public void LoadResources()
-        {
-            LoadSettings();
-            PrepareWordList();
-        }
+		public void LoadResources()
+		{
+			LoadSettings();
+			PrepareWordList();
+		}
 
-        public void PrepareWordList()
-        {
-            string wordlistFilePath = _dataBank.GetSetting("lastWordList");
+		public void PrepareWordList()
+		{
+			string wordlistFilePath = _dataBank.GetSetting("lastWordList");
 
-            _dataBank.WordList.Clear();
+			_dataBank.WordList.Clear();
 
-            if (wordlistFilePath == string.Empty)
-            {
-                _dataBank.WordList.AddRange(LoadDefaultWordList());
-            }
-            else
-            {
-                _dataBank.WordList.AddRange(LoadCustomWordList(wordlistFilePath));
-            }
-        }
+			if (wordlistFilePath == string.Empty)
+			{
+				_dataBank.WordList.AddRange(LoadDefaultWordList());
+			}
+			else
+			{
+				_dataBank.WordList.AddRange(LoadCustomWordList(wordlistFilePath));
+			}
+		}
 
-        public List<string> LoadDefaultWordList()
-        {
-            List<string> wordList = new List<string>();
-            try
-            {
-                var assembly = Assembly.GetExecutingAssembly();
+		public List<string> LoadDefaultWordList()
+		{
+			List<string> wordList = new List<string>();
+			try
+			{
+				var assembly = Assembly.GetExecutingAssembly();
 
-                using (Stream stream = assembly.GetManifestResourceStream(_dataBank.DefaultWordListFile))
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    string? newWord = reader.ReadLine();
+				using (Stream stream = assembly.GetManifestResourceStream(_dataBank.DefaultWordListFile))
+				using (StreamReader reader = new StreamReader(stream))
+				{
+					string? newWord = reader.ReadLine();
 
-                    while (!string.IsNullOrEmpty(newWord))
-                    {
-                        wordList.Add(newWord);
-                        newWord = reader.ReadLine();
-                    }
+					while (!string.IsNullOrEmpty(newWord))
+					{
+						wordList.Add(newWord);
+						newWord = reader.ReadLine();
+					}
 
-                    reader.Close();
-                }
-            }
-            catch (FileNotFoundException e)
-            {
-                new ErrorHandler("ErrorFileNotFound", null, e.InnerException);
-            }
+					reader.Close();
+				}
+			}
+			catch (FileNotFoundException e)
+			{
+				new ErrorHandler("ErrorFileNotFound", null, e.InnerException);
+			}
 
-            _dataBank.SetSetting("lastWordList", string.Empty);
-            return wordList;
-        }
+			_dataBank.SetSetting("lastWordList", string.Empty);
+			return wordList;
+		}
 
-        public List<string> LoadCustomWordList(string filePath)
-        {
-            List<string> wordList = new List<string>();
+		public List<string> LoadCustomWordList(string filePath)
+		{
+			List<string> wordList = new List<string>();
 
-            if (File.Exists(filePath))
-            {
-                wordList.Clear();
-                wordList.AddRange(File.ReadAllLines(filePath));
+			if (File.Exists(filePath))
+			{
+				wordList.Clear();
+				wordList.AddRange(File.ReadAllLines(filePath));
 
-                _dataBank.SetSetting("lastWordList", filePath);
-            }
-            else
-            {
-                new ErrorHandler("ErrorFileNotFound");
-            }
+				_dataBank.SetSetting("lastWordList", filePath);
+			}
+			else
+			{
+				new ErrorHandler("ErrorFileNotFound");
+			}
 
-            return wordList;
-        }
+			return wordList;
+		}
 
-        public void LoadSettings()
-        {
-            string configFilePath = _dataBank.DefaultConfigFile;
+		public void LoadSettings()
+		{
+			string configFilePath = _dataBank.DefaultConfigFile;
 
-            if (File.Exists(configFilePath))
-            {
-                string configFile = File.ReadAllText(configFilePath);
-                XElement rootElement = XElement.Parse(configFile);
+			if (File.Exists(configFilePath))
+			{
+				string configFile = File.ReadAllText(configFilePath);
+				XElement rootElement = XElement.Parse(configFile);
 
-                foreach (var element in rootElement.Elements())
-                {
-                    _dataBank.SetSetting(element.Name.LocalName, element.Value);
-                }
-            }
-            else
-            {
-                _dataBank.DefaultSettings();
-                SaveSettings();
-            }
-        }
+				foreach (var element in rootElement.Elements())
+				{
+					_dataBank.SetSetting(element.Name.LocalName, element.Value);
+				}
+			}
+			else
+			{
+				_dataBank.SetDefaultSettings();
+				SaveSettings();
+			}
+		}
 
-        public void SaveSettings()
-        {
-            Dictionary<string, string> appSettings = _dataBank.GetAllSettings();
+		public void SaveSettings()
+		{
+			Dictionary<string, string> appSettings = _dataBank.GetAllSettings();
 
-            FileStream fileStream;
-            fileStream = new FileStream(_dataBank.DefaultConfigFile, FileMode.Create);
+			FileStream fileStream;
+			fileStream = new FileStream(_dataBank.DefaultConfigFile, FileMode.Create);
 
-            XElement rootElement = new XElement("Config", appSettings.Select(kv => new XElement(kv.Key, kv.Value)));
-            XmlSerializer serializer = new XmlSerializer(rootElement.GetType());
-            serializer.Serialize(fileStream, rootElement);
+			XElement rootElement = new XElement("Config", appSettings.Select(kv => new XElement(kv.Key, kv.Value)));
+			XmlSerializer serializer = new XmlSerializer(rootElement.GetType());
+			serializer.Serialize(fileStream, rootElement);
 
-            fileStream.Close();
-        }
-    }
+			fileStream.Close();
+		}
+	}
 }

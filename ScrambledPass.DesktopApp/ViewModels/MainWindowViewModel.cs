@@ -28,7 +28,8 @@ public class MainWindowViewModel : ViewModelBase
 	{
 		Pages = new ViewModelBase[]
 		{
-			new GeneratorViewModel(generatorController)
+			new GeneratorViewModel(generatorController),
+			new SettingsViewModel(generatorController)
 		};
 	}
 
