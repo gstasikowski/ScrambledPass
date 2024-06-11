@@ -3,18 +3,22 @@
         xmlns:vm="using:ScrambledPass.DesktopApp.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="400"
         x:Class="ScrambledPass.DesktopApp.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="ScrambledPass.DesktopApp">
+        Title="ScrambledPass">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<Grid RowDefinitions="*,Auto" Margin="10">
+        <TransitioningContentControl Content="{Binding CurrentPage}" />
 
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="5"
+					HorizontalAlignment="Right">
+            <Button Command="{Binding ToggleActiveScreenCommand}" Content="Settings" />
+        </StackPanel>
+    </Grid>
 </Window>

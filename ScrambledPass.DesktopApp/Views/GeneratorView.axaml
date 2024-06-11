@@ -1,40 +1,43 @@
-<Window xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:ScrambledPass.DesktopApp.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         x:Class="ScrambledPass.DesktopApp.Views.GeneratorView"
         x:DataType="vm:GeneratorViewModel"
+        x:CompileBindings="True"
         xmlns:lang="clr-namespace:ScrambledPass.DesktopApp.Assets.Localization"
-        mc:Ignorable="d" d:DesignWidth="Auto" SizeToContent="WidthAndHeight"
-		Title="ScrambledPass">
+        mc:Ignorable="d">
+	<Design.DataContext>
+		<vm:GeneratorViewModel />
+	</Design.DataContext>
+
 	<StackPanel>
 		<StackPanel>
 			<CheckBox x:Name="EnableRandomWords" Content="{Binding EnableRandomWords}" Margin="10,10,0,0" IsChecked="True" Click="ToggleWordPanel"/>
 			<StackPanel x:Name="WordPanel" HorizontalAlignment="Left" Height="50" Margin="30,0,0,0" Width="248" Spacing="5">
-			<StackPanel Orientation="Horizontal" Spacing="10">
+				<StackPanel Orientation="Horizontal" Spacing="10">
 					<Label Content="{Binding UICharacterCount}" />
 					<NumericUpDown x:Name="WordCount" Height="23" Width="200" Value="{Binding Generator.Parameters.WordCount}" FormatString="0" Minimum="1"/>
-			</StackPanel>
+				</StackPanel>
 				<CheckBox x:Name="EnableRandomLetterSize" Content="{Binding EnableRandomLetterSize}" Margin="5,5,0,0" VerticalAlignment="Top"/>
 			</StackPanel>
 		</StackPanel>
 		<StackPanel>
-			<StackPanel Orientation="Horizontal" Spacing="10">
-				<CheckBox x:Name="EnableRandomCharacters" Content="{Binding EnableRandomCharacters}" Margin="10,10,0,0" IsChecked="True" Click="ToggleSymbolPanel"/>
+			<CheckBox x:Name="EnableRandomCharacters" Content="{Binding EnableRandomCharacters}" Margin="10,10,0,0" IsChecked="True" Click="ToggleSymbolPanel"/>
 			<StackPanel x:Name="CharacterPanel" Margin="30,0,0,0" Spacing="10">
 				<StackPanel Orientation="Horizontal" Spacing="5">
 					<Label Content="{Binding UICharacterCount}" />
 					<NumericUpDown x:Name="CharacterCount" HorizontalAlignment="Left" Height="23" Width="200" Value="{Binding Generator.Parameters.SymbolCount}" FormatString="0" Minimum="1"/>
-			</StackPanel>
+				</StackPanel>
 				<StackPanel HorizontalAlignment="Left" Height="35" Orientation="Horizontal" Spacing="10">
-						<Label x:Name="SymbolModeLabel" Content="{Binding SymbolMode}" VerticalAlignment="Center"/>
+					<Label x:Name="SymbolModeLabel" Content="{Binding SymbolMode}" VerticalAlignment="Center"/>
 					<ComboBox x:Name="SymbolMode" SelectedIndex="{Binding Generator.Parameters.SymbolMode}">
-							<ComboBoxItem Content="{Binding UIRandomPosition}"/>
-							<ComboBoxItem Content="{Binding UIReplaceSpacing}"/>
-							<ComboBoxItem Content="{Binding UIReplaceCharacters}"/>
-						</ComboBox>
-					</StackPanel>
+						<ComboBoxItem Content="{Binding UIRandomPosition}"/>
+						<ComboBoxItem Content="{Binding UIReplaceSpacing}"/>
+						<ComboBoxItem Content="{Binding UIReplaceCharacters}"/>
+					</ComboBox>
+				</StackPanel>
 				<CheckBox x:Name="EnableRandomLowerLetters" Content="a-z" IsChecked="{Binding Generator.Parameters.UseLetters}"/>
 				<CheckBox x:Name="EnableRandomUpperLetters" Content="A-Z" IsChecked="{Binding Generator.Parameters.UseCapitalLetters}"/>
 				<CheckBox x:Name="EnableRandomNumbers" Content="0-9" IsChecked="{Binding Generator.Parameters.UseNumbers}"/>
@@ -73,4 +76,4 @@
 			</Button>
         </StackPanel>
 	</StackPanel>
-</Window>
+</UserControl>
