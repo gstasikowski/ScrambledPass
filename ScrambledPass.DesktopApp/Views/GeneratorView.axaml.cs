@@ -9,7 +9,7 @@ using ScrambledPass.DesktopApp.ViewModels;
 
 namespace ScrambledPass.DesktopApp.Views;
 
-public partial class GeneratorView : Window
+public partial class GeneratorView : UserControl
 {
 	public GeneratorView()
 	{
