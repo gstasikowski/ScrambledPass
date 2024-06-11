@@ -72,7 +72,7 @@ namespace ScrambledPass.Models
 		#endregion Properties
 
 		#region Methods
-		public void DefaultSettings()
+		public void SetDefaultSettings()
 		{
 			SetSetting("languageID", "en-US");
 			SetSetting("theme", "Light");

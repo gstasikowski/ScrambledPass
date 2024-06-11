@@ -86,4 +86,14 @@ public class AppLogic
 	{
 		return ScrambledPass.Logic.Helpers.CalculateEntropy(password, ref _core.dataBank);
 	}
+
+	public void SaveSettings()
+	{
+		_core.fileOperations.SaveSettings();
+	}
+
+	public void RestoreDefaultSettings()
+	{
+		_core.dataBank.SetDefaultSettings();
+	}
 }
