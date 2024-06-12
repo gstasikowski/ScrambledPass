@@ -60,6 +60,30 @@ public class AppLogic
 		);
 	}
 
+	public void ToggleWordUse(bool enable)
+	{
+		int updatedWordCount = 0;
+
+		if (enable)
+		{
+			int.TryParse(_core.dataBank.GetSetting("defaultWordCount"), out updatedWordCount);
+		}
+
+		_parameters.WordCount = updatedWordCount;
+	}
+
+	public void ToggleSymbolUse(bool enable)
+	{
+		int updatedSymbolCount = 0;
+
+		if (enable)
+		{
+			int.TryParse(_core.dataBank.GetSetting("defaultSymbolCount"), out updatedSymbolCount);
+		}
+
+		_parameters.SymbolCount = updatedSymbolCount;
+	}
+
 	public void ChangeWordList(string filePath)
 	{
 		_core.dataBank.SetSetting("lastWordList", filePath);

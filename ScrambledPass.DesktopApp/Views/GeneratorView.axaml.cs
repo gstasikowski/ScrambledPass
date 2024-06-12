@@ -27,6 +27,7 @@ public partial class GeneratorView : UserControl
 		WordPanel.IsVisible = GetCheckBoxState(sender as CheckBox);
 		WordCount.IsEnabled = WordPanel.IsVisible;
 		ToggleSymbolModeSelection(WordPanel.IsVisible);
+		((GeneratorViewModel)this.DataContext).Generator.ToggleWordUse(WordPanel.IsVisible);
 	}
 
 	private void ToggleSymbolModeSelection(bool enable)
@@ -43,6 +44,7 @@ public partial class GeneratorView : UserControl
 	{
 		CharacterPanel.IsVisible = GetCheckBoxState(sender as CheckBox);
 		CharacterCount.IsEnabled = CharacterPanel.IsVisible;
+		((GeneratorViewModel)this.DataContext).Generator.ToggleSymbolUse(CharacterPanel.IsVisible);
 	}
 
 	private void GeneratePassword(object sender, RoutedEventArgs e)
