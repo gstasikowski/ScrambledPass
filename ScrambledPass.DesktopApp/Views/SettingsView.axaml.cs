@@ -29,4 +29,10 @@ public partial class SettingsView : UserControl
 	{
 		// return to generator view
 	}
+
+	private void ChangeLanguage(object sender, SelectionChangedEventArgs e)
+	{
+		string languageCode = ((ComboBox)sender).SelectedItem.ToString();
+		((SettingsViewModel)this.DataContext).Generator.SetSetting("languageID", languageCode);
+	}
 }

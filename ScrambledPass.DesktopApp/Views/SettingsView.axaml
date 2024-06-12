@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         x:Class="ScrambledPass.DesktopApp.Views.SettingsView"
         x:DataType="vm:SettingsViewModel"
-        xmlns:lang="clr-namespace:ScrambledPass.DesktopApp.Assets.Localization"
+        xmlns:lang="clr-namespace:ScrambledPass.DesktopApp.Logic"
         mc:Ignorable="d">
 	<Design.DataContext>
 		<vm:SettingsViewModel />
@@ -14,33 +14,33 @@
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,10">
-                <Label Content="{Binding UILanguage}"/>
-                <ComboBox x:Name="cboLanguage"/>
+                <Label Content="{lang:Localize Language}"/>
+                <ComboBox x:Name="LanguageSelector" ItemsSource="{Binding LanguageList}" SelectionChanged="ChangeLanguage"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                <Label Content="{Binding UITheme}"/>
+                <Label Content="{lang:Localize Theme}"/>
                 <ComboBox x:Name="cboTheme"/>
             </StackPanel>
-            <CheckBox x:Name="chkLoadCustomWordList" Content="{Binding UILoadWordList}" Margin="3,0,0,0" />
+            <CheckBox x:Name="chkLoadCustomWordList" Content="{lang:Localize LoadWordList}" Margin="3,0,0,0" />
             <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
-                <Label Content="{Binding UIDefWordCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Label Content="{lang:Localize DefaultWordCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <NumericUpDown HorizontalAlignment="Left" Width="200" Value="{Binding Generator.DefaultWordCount}" FormatString="0" Minimum="1"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
-                <Label Content="{Binding UIDefCharacterCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Label Content="{lang:Localize DefaultCharacterCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <NumericUpDown HorizontalAlignment="Left" Width="200" Value="{Binding Generator.DefaultSymbolCount}" FormatString="0" Minimum="1"/>
             </StackPanel>
             <StackPanel>
-                <CheckBox Content="{Binding UIClearClipboard}" Margin="3,0,0,0" />
+                <CheckBox Content="{lang:Localize ClearClipboard}" Margin="3,0,0,0" />
                 <StackPanel HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
-                    <Label Content="{Binding UIClearClipboardDelay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Label Content="{lang:Localize ClearClipboardDelay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <TextBox x:Name="txtClearClipboardDelay" HorizontalAlignment="Left" Height="23" Text="25" VerticalAlignment="Center" Width="40"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,5" >
-                <Button Content="{Binding UISave}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="SaveSettings" Margin="0,0,10,0"/>
-                <Button Content="{Binding UIRestoreDefault}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="RestoreDefaultSettings" Margin="0,0,10,0"/>
-                <Button Content="{Binding UIBack}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="CloseSettingsView"/>
+                <Button Content="{lang:Localize Save}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="SaveSettings" Margin="0,0,10,0"/>
+                <Button Content="{lang:Localize RestoreDefault}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="RestoreDefaultSettings" Margin="0,0,10,0"/>
+                <Button Content="{lang:Localize Back}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5,2" Click="CloseSettingsView"/>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -36,7 +36,13 @@ public class AppLogic
 	public AppLogic()
 	{
 		_core.fileOperations.LoadResources();
+		InitializeSettings();
 		InitializeDefaultParameters();
+	}
+
+	private void InitializeSettings()
+	{
+		ScrambledPass.DesktopApp.Logic.Localizer.Instance.LoadLanguage(_core.dataBank.GetSetting("languageID"));
 	}
 
 	private void InitializeDefaultParameters()
@@ -114,10 +120,21 @@ public class AppLogic
 	public void SaveSettings()
 	{
 		_core.fileOperations.SaveSettings();
+		Logic.Localizer.Instance.LoadLanguage(_core.dataBank.GetSetting("languageID"));
 	}
 
 	public void RestoreDefaultSettings()
 	{
 		_core.dataBank.SetDefaultSettings();
+	}
+
+	public string GetSetting(string settingID)
+	{
+		return _core.dataBank.GetSetting(settingID);
+	}
+
+	public void SetSetting(string settingID, string value)
+	{
+		_core.dataBank.SetSetting(settingID, value);
 	}
 }

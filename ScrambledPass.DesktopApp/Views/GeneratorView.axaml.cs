@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -66,33 +65,33 @@ public partial class GeneratorView : UserControl
 	{
 		string strengthTxt = "";
 		double passwordEntropy = ((GeneratorViewModel)this.DataContext).Generator.CalculatePasswordEntropy((sender as TextBox).Text);
-		PasswordEntropy.Content = $"{((GeneratorViewModel)this.DataContext).UIEntropy}: {passwordEntropy}";
+		PasswordEntropy.Content = $"{Logic.Localizer.Instance["Entropy"]}: {passwordEntropy}";
 
 		if (passwordEntropy > 0.0)
 		{
-			strengthTxt = ((GeneratorViewModel)this.DataContext).PasswordPoor;
+			strengthTxt = Logic.Localizer.Instance["PasswordPoor"];
 			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Red"));
 		}
 
 		if (passwordEntropy >= 40.0)
 		{
-			strengthTxt = ((GeneratorViewModel)this.DataContext).PasswordWeak;
+			strengthTxt = Logic.Localizer.Instance["PasswordWeak"];
 			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Yellow"));
 		}
 
 		if (passwordEntropy >= 75.0)
 		{
-			strengthTxt = ((GeneratorViewModel)this.DataContext).PasswordGood;
+			strengthTxt = Logic.Localizer.Instance["PasswordGood"];
 			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Blue"));
 		}
 
 		if (passwordEntropy >= 100.0)
 		{
-			strengthTxt = ((GeneratorViewModel)this.DataContext).PasswordGreat;
+			strengthTxt = Logic.Localizer.Instance["PasswordGreat"];
 			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Green"));
 		}
 
-		PasswordStrength.Content = $"{((GeneratorViewModel)this.DataContext).UIPasswordStrength}: {strengthTxt}";
+		PasswordStrength.Content = $"{Logic.Localizer.Instance["PasswordStrength"]}: {strengthTxt}";
 	}
 
 	private async void OpenFilePicker(object sender, RoutedEventArgs e)
@@ -101,7 +100,7 @@ public partial class GeneratorView : UserControl
 
 		var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
 		{
-			Title = "Open Text File",
+			Title = Logic.Localizer.Instance["SelectWordFile"],
 			AllowMultiple = false,
 			FileTypeFilter = new[] { FilePickerFileTypes.TextPlain }
 		});
