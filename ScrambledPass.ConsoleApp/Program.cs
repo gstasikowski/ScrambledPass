@@ -93,17 +93,17 @@
 			{
 				case "1":
 					Console.WriteLine("Amount of words to put in new password:");
-					ParseUserIntInput(ref settings.WordCount);
+					settings.WordCount = ParseUserIntInput();
 					break;
 
 				case "2":
 					Console.WriteLine("Amount of symbols to put in new password:");
-					ParseUserIntInput(ref settings.SymbolCount);
+					settings.SymbolCount = ParseUserIntInput();
 					break;
 
 				case "3":
 					Console.WriteLine("Select symbol mode:\n[1] Insert symbols in random places\n[2] Replace spaces with symbols\n[3] Replace random characters with symbols");
-					ParseUserIntInput(ref settings.SymbolMode);
+					settings.SymbolMode = ParseUserIntInput();
 					settings.SymbolMode = (settings.SymbolMode > 0 && settings.SymbolMode <= 3) ? settings.SymbolMode - 1 : 0;
 					break;
 
@@ -142,10 +142,12 @@
 			DisplayGeneratorMenu();
 		}
 
-		private static void ParseUserIntInput(ref int variable)
+		private static int ParseUserIntInput()
 		{
 			string? key = Console.ReadLine();
-			int.TryParse(key, out variable);
+			int parsedValue;
+			int.TryParse(key, out parsedValue);
+			return parsedValue;
 		}
 
 		private static void DisplayPasswordEntropy(string password)
