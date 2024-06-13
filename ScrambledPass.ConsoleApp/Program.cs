@@ -2,13 +2,24 @@
 {
 	class Program
 	{
-		private static Core _core = new Core();
 		private static ScrambledPass.Models.GeneratorParameters settings = new ScrambledPass.Models.GeneratorParameters();
 
 		public static void Main(string[] args)
 		{
-			_core.fileOperations.LoadResources();
+			InitializeDefaultParameters();
 			DisplayMainMenu();
+		}
+
+		private static void InitializeDefaultParameters()
+		{
+			int initialWordCount = 5;
+			int.TryParse(Core.Instance.dataBank.GetSetting("defaultWordCount"), out initialWordCount);
+
+			int initialSymbolCount = 5;
+			int.TryParse(Core.Instance.dataBank.GetSetting("defaultSymbolCount"), out initialSymbolCount);
+
+			settings.WordCount = initialWordCount;
+			settings.SymbolCount = initialSymbolCount;
 		}
 
 		private static void DisplayMainMenu()
@@ -55,11 +66,10 @@
 			{
 				case "1":
 					Console.WriteLine("\nHere's your new password:");
-					string newPassword = _core.generator.GeneratePassword(settings);
+					string newPassword = Core.Instance.generator.GeneratePassword(settings);
 
 					Console.WriteLine(newPassword);
 					DisplayPasswordEntropy(newPassword);
-					Console.ReadKey();
 					break;
 
 				case "2":
@@ -152,7 +162,7 @@
 
 		private static void DisplayPasswordEntropy(string password)
 		{
-			double entropy = Logic.Helpers.CalculateEntropy(password, ref _core.dataBank);
+			double entropy = Logic.Helpers.CalculateEntropy(password, ref Core.Instance.dataBank);
 
 			SetEntropyColors(entropy);
 			System.Console.WriteLine($"Password entropy: {entropy}");
@@ -169,9 +179,15 @@
 				return;
 			}
 
-			if (entropy >= 65.0)
+			if (entropy >= 75.0)
 			{
 				System.Console.ForegroundColor = ConsoleColor.Blue;
+				return;
+			}
+
+			if (entropy >= 40.0)
+			{
+				System.Console.ForegroundColor = ConsoleColor.Yellow;
 				return;
 			}
 
