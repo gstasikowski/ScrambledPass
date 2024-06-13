@@ -15,12 +15,12 @@
 	<StackPanel>
 		<StackPanel>
 			<CheckBox x:Name="EnableRandomWords" Content="{lang:Localize EnableRandomWords}" Margin="10,10,0,0" IsChecked="True" Click="ToggleWordPanel"/>
-			<StackPanel x:Name="WordPanel" HorizontalAlignment="Left" Height="50" Margin="30,0,0,0" Width="248" Spacing="5">
+			<StackPanel x:Name="WordPanel" HorizontalAlignment="Left" Margin="30,0,0,0" Width="248" Spacing="5">
 				<StackPanel Orientation="Horizontal" Spacing="10">
 					<Label Content="{lang:Localize CharacterCount}" />
 					<NumericUpDown x:Name="WordCount" Height="23" Width="200" Value="{Binding Generator.Parameters.WordCount}" FormatString="0" Minimum="1"/>
 				</StackPanel>
-				<CheckBox x:Name="EnableRandomLetterSize" Content="{lang:Localize EnableRandomLetterSize}" Margin="5,5,0,0" VerticalAlignment="Top"/>
+				<CheckBox Content="{lang:Localize EnableRandomLetterSize}" IsChecked="{Binding Generator.Parameters.RandomizeLetterSize}"/>
 			</StackPanel>
 		</StackPanel>
 		<StackPanel>
