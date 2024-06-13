@@ -12,6 +12,7 @@ namespace ScrambledPass.Logic
 		public FileOperations(DataBank dataBank)
 		{
 			_dataBank = dataBank;
+			LoadResources();
 		}
 
 		public void LoadResources()

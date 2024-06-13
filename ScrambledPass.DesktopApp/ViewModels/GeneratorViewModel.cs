@@ -1,18 +1,16 @@
-﻿using ScrambledPass.DesktopApp.Controllers;
+﻿using ScrambledPass.DesktopApp.Logic;
 
 namespace ScrambledPass.DesktopApp.ViewModels;
 
 public class GeneratorViewModel : ViewModelBase
 {
-	private AppLogic? _appLogic;
-
-	public AppLogic? Generator
+	public AppLogic Generator
 	{
-		get { return _appLogic; }
+		get { return AppLogic.Instance; }
 	}
 
-	public GeneratorViewModel(AppLogic sourceController)
+	public Localizer Lang
 	{
-		_appLogic = sourceController;
+		get { return Localizer.Instance; }
 	}
 }

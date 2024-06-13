@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using DynamicData;
 using ReactiveUI;
-using ScrambledPass.DesktopApp.Controllers;
+using ScrambledPass.DesktopApp.Logic;
 using ScrambledPass.DesktopApp.Views;
 
 namespace ScrambledPass.DesktopApp.ViewModels;
@@ -13,11 +13,8 @@ public class MainWindowViewModel : ViewModelBase
 	// The default is the first page
 	private ViewModelBase _currentPage;
 
-	private AppLogic generatorController;
-
 	public MainWindowViewModel()
 	{
-		generatorController = new AppLogic();
 		InitializePages();
 		_currentPage = Pages[0];
 
@@ -28,8 +25,8 @@ public class MainWindowViewModel : ViewModelBase
 	{
 		Pages = new ViewModelBase[]
 		{
-			new GeneratorViewModel(generatorController),
-			new SettingsViewModel(generatorController)
+			new GeneratorViewModel(),
+			new SettingsViewModel()
 		};
 	}
 

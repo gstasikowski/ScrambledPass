@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using ScrambledPass.DesktopApp.Controllers;
 using ScrambledPass.DesktopApp.ViewModels;
 
 namespace ScrambledPass.DesktopApp.Views;
