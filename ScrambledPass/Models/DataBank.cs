@@ -7,14 +7,12 @@ namespace ScrambledPass.Models
 		#region Variables
 		private readonly static string _defaultWordListFile = "ScrambledPass.defaultWordList.txt";
 		private readonly string _defaultConfigFile = AppDomain.CurrentDomain.BaseDirectory + "Config.xml";
-		private readonly string _defaultLanguagePath = AppDomain.CurrentDomain.BaseDirectory + "Languages\\";
 		private readonly string _defaultThemePath = AppDomain.CurrentDomain.BaseDirectory + "Themes\\";
 
 		private Dictionary<string, string> _settings = new Dictionary<string, string>();
 		private List<string> _wordList = new List<string>();
 		private static readonly char[] _symbols = { ' ', '.', ',', ';', '/', '\\', '\'', '[', ']', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '|', ':', '\"', '<', '>', '?' };
 
-		private ObservableCollection<string> _languages = new ObservableCollection<string>();
 		private ObservableCollection<string> _themes = new ObservableCollection<string>();
 		#endregion Variables
 
@@ -32,11 +30,6 @@ namespace ScrambledPass.Models
 		public string DefaultConfigFile
 		{
 			get { return _defaultConfigFile; }
-		}
-
-		public string DefaultLanguagePath
-		{
-			get { return _defaultLanguagePath; }
 		}
 
 		public string DefaultThemePath
@@ -59,11 +52,6 @@ namespace ScrambledPass.Models
 			get { return _symbols.Length; }
 		}
 
-		public ObservableCollection<string> LanguageList
-		{
-			get { return _languages; }
-			set { _languages = value; }
-		}
 		public ObservableCollection<string> ThemeList
 		{
 			get { return _themes; }
@@ -106,19 +94,11 @@ namespace ScrambledPass.Models
 			}
 		}
 
-		public void AddAvailableLanguage(string languageCode)
-		{
-			if (!_languages.Contains(languageCode))
-			{
-				_languages.Add(languageCode);
-			}
-		}
-
-		public int LanguageIndex(string languageCode)
-		{
-			int languageIndex = _languages.IndexOf(languageCode);
-			return (languageIndex > -1) ? languageIndex : 0;
-		}
+		// public int LanguageIndex(string languageCode)
+		// {
+		// 	int languageIndex = _languages.IndexOf(languageCode);
+		// 	return (languageIndex > -1) ? languageIndex : 0;
+		// }
 
 		public void AddAvailableTheme(string themeName)
 		{

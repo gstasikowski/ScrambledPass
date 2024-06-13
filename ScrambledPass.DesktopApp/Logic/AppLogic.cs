@@ -1,9 +1,15 @@
-namespace ScrambledPass.DesktopApp.Controllers;
+using System.Diagnostics.Contracts;
+
+namespace ScrambledPass.DesktopApp.Logic;
 
 public class AppLogic
 {
-	private static Core _core = new Core();
 	private ScrambledPass.Models.GeneratorParameters _parameters;
+
+	public Core CoreApp
+	{
+		get { return Core.Instance; }
+	}
 
 	public ScrambledPass.Models.GeneratorParameters Parameters
 	{
@@ -16,10 +22,10 @@ public class AppLogic
 		get
 		{
 			int count = 1;
-			int.TryParse(_core.dataBank.GetSetting("defaultWordCount"), out count);
+			int.TryParse(CoreApp.dataBank.GetSetting("defaultWordCount"), out count);
 			return count;
 		}
-		set { _core.dataBank.SetSetting("defaultWordCount", value.ToString()); }
+		set { CoreApp.dataBank.SetSetting("defaultWordCount", value.ToString()); }
 	}
 
 	public int DefaultSymbolCount
@@ -27,31 +33,32 @@ public class AppLogic
 		get
 		{
 			int count = 1;
-			int.TryParse(_core.dataBank.GetSetting("defaultSymbolCount"), out count);
+			int.TryParse(CoreApp.dataBank.GetSetting("defaultSymbolCount"), out count);
 			return count;
 		}
-		set { _core.dataBank.SetSetting("defaultSymbolCount", value.ToString()); }
+		set { CoreApp.dataBank.SetSetting("defaultSymbolCount", value.ToString()); }
 	}
+
+	public static AppLogic Instance { get; set; } = new AppLogic();
 
 	public AppLogic()
 	{
-		_core.fileOperations.LoadResources();
 		InitializeSettings();
 		InitializeDefaultParameters();
 	}
 
 	private void InitializeSettings()
 	{
-		ScrambledPass.DesktopApp.Logic.Localizer.Instance.LoadLanguage(_core.dataBank.GetSetting("languageID"));
+		Localizer.Instance.LoadLanguage(CoreApp.dataBank.GetSetting("languageID"));
 	}
 
 	private void InitializeDefaultParameters()
 	{
 		int initialWordCount = 5;
-		int.TryParse(_core.dataBank.GetSetting("defaultWordCount"), out initialWordCount);
+		int.TryParse(CoreApp.dataBank.GetSetting("defaultWordCount"), out initialWordCount);
 
 		int initialSymbolCount = 5;
-		int.TryParse(_core.dataBank.GetSetting("defaultSymbolCount"), out initialSymbolCount);
+		int.TryParse(CoreApp.dataBank.GetSetting("defaultSymbolCount"), out initialSymbolCount);
 
 		_parameters = new ScrambledPass.Models.GeneratorParameters
 		(
@@ -72,7 +79,7 @@ public class AppLogic
 
 		if (enable)
 		{
-			int.TryParse(_core.dataBank.GetSetting("defaultWordCount"), out updatedWordCount);
+			int.TryParse(CoreApp.dataBank.GetSetting("defaultWordCount"), out updatedWordCount);
 		}
 
 		_parameters.WordCount = updatedWordCount;
@@ -84,7 +91,7 @@ public class AppLogic
 
 		if (enable)
 		{
-			int.TryParse(_core.dataBank.GetSetting("defaultSymbolCount"), out updatedSymbolCount);
+			int.TryParse(CoreApp.dataBank.GetSetting("defaultSymbolCount"), out updatedSymbolCount);
 		}
 
 		_parameters.SymbolCount = updatedSymbolCount;
@@ -92,19 +99,19 @@ public class AppLogic
 
 	public void ChangeWordList(string filePath)
 	{
-		_core.dataBank.SetSetting("lastWordList", filePath);
-		_core.fileOperations.PrepareWordList();
+		CoreApp.dataBank.SetSetting("lastWordList", filePath);
+		CoreApp.fileOperations.PrepareWordList();
 	}
 
 	public void ResetWordList()
 	{
-		_core.dataBank.SetSetting("lastWordList", string.Empty);
-		_core.fileOperations.PrepareWordList();
+		CoreApp.dataBank.SetSetting("lastWordList", string.Empty);
+		CoreApp.fileOperations.PrepareWordList();
 	}
 
 	public string GeneratePassword()
 	{
-		return _core.generator.GeneratePassword(_parameters);
+		return CoreApp.generator.GeneratePassword(_parameters);
 	}
 
 	public void RandomizeParameters()
@@ -114,27 +121,27 @@ public class AppLogic
 
 	public double CalculatePasswordEntropy(string password)
 	{
-		return ScrambledPass.Logic.Helpers.CalculateEntropy(password, ref _core.dataBank);
+		return ScrambledPass.Logic.Helpers.CalculateEntropy(password, ref CoreApp.dataBank);
 	}
 
 	public void SaveSettings()
 	{
-		_core.fileOperations.SaveSettings();
-		Logic.Localizer.Instance.LoadLanguage(_core.dataBank.GetSetting("languageID"));
+		CoreApp.fileOperations.SaveSettings();
+		Localizer.Instance.LoadLanguage(CoreApp.dataBank.GetSetting("languageID"));
 	}
 
 	public void RestoreDefaultSettings()
 	{
-		_core.dataBank.SetDefaultSettings();
+		CoreApp.dataBank.SetDefaultSettings();
 	}
 
 	public string GetSetting(string settingID)
 	{
-		return _core.dataBank.GetSetting(settingID);
+		return CoreApp.dataBank.GetSetting(settingID);
 	}
 
 	public void SetSetting(string settingID, string value)
 	{
-		_core.dataBank.SetSetting(settingID, value);
+		CoreApp.dataBank.SetSetting(settingID, value);
 	}
 }

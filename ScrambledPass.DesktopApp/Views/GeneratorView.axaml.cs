@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
-using ScrambledPass.DesktopApp.Controllers;
 using ScrambledPass.DesktopApp.ViewModels;
 
 namespace ScrambledPass.DesktopApp.Views;
@@ -65,33 +64,33 @@ public partial class GeneratorView : UserControl
 	{
 		string strengthTxt = "";
 		double passwordEntropy = ((GeneratorViewModel)this.DataContext).Generator.CalculatePasswordEntropy((sender as TextBox).Text);
-		PasswordEntropy.Content = $"{Logic.Localizer.Instance["Entropy"]}: {passwordEntropy}";
+		PasswordEntropy.Content = $"{((GeneratorViewModel)this.DataContext).Lang["Entropy"]}: {passwordEntropy}";
 
 		if (passwordEntropy > 0.0)
 		{
-			strengthTxt = Logic.Localizer.Instance["PasswordPoor"];
+			strengthTxt = ((GeneratorViewModel)this.DataContext).Lang["PasswordPoor"];
 			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Red"));
 		}
 
 		if (passwordEntropy >= 40.0)
 		{
-			strengthTxt = Logic.Localizer.Instance["PasswordWeak"];
+			strengthTxt = ((GeneratorViewModel)this.DataContext).Lang["PasswordWeak"];
 			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Yellow"));
 		}
 
 		if (passwordEntropy >= 75.0)
 		{
-			strengthTxt = Logic.Localizer.Instance["PasswordGood"];
+			strengthTxt = ((GeneratorViewModel)this.DataContext).Lang["PasswordGood"];
 			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Blue"));
 		}
 
 		if (passwordEntropy >= 100.0)
 		{
-			strengthTxt = Logic.Localizer.Instance["PasswordGreat"];
+			strengthTxt = ((GeneratorViewModel)this.DataContext).Lang["PasswordGreat"];
 			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Green"));
 		}
 
-		PasswordStrength.Content = $"{Logic.Localizer.Instance["PasswordStrength"]}: {strengthTxt}";
+		PasswordStrength.Content = $"{((GeneratorViewModel)this.DataContext).Lang["PasswordStrength"]}: {strengthTxt}";
 	}
 
 	private async void OpenFilePicker(object sender, RoutedEventArgs e)
@@ -100,7 +99,7 @@ public partial class GeneratorView : UserControl
 
 		var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
 		{
-			Title = Logic.Localizer.Instance["SelectWordFile"],
+			Title = ((GeneratorViewModel)this.DataContext).Lang["SelectWordFile"],
 			AllowMultiple = false,
 			FileTypeFilter = new[] { FilePickerFileTypes.TextPlain }
 		});
