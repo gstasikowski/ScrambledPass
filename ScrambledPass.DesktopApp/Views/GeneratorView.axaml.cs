@@ -65,32 +65,39 @@ public partial class GeneratorView : UserControl
 		string strengthTxt = "";
 		double passwordEntropy = ((GeneratorViewModel)this.DataContext).Generator.CalculatePasswordEntropy((sender as TextBox).Text);
 		PasswordEntropy.Content = $"{((GeneratorViewModel)this.DataContext).Lang["Entropy"]}: {passwordEntropy}";
+		object fontColor = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("White"));
 
-		if (passwordEntropy > 0.0)
-		{
-			strengthTxt = ((GeneratorViewModel)this.DataContext).Lang["PasswordPoor"];
-			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Red"));
-		}
+		FindPasswordStrengthColor(passwordEntropy, ref strengthTxt, ref fontColor);
 
-		if (passwordEntropy >= 40.0)
+		PasswordStrength.Foreground = (Avalonia.Media.SolidColorBrush)fontColor;
+		PasswordStrength.Content = $"{((GeneratorViewModel)this.DataContext).Lang["PasswordStrength"]}: {strengthTxt}";
+	}
+
+	private void FindPasswordStrengthColor(double passwordEntropy, ref string strengthTxt, ref object fontColor)
+	{
+		if (passwordEntropy >= 100.0)
 		{
-			strengthTxt = ((GeneratorViewModel)this.DataContext).Lang["PasswordWeak"];
-			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Yellow"));
+			strengthTxt = ((GeneratorViewModel)this.DataContext).Lang["PasswordGreat"];
+			this.TryFindResource("PasswordQualityGreat", this.ActualThemeVariant, out fontColor);
+			return;
 		}
 
 		if (passwordEntropy >= 75.0)
 		{
 			strengthTxt = ((GeneratorViewModel)this.DataContext).Lang["PasswordGood"];
-			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Blue"));
+			this.TryFindResource("PasswordQualityGood", this.ActualThemeVariant, out fontColor);
+			return;
 		}
 
-		if (passwordEntropy >= 100.0)
+		if (passwordEntropy >= 40.0)
 		{
-			strengthTxt = ((GeneratorViewModel)this.DataContext).Lang["PasswordGreat"];
-			PasswordStrength.Foreground = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("Green"));
+			strengthTxt = ((GeneratorViewModel)this.DataContext).Lang["PasswordWeak"];
+			this.TryFindResource("PasswordQualityWeak", this.ActualThemeVariant, out fontColor);
+			return;
 		}
 
-		PasswordStrength.Content = $"{((GeneratorViewModel)this.DataContext).Lang["PasswordStrength"]}: {strengthTxt}";
+		strengthTxt = ((GeneratorViewModel)this.DataContext).Lang["PasswordPoor"];
+		this.TryFindResource("PasswordQualityPoor", this.ActualThemeVariant, out fontColor);
 	}
 
 	private async void OpenFilePicker(object sender, RoutedEventArgs e)
