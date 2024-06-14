@@ -21,10 +21,7 @@ namespace ScrambledPass.DesktopApp.Logic
 		public ObservableCollection<string> LanguageList
 		{
 			get { return _languages; }
-			set
-			{
-				_languages = value;
-			}
+			set { _languages = value; }
 		}
 
 		public Localizer()
@@ -86,6 +83,11 @@ namespace ScrambledPass.DesktopApp.Logic
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(IndexerName));
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(IndexerArrayName));
+		}
+
+		public int SelectedLanguageIndex()
+		{
+			return LanguageList.IndexOf(Language);
 		}
 
 		// Create the OnPropertyChanged method to raise the event

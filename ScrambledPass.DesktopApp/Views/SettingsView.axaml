@@ -15,7 +15,7 @@
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,10">
                 <Label Content="{lang:Localize Language}"/>
-                <ComboBox x:Name="LanguageSelector" ItemsSource="{Binding LanguageList}" SelectionChanged="ChangeLanguage"/>
+                <ComboBox x:Name="LanguageSelector" ItemsSource="{Binding LanguageList}" SelectionChanged="ChangeLanguage" SelectedIndex="{Binding SelectedLanguage}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                 <Label Content="{lang:Localize Theme}"/>

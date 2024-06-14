@@ -14,4 +14,10 @@ public class SettingsViewModel : ViewModelBase
 	{
 		get { return Localizer.Instance.LanguageList; }
 	}
+
+	public int SelectedLanguage
+	{
+		get { return Localizer.Instance.SelectedLanguageIndex(); }
+		set { Localizer.Instance.LoadLanguage(Localizer.Instance.LanguageList[value]); }
+	}
 }
