@@ -13,12 +13,18 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<Grid RowDefinitions="*,Auto" Margin="10">
+	<Grid Margin="10">
         <TransitioningContentControl Content="{Binding CurrentPage}" />
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="5"
-					HorizontalAlignment="Right">
-            <Button Command="{Binding ToggleActiveScreenCommand}" Content="Settings" />
+        <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button Command="{Binding ToggleActiveScreenCommand}" Height="20" Width="20">
+				<Button.Content>
+					<Image Source="/Assets/Icons/settings.png" Stretch="Uniform" Height="20" Width="20"/>
+				</Button.Content>
+				<Button.Background>
+					<SolidColorBrush Opacity="0"/>
+				</Button.Background>
+			</Button>
         </StackPanel>
     </Grid>
 </Window>

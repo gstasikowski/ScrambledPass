@@ -17,7 +17,7 @@
 			<CheckBox x:Name="EnableRandomWords" Content="{lang:Localize EnableRandomWords}" Margin="10,10,0,0" IsChecked="True" Click="ToggleWordPanel"/>
 			<StackPanel x:Name="WordPanel" HorizontalAlignment="Left" Margin="30,0,0,0" Width="248" Spacing="5">
 				<StackPanel Orientation="Horizontal" Spacing="10">
-					<Label Content="{lang:Localize CharacterCount}" />
+					<Label Content="{lang:Localize CharacterCount}"/>
 					<NumericUpDown x:Name="WordCount" Height="23" Width="200" Value="{Binding Generator.Parameters.WordCount}" FormatString="0" Minimum="1"/>
 				</StackPanel>
 				<CheckBox Content="{lang:Localize EnableRandomLetterSize}" IsChecked="{Binding Generator.Parameters.RandomizeLetterSize}"/>
@@ -67,11 +67,6 @@
 			<Button HorizontalAlignment="Right" Margin="10,0,0,0" Height="20" Width="20" Click="ResetWordList">
 					<Button.Background>
 						<ImageBrush Source="/Assets/Icons/reload.png" Stretch="Uniform"/>
-					</Button.Background>
-			</Button>
-			<Button HorizontalAlignment="Right" Margin="10,0,0,0" Height="20" Width="20">
-					<Button.Background>
-						<ImageBrush Source="/Assets/Icons/settings.png" Stretch="Uniform"/>
 					</Button.Background>
 			</Button>
         </StackPanel>
