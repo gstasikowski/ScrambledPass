@@ -25,7 +25,7 @@
 	"DefaultCharacterCount": "Default character count",
 	"ClearClipboard": "Clear clipboard after copying the password",
 	"ClearClipboardDelay": "Delay before clearing the clipboard (seconds)",
-	"Save": "Save",
+	"Save": "Apply",
 	"RestoreDefault": "Restore default",
 	"Back": "Return",
 	"SelectWordFile": "Select word file"
