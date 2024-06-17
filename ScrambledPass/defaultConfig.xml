@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Config>
+  <languageID>en-US</languageID>
+  <theme>Light</theme>
+  <lastWordList></lastWordList>
+  <rememberLastWordList>False</rememberLastWordList>
+  <defaultWordCount>15</defaultWordCount>
+  <defaultSymbolCount>5</defaultSymbolCount>
+  <clearClipboard>False</clearClipboard>
+  <clearClipboardDelay>15</clearClipboardDelay>
+</Config>
