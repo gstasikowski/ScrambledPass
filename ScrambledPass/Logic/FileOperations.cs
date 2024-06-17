@@ -88,22 +88,38 @@ namespace ScrambledPass.Logic
 
 		public void LoadSettings()
 		{
-			string configFilePath = _dataBank.DefaultConfigFile;
+			string configFilePath = _dataBank.ConfigFile;
 
 			if (File.Exists(configFilePath))
 			{
 				string configFile = File.ReadAllText(configFilePath);
-				XElement rootElement = XElement.Parse(configFile);
-
-				foreach (var element in rootElement.Elements())
-				{
-					_dataBank.SetSetting(element.Name.LocalName, element.Value);
-				}
+				ParseSettings(configFile);
 			}
 			else
 			{
-				_dataBank.SetDefaultSettings();
+				LoadDefaultSettings(_dataBank.DefaultConfigFile);
 				SaveSettings();
+			}
+		}
+
+		public void LoadDefaultSettings(string assemblyConfigFile)
+		{
+			try
+			{
+				var assembly = Assembly.GetExecutingAssembly();
+
+				using (Stream stream = assembly.GetManifestResourceStream(assemblyConfigFile))
+				using (StreamReader reader = new StreamReader(stream))
+				{
+					string? configContent = reader.ReadToEnd();
+					ParseSettings(configContent);
+
+					reader.Close();
+				}
+			}
+			catch (FileNotFoundException e)
+			{
+				new ErrorHandler("ErrorFileNotFound", null, e.InnerException);
 			}
 		}
 
@@ -112,13 +128,23 @@ namespace ScrambledPass.Logic
 			Dictionary<string, string> appSettings = _dataBank.GetAllSettings();
 
 			FileStream fileStream;
-			fileStream = new FileStream(_dataBank.DefaultConfigFile, FileMode.Create);
+			fileStream = new FileStream(_dataBank.ConfigFile, FileMode.Create);
 
 			XElement rootElement = new XElement("Config", appSettings.Select(kv => new XElement(kv.Key, kv.Value)));
 			XmlSerializer serializer = new XmlSerializer(rootElement.GetType());
 			serializer.Serialize(fileStream, rootElement);
 
 			fileStream.Close();
+		}
+
+		public void ParseSettings(string configContent)
+		{
+			XElement rootElement = XElement.Parse(configContent);
+
+			foreach (var element in rootElement.Elements())
+			{
+				_dataBank.SetSetting(element.Name.LocalName, element.Value);
+			}
 		}
 	}
 }

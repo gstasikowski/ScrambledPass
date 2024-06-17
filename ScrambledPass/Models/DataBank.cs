@@ -6,7 +6,8 @@ namespace ScrambledPass.Models
 	{
 		#region Variables
 		private readonly static string _defaultWordListFile = "ScrambledPass.defaultWordList.txt";
-		private readonly string _defaultConfigFile = AppDomain.CurrentDomain.BaseDirectory + "Config.xml";
+		private readonly string _defaultConfigFile = "ScrambledPass.defaultConfig.xml";
+		private readonly string _configFile = AppDomain.CurrentDomain.BaseDirectory + "Config.xml";
 		private readonly string _defaultThemePath = AppDomain.CurrentDomain.BaseDirectory + "Themes\\";
 
 		private Dictionary<string, string> _settings = new Dictionary<string, string>();
@@ -30,6 +31,11 @@ namespace ScrambledPass.Models
 		public string DefaultConfigFile
 		{
 			get { return _defaultConfigFile; }
+		}
+
+		public string ConfigFile
+		{
+			get { return _configFile; }
 		}
 
 		public string DefaultThemePath
@@ -60,18 +66,6 @@ namespace ScrambledPass.Models
 		#endregion Properties
 
 		#region Methods
-		public void SetDefaultSettings()
-		{
-			SetSetting("languageID", "en-US");
-			SetSetting("theme", "Light");
-			SetSetting("lastWordList", string.Empty);
-			SetSetting("rememberLastWordList", "False");
-			SetSetting("defaultWordCount", "5");
-			SetSetting("defaultSymbolCount", "5");
-			SetSetting("clearClipboard", "False");
-			SetSetting("clearClipboardDelay", "15");
-		}
-
 		public Dictionary<string, string> GetAllSettings()
 		{
 			return _settings;
@@ -93,12 +87,6 @@ namespace ScrambledPass.Models
 				_settings.Add(key, value);
 			}
 		}
-
-		// public int LanguageIndex(string languageCode)
-		// {
-		// 	int languageIndex = _languages.IndexOf(languageCode);
-		// 	return (languageIndex > -1) ? languageIndex : 0;
-		// }
 
 		public void AddAvailableTheme(string themeName)
 		{
