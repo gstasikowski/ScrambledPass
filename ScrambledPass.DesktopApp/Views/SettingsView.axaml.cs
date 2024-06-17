@@ -16,17 +16,17 @@ public partial class SettingsView : UserControl
 
 	private void SaveSettings(object sender, RoutedEventArgs e)
 	{
-		((SettingsViewModel)this.DataContext).Generator.SaveSettings();
+		((SettingsViewModel)this.DataContext).AppSettings.SaveSettings();
 	}
 
 	private void RestoreDefaultSettings(object sender, RoutedEventArgs e)
 	{
-		((SettingsViewModel)this.DataContext).Generator.RestoreDefaultSettings();
+		((SettingsViewModel)this.DataContext).AppSettings.RestoreDefaultSettings();
 	}
 
 	private void ChangeLanguage(object sender, SelectionChangedEventArgs e)
 	{
 		string languageCode = ((ComboBox)sender).SelectedItem.ToString();
-		((SettingsViewModel)this.DataContext).Generator.SetSetting("languageID", languageCode);
+		((SettingsViewModel)this.DataContext).AppSettings.SetSetting("languageID", languageCode);
 	}
 }

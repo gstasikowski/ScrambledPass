@@ -17,28 +17,6 @@ public class AppLogic
 		set { _parameters = value; }
 	}
 
-	public int DefaultWordCount
-	{
-		get
-		{
-			int count = 1;
-			int.TryParse(CoreApp.dataBank.GetSetting("defaultWordCount"), out count);
-			return count;
-		}
-		set { CoreApp.dataBank.SetSetting("defaultWordCount", value.ToString()); }
-	}
-
-	public int DefaultSymbolCount
-	{
-		get
-		{
-			int count = 1;
-			int.TryParse(CoreApp.dataBank.GetSetting("defaultSymbolCount"), out count);
-			return count;
-		}
-		set { CoreApp.dataBank.SetSetting("defaultSymbolCount", value.ToString()); }
-	}
-
 	public static AppLogic Instance { get; set; } = new AppLogic();
 
 	public AppLogic()
@@ -122,26 +100,5 @@ public class AppLogic
 	public double CalculatePasswordEntropy(string password)
 	{
 		return ScrambledPass.Logic.Helpers.CalculateEntropy(password, ref CoreApp.dataBank);
-	}
-
-	public void SaveSettings()
-	{
-		CoreApp.fileOperations.SaveSettings();
-		Localizer.Instance.LoadLanguage(CoreApp.dataBank.GetSetting("languageID"));
-	}
-
-	public void RestoreDefaultSettings()
-	{
-		CoreApp.dataBank.SetDefaultSettings();
-	}
-
-	public string GetSetting(string settingID)
-	{
-		return CoreApp.dataBank.GetSetting(settingID);
-	}
-
-	public void SetSetting(string settingID, string value)
-	{
-		CoreApp.dataBank.SetSetting(settingID, value);
 	}
 }
