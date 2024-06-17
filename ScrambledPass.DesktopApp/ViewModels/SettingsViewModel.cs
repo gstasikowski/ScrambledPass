@@ -10,14 +10,13 @@ public class SettingsViewModel : ViewModelBase
 		get { return AppLogic.Instance; }
 	}
 
+	public Settings AppSettings
+	{
+		get { return Settings.Instance; }
+	}
+
 	public ObservableCollection<string> LanguageList
 	{
 		get { return Localizer.Instance.LanguageList; }
-	}
-
-	public int SelectedLanguage
-	{
-		get { return Localizer.Instance.SelectedLanguageIndex(); }
-		set { Localizer.Instance.LoadLanguage(Localizer.Instance.LanguageList[value]); }
 	}
 }
