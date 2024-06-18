@@ -8,17 +8,26 @@ public class Settings : INotifyPropertyChanged
 {
 	private Core CoreApp
 	{
-		get { return AppLogic.Instance.CoreApp; }
+		get { return Core.Instance; }
 	}
 
 	public static Settings Instance { get; set; } = new Settings();
 	public event PropertyChangedEventHandler PropertyChanged;
 
-
 	public int SelectedLanguage
 	{
 		get { return Localizer.Instance.SelectedLanguageIndex(); }
-		set { Localizer.Instance.LoadLanguage(Localizer.Instance.LanguageList[value]); }
+		set
+		{
+			Localizer.Instance.LoadLanguage(Localizer.Instance.LanguageList[value]);
+			SetSetting("languageID", Localizer.Instance.LanguageList[value]);
+		}
+	}
+
+	public int SelectedTheme
+	{
+		get { return GetThemeIndex(); }
+		set { ChangeTheme(value); }
 	}
 
 	public int DefaultWordCount
@@ -26,10 +35,10 @@ public class Settings : INotifyPropertyChanged
 		get
 		{
 			int count = 1;
-			int.TryParse(CoreApp.dataBank.GetSetting("defaultWordCount"), out count);
+			int.TryParse(GetSetting("defaultWordCount"), out count);
 			return count;
 		}
-		set { CoreApp.dataBank.SetSetting("defaultWordCount", value.ToString()); }
+		set { SetSetting("defaultWordCount", value.ToString()); }
 	}
 
 	public int DefaultSymbolCount
@@ -37,10 +46,19 @@ public class Settings : INotifyPropertyChanged
 		get
 		{
 			int count = 1;
-			int.TryParse(CoreApp.dataBank.GetSetting("defaultSymbolCount"), out count);
+			int.TryParse(GetSetting("defaultSymbolCount"), out count);
 			return count;
 		}
-		set { CoreApp.dataBank.SetSetting("defaultSymbolCount", value.ToString()); }
+		set { SetSetting("defaultSymbolCount", value.ToString()); }
+	}
+
+	public void ApplyUserSettings()
+	{
+		Localizer.Instance.LoadLanguage(GetSetting("languageID"));
+
+		int themeIndex = 0;
+		int.TryParse(GetSetting("theme"), out themeIndex);
+		SelectedTheme = themeIndex;
 	}
 
 	public void SaveSettings()
@@ -51,7 +69,7 @@ public class Settings : INotifyPropertyChanged
 	public void RestoreDefaultSettings()
 	{
 		CoreApp.fileOperations.LoadDefaultSettings(CoreApp.dataBank.DefaultConfigFile);
-		Localizer.Instance.LoadLanguage(CoreApp.dataBank.GetSetting("languageID"));
+		Localizer.Instance.LoadLanguage(GetSetting("languageID"));
 		OnPropertyChanged("SelectedLanguage");
 		OnPropertyChanged("DefaultWordCount");
 		OnPropertyChanged("DefaultSymbolCount");
@@ -70,5 +88,38 @@ public class Settings : INotifyPropertyChanged
 	protected void OnPropertyChanged([CallerMemberName] string name = null)
 	{
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+	}
+
+	private void ChangeTheme(int index)
+	{
+		switch (index)
+		{
+			case 1:
+				Avalonia.Application.Current.RequestedThemeVariant = Avalonia.Styling.ThemeVariant.Light;
+				break;
+
+			case 2:
+				Avalonia.Application.Current.RequestedThemeVariant = Avalonia.Styling.ThemeVariant.Dark;
+				break;
+
+			default:
+				Avalonia.Application.Current.RequestedThemeVariant = Avalonia.Styling.ThemeVariant.Default;
+				break;
+		}
+	}
+
+	private int GetThemeIndex()
+	{
+		switch (Avalonia.Application.Current.RequestedThemeVariant.ToString())
+		{
+			case "Light":
+				return 1;
+
+			case "Dark":
+				return 2;
+
+			default:
+				return 0;
+		}
 	}
 }

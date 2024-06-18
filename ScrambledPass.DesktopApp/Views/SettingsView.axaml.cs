@@ -22,11 +22,6 @@ public partial class SettingsView : UserControl
 	private void RestoreDefaultSettings(object sender, RoutedEventArgs e)
 	{
 		((SettingsViewModel)this.DataContext).AppSettings.RestoreDefaultSettings();
-	}
 
-	private void ChangeLanguage(object sender, SelectionChangedEventArgs e)
-	{
-		string languageCode = ((ComboBox)sender).SelectedItem.ToString();
-		((SettingsViewModel)this.DataContext).AppSettings.SetSetting("languageID", languageCode);
 	}
 }
