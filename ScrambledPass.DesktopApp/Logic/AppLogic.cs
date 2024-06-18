@@ -21,13 +21,8 @@ public class AppLogic
 
 	public AppLogic()
 	{
-		InitializeSettings();
+		Settings.Instance.ApplyUserSettings();
 		InitializeDefaultParameters();
-	}
-
-	private void InitializeSettings()
-	{
-		Localizer.Instance.LoadLanguage(CoreApp.dataBank.GetSetting("languageID"));
 	}
 
 	private void InitializeDefaultParameters()

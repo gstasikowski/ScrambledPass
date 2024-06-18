@@ -15,13 +15,17 @@
         <StackPanel Spacing="10">
             <StackPanel Orientation="Horizontal" Margin="0,10">
                 <Label Content="{lang:Localize Language}"/>
-                <ComboBox x:Name="LanguageSelector" ItemsSource="{Binding LanguageList}" SelectionChanged="ChangeLanguage" SelectedIndex="{Binding AppSettings.SelectedLanguage}"/>
+                <ComboBox ItemsSource="{Binding LanguageList}" SelectedIndex="{Binding AppSettings.SelectedLanguage}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                 <Label Content="{lang:Localize Theme}"/>
-                <ComboBox x:Name="cboTheme"/>
+                <ComboBox SelectedIndex="{Binding AppSettings.SelectedTheme}">
+					<ComboBoxItem Content="{lang:Localize ThemeAutomatic}"/>
+					<ComboBoxItem Content="{lang:Localize ThemeLight}"/>
+					<ComboBoxItem Content="{lang:Localize ThemeDark}"/>
+				</ComboBox>
             </StackPanel>
-            <CheckBox x:Name="chkLoadCustomWordList" Content="{lang:Localize LoadWordList}" Margin="3,0,0,0" />
+            <CheckBox Content="{lang:Localize LoadWordList}" Margin="3,0,0,0" />
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
                 <Label Content="{lang:Localize DefaultWordCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <NumericUpDown HorizontalAlignment="Right" Width="200" Value="{Binding AppSettings.DefaultWordCount}" FormatString="0" Minimum="1"/>
@@ -34,7 +38,7 @@
                 <CheckBox Content="{lang:Localize ClearClipboard}" Margin="3,0,0,0" />
                 <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
                     <Label Content="{lang:Localize ClearClipboardDelay}" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtClearClipboardDelay" HorizontalAlignment="Left" Text="25" VerticalAlignment="Center" Width="40"/>
+                    <TextBox HorizontalAlignment="Left" Text="25" VerticalAlignment="Center" Width="40"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,5" >
