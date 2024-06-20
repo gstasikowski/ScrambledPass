@@ -9,12 +9,24 @@
 			<SolidColorBrush x:Key="PasswordQualityGood" Color="Blue"/>
 			<SolidColorBrush x:Key="PasswordQualityWeak" Color="Orange"/>
 			<SolidColorBrush x:Key="PasswordQualityPoor" Color="Red"/>
+
+			<ControlTheme x:Key="PanelContainer" TargetType="StackPanel">
+				<Setter Property="Background">
+					<SolidColorBrush  Color="Gray" Opacity="0.2" />
+				</Setter>
+			</ControlTheme>
 		</ResourceDictionary>
 		<ResourceDictionary x:Key="Dark">
 			<SolidColorBrush x:Key="PasswordQualityGreat" Color="Green"/>
 			<SolidColorBrush x:Key="PasswordQualityGood" Color="CornflowerBlue"/>
 			<SolidColorBrush x:Key="PasswordQualityWeak" Color="Yellow"/>
 			<SolidColorBrush x:Key="PasswordQualityPoor" Color="OrangeRed"/>
+
+			<ControlTheme x:Key="PanelContainer" TargetType="StackPanel">
+				<Setter Property="Background">
+					<SolidColorBrush  Color="Gray" Opacity="0.3" />
+				</Setter>
+			</ControlTheme>
 		</ResourceDictionary>
 	</ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
