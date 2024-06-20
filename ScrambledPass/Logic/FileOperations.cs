@@ -76,7 +76,11 @@ namespace ScrambledPass.Logic
 				wordList.Clear();
 				wordList.AddRange(File.ReadAllLines(filePath));
 
-				_dataBank.SetSetting("lastWordList", filePath);
+				if (_dataBank.GetSetting("rememberLastWordList") == "True")
+				{
+					_dataBank.SetSetting("lastWordList", filePath);
+					SaveSettings();
+				}
 			}
 			else
 			{

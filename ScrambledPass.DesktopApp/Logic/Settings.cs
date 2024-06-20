@@ -30,6 +30,12 @@ public class Settings : INotifyPropertyChanged
 		set { ChangeTheme(value); }
 	}
 
+	public bool RememberLastWordList
+	{
+		get { return GetSetting("rememberLastWordList") == "True"; }
+		set { ToggleLastWordList(value); }
+	}
+
 	public int DefaultWordCount
 	{
 		get
@@ -122,6 +128,16 @@ public class Settings : INotifyPropertyChanged
 
 			default:
 				return 0;
+		}
+	}
+
+	private void ToggleLastWordList(bool enable)
+	{
+		SetSetting("rememberLastWordList", enable.ToString());
+
+		if (!enable)
+		{
+			SetSetting("lastWordList", string.Empty);
 		}
 	}
 }
