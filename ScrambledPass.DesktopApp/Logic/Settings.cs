@@ -106,6 +106,8 @@ public class Settings : INotifyPropertyChanged
 				Avalonia.Application.Current.RequestedThemeVariant = Avalonia.Styling.ThemeVariant.Default;
 				break;
 		}
+
+		SetSetting("theme", index.ToString());
 	}
 
 	private int GetThemeIndex()
