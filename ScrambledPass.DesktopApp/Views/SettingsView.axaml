@@ -25,7 +25,7 @@
 					<ComboBoxItem Content="{lang:Localize ThemeDark}"/>
 				</ComboBox>
             </StackPanel>
-            <CheckBox Content="{lang:Localize LoadWordList}" Margin="3,0,0,0" />
+            <CheckBox Content="{lang:Localize LoadWordList}" Margin="3,0,0,0" IsChecked="{Binding AppSettings.RememberLastWordList}"/>
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
                 <Label Content="{lang:Localize DefaultWordCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <NumericUpDown HorizontalAlignment="Right" Width="200" Value="{Binding AppSettings.DefaultWordCount}" FormatString="0" Minimum="1"/>
