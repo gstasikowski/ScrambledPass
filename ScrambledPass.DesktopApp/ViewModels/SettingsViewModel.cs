@@ -1,22 +1,23 @@
 ﻿using System.Collections.ObjectModel;
 using ScrambledPass.DesktopApp.Logic;
 
-namespace ScrambledPass.DesktopApp.ViewModels;
-
-public class SettingsViewModel : ViewModelBase
+namespace ScrambledPass.DesktopApp.ViewModels
 {
-	public AppLogic Generator
+	public class SettingsViewModel : ViewModelBase
 	{
-		get { return AppLogic.Instance; }
-	}
+		public AppLogic Generator
+		{
+			get { return AppLogic.Instance; }
+		}
 
-	public Settings AppSettings
-	{
-		get { return Settings.Instance; }
-	}
+		public Settings AppSettings
+		{
+			get { return Settings.Instance; }
+		}
 
-	public ObservableCollection<string> LanguageList
-	{
-		get { return Localizer.Instance.LanguageList; }
+		public ObservableCollection<string> LanguageList
+		{
+			get { return Localizer.Instance.LanguageList; }
+		}
 	}
 }
