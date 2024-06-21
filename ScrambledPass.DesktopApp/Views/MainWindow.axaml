@@ -16,10 +16,10 @@
 	<Grid Margin="10">
         <TransitioningContentControl Content="{Binding CurrentPage}" />
 
-        <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <Button Command="{Binding ToggleActiveScreenCommand}" Height="20" Width="20">
+        <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Command="{Binding ToggleActiveScreenCommand}" Margin="0,0,0,3">
 				<Button.Content>
-					<Image Source="/Assets/Icons/settings.png" Stretch="Uniform" Height="20" Width="20"/>
+					<Image Source="/Assets/Icons/settings.png" Height="20" Width="20"/>
 				</Button.Content>
 				<Button.Background>
 					<SolidColorBrush Opacity="0"/>
