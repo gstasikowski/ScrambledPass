@@ -6,7 +6,7 @@
         mc:Ignorable="d" MinWidth="520" MinHeight="670" VerticalContentAlignment="Stretch" SizeToContent="WidthAndHeight"
         x:Class="ScrambledPass.DesktopApp.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/logo.png"
         Title="ScrambledPass">
 
     <Design.DataContext>
