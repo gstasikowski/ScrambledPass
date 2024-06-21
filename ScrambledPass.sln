@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrambledPass.UnitTests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrambledPass.ConsoleApp", "ScrambledPass.ConsoleApp\ScrambledPass.ConsoleApp.csproj", "{EC691C0A-1553-4CBD-9CCF-F66E8A845BDE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrambledPass.DesktopApp", "ScrambledPass.DesktopApp\ScrambledPass.DesktopApp.csproj", "{EC691C0A-1553-4CBD-9CCF-F66E8A845BDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
