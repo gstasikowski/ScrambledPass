@@ -13,7 +13,6 @@
 			<ControlTheme x:Key="PanelContainer" TargetType="Border">
 				<Setter Property="HorizontalAlignment" Value="Stretch"/>
 				<Setter Property="Padding" Value="5"/>
-				<Setter Property="Margin" Value="0,0,30,0"/>
 				<Setter Property="BorderBrush">
 					<SolidColorBrush  Color="Black" Opacity="0.3" />
 				</Setter>
@@ -33,7 +32,6 @@
 			<ControlTheme x:Key="PanelContainer" TargetType="Border">
 				<Setter Property="HorizontalAlignment" Value="Stretch"/>
 				<Setter Property="Padding" Value="5"/>
-				<Setter Property="Margin" Value="0,0,30,0"/>
 				<Setter Property="BorderBrush">
 					<SolidColorBrush  Color="White" Opacity="0.3" />
 				</Setter>

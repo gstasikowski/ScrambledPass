@@ -56,8 +56,8 @@
         </StackPanel>
 		<Separator Height="10" Opacity="0" Grid.Row="1"/>
         <StackPanel Orientation="Horizontal" Margin="0,0,10,5" Grid.Row="2">
-            <Button Content="{lang:Localize Save}" Padding="5,2" Click="SaveSettings" Margin="0,0,10,0"/>
-            <Button Content="{lang:Localize RestoreDefault}" Padding="5,2" Click="RestoreDefaultSettings" Margin="0,0,10,0"/>
+            <Button Content="{lang:Localize Save}" Click="SaveSettings"/>
+            <Button Content="{lang:Localize RestoreDefault}" Click="RestoreDefaultSettings"/>
         </StackPanel>
     </Grid>
 </UserControl>

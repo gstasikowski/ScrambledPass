@@ -11,13 +11,13 @@
 	<Design.DataContext>
 		<vm:GeneratorViewModel />
 	</Design.DataContext>
-
-	<Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
+<Panel>
+	<Grid RowDefinitions="Auto,Auto,*,Auto">
 		<StackPanel Grid.Row="0">
 			<Border Theme="{DynamicResource PanelContainer}" CornerRadius="3,3,0,3">
 				<CheckBox Content="{lang:Localize EnableRandomWords}" IsChecked="True" Click="ToggleWordPanel" Margin="10,0,0,0"/>
 			</Border>
-			<Border Theme="{DynamicResource PanelContainer}" Margin="30,0" BorderThickness="1,0,1,1" CornerRadius="0,3">
+			<Border Theme="{DynamicResource PanelContainer}" Margin="30,0,0,0" BorderThickness="1,0,1,1" CornerRadius="0,3">
 				<StackPanel x:Name="WordPanel" HorizontalAlignment="Stretch" Spacing="5">
 					<StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Stretch">
 						<Label Content="{lang:Localize WordCount}" VerticalAlignment="Center" Margin="10,0"/>
@@ -32,7 +32,7 @@
 			<Border Theme="{DynamicResource PanelContainer}" CornerRadius="3,3,0,3">
 				<CheckBox Content="{lang:Localize EnableRandomCharacters}" IsChecked="True" Click="ToggleSymbolPanel" Margin="10,0,0,0"/>
 			</Border>
-			<Border Theme="{DynamicResource PanelContainer}" Margin="30,0" BorderThickness="1,0,1,1" CornerRadius="0,3">
+			<Border Theme="{DynamicResource PanelContainer}" Margin="30,0,0,0" BorderThickness="1,0,1,1" CornerRadius="0,3">
 				<StackPanel x:Name="CharacterPanel" HorizontalAlignment="Stretch" Spacing="10">
 					<StackPanel Orientation="Horizontal" Spacing="5">
 						<Label Content="{lang:Localize CharacterCount}" VerticalAlignment="Center" Margin="10,0"/>
@@ -54,35 +54,40 @@
 				</StackPanel>
 			</Border>
 		</StackPanel>
-		<Separator Height="10" Opacity="0" Grid.Row="2"/>
-		<StackPanel Grid.Row="3">
-			<StackPanel Height="50">
+		<Separator Height="5" Opacity="0" Grid.Row="2"/>
+		<StackPanel Grid.Row="3" Margin="0,0,0,35">
 				<Label x:Name="PasswordEntropy" HorizontalContentAlignment="Right" Height="22" Padding="5,5,15,-11"/>
 				<Label x:Name="PasswordStrength" HorizontalContentAlignment="Right" Height="22" Padding="5,5,15,-11"/>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal" Height="50">
-				<Label Content="{lang:Localize Password}" Margin="12,0,0,0" VerticalAlignment="Center"/>
-				<TextBox x:Name="Password" Height="23" Width="350" Margin="10,0" VerticalAlignment="Center"/>
-			</StackPanel>
+				<StackPanel Orientation="Horizontal" Height="50">
+					<Label Content="{lang:Localize Password}" VerticalAlignment="Center" Margin="12,0,0,0"/>
+					<TextBox x:Name="Password" VerticalAlignment="Center" Width="350" Margin="10,0,0,0"/>
+				</StackPanel>
 		</StackPanel>
-		<Grid ColumnDefinitions="Auto,*,Auto" Grid.Row="4">
-			<StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Column="0">
+	</Grid>
+	<Grid ColumnDefinitions="Auto,*,Auto" VerticalAlignment="Bottom" Margin="0,0,35,0">
+			<StackPanel Orientation="Horizontal" Margin="0,5" Grid.Column="0">
 				<Button Content="{lang:Localize Generate}" HorizontalAlignment="Left" Click="GeneratePassword"/>
 				<Button Content="{lang:Localize Randomize}" HorizontalAlignment="Left" Click="RandomizeParameters"/>
 			</StackPanel>
 			<Separator Margin="10" Opacity="0" HorizontalAlignment="Stretch" Grid.Column="1"/>
 			<StackPanel Orientation="Horizontal" Grid.Column="2">
-				<Button HorizontalAlignment="Left" Margin="10,0,0,0" Height="20" Width="20" Click="OpenFilePicker">
-						<Button.Background>
-							<ImageBrush Source="/Assets/Icons/open_file.PNG" Stretch="Uniform"/>
-						</Button.Background>
+				<Button HorizontalAlignment="Left" Click="OpenFilePicker">
+					<Button.Content>
+						<Image Source="/Assets/Icons/open_file.png" Height="20" Width="20"/>
+					</Button.Content>
+					<Button.Background>
+						<SolidColorBrush Opacity="0"/>
+					</Button.Background>
 				</Button>
-				<Button HorizontalAlignment="Right" Margin="10,0,0,0" Height="20" Width="20" Click="ResetWordList">
-						<Button.Background>
-							<ImageBrush Source="/Assets/Icons/reload.png" Stretch="Uniform"/>
-						</Button.Background>
+				<Button HorizontalAlignment="Right" Click="ResetWordList">
+					<Button.Content>
+						<Image Source="/Assets/Icons/reload.png" Height="20" Width="20"/>
+					</Button.Content>
+					<Button.Background>
+						<SolidColorBrush Opacity="0"/>
+					</Button.Background>
 				</Button>
 			</StackPanel>
         </Grid>
-	</Grid>
+	</Panel>
 </UserControl>
