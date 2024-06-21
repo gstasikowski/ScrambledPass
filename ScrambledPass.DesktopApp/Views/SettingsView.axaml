@@ -1,0 +1,63 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ScrambledPass.DesktopApp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Class="ScrambledPass.DesktopApp.Views.SettingsView"
+        x:DataType="vm:SettingsViewModel"
+        xmlns:lang="clr-namespace:ScrambledPass.DesktopApp.Logic"
+        mc:Ignorable="d">
+	<Design.DataContext>
+		<vm:SettingsViewModel />
+	</Design.DataContext>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <StackPanel Spacing="10" Grid.Row="0">
+			<Border Theme="{DynamicResource PanelContainer}">
+				<StackPanel Spacing="5">
+					<Label Content="{lang:Localize Language}" Margin="10,0"/>
+					<ComboBox ItemsSource="{Binding LanguageList}" SelectedIndex="{Binding AppSettings.SelectedLanguage}" Width="200" Margin="10,0,0,5"/>
+				</StackPanel>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}">
+				<StackPanel Spacing="5" Margin="0,0,0,5">
+					<Label Content="{lang:Localize Theme}" Margin="10,0"/>
+					<ComboBox SelectedIndex="{Binding AppSettings.SelectedTheme}" Width="200" Margin="10,0,0,5">
+						<ComboBoxItem Content="{lang:Localize ThemeAutomatic}"/>
+						<ComboBoxItem Content="{lang:Localize ThemeLight}"/>
+						<ComboBoxItem Content="{lang:Localize ThemeDark}"/>
+					</ComboBox>
+				</StackPanel>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}">
+            	<CheckBox Content="{lang:Localize LoadWordList}" IsChecked="{Binding AppSettings.RememberLastWordList}" Margin="10,0"/>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}">
+				<StackPanel Spacing="5">
+					<Label Content="{lang:Localize DefaultWordCount}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0"/>
+					<NumericUpDown Value="{Binding AppSettings.DefaultWordCount}" FormatString="0" Minimum="1" Width="200" HorizontalAlignment="Left" Margin="10,0,0,5"/>
+				</StackPanel>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}">
+				<StackPanel Spacing="5">
+					<Label Content="{lang:Localize DefaultCharacterCount}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0"/>
+					<NumericUpDown Value="{Binding AppSettings.DefaultSymbolCount}" FormatString="0" Minimum="1" Width="200" HorizontalAlignment="Left" Margin="10,0,0,5"/>
+				</StackPanel>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}">
+                <CheckBox Content="{lang:Localize ClearClipboard}" IsChecked="{Binding AppSettings.ClearClipboard}" Margin="10,0"/>
+            </Border>
+			<Border Theme="{DynamicResource PanelContainer}">
+				<StackPanel Spacing="5">
+					<Label Content="{lang:Localize ClearClipboardDelay}" Margin="10,0"/>
+					<NumericUpDown Value="{Binding AppSettings.ClearClipboardDelay}" FormatString="0" Minimum="1" Width="200" HorizontalAlignment="Left" Margin="10,0,0,5"/>
+				</StackPanel>
+			</Border>
+        </StackPanel>
+		<Separator Height="10" Opacity="0" Grid.Row="1"/>
+        <StackPanel Orientation="Horizontal" Margin="0,0,10,5" Grid.Row="2">
+            <Button Content="{lang:Localize Save}" Click="SaveSettings"/>
+            <Button Content="{lang:Localize RestoreDefault}" Click="RestoreDefaultSettings"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

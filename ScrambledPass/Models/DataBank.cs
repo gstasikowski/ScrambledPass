@@ -1,128 +1,106 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace ScrambledPass.Models
 {
-    public class DataBank
-    {
-        #region Variables
-        static string defaultWordListFile = "ScrambledPass.Resources.defaultWordList.txt";
-        readonly string defaultConfigFile = AppDomain.CurrentDomain.BaseDirectory + "Config.xml";
-        readonly string defaultLanguagePath = AppDomain.CurrentDomain.BaseDirectory + "Languages\\";
-        readonly string defaultThemePath = AppDomain.CurrentDomain.BaseDirectory + "Themes\\";
-        
-        Dictionary<string, string> settings = new Dictionary<string, string>();
-        List<string> wordList = new List<string>();
-        static readonly char[] symbols = { ' ', '.', ',', ';', '/', '\\', '\'', '[', ']', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '|', ':', '\"', '<', '>', '?' };
+	public class DataBank
+	{
+		#region Variables
+		private readonly static string _defaultWordListFile = "ScrambledPass.defaultWordList.txt";
+		private readonly string _defaultConfigFile = "ScrambledPass.defaultConfig.xml";
+		private readonly string _configFile = AppDomain.CurrentDomain.BaseDirectory + "Config.xml";
+		private readonly string _defaultThemePath = AppDomain.CurrentDomain.BaseDirectory + "Themes\\";
 
-        private ObservableCollection<string> languageList = new ObservableCollection<string>();
-        private ObservableCollection<string> themeList = new ObservableCollection<string>();
-        #endregion Variables
+		private Dictionary<string, string> _settings = new Dictionary<string, string>();
+		private List<string> _wordList = new List<string>();
+		private static readonly char[] _symbols = { ' ', '.', ',', ';', '/', '\\', '\'', '[', ']', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '|', ':', '\"', '<', '>', '?' };
 
-        #region Properties
-        public string DefaultWordListFile
-        {
-            get { return defaultWordListFile; }
-        }
+		private ObservableCollection<string> _themes = new ObservableCollection<string>();
+		#endregion Variables
 
-        public string DefaultConfigFile
-        {
-            get { return defaultConfigFile; }
-        }
+		#region Properties
+		public string AppPath
+		{
+			get { return AppDomain.CurrentDomain.BaseDirectory; }
+		}
 
-        public string DefaultLanguagePath
-        {
-            get { return defaultLanguagePath; }
-        }
+		public string DefaultWordListFile
+		{
+			get { return _defaultWordListFile; }
+		}
 
-        public string DefaultThemePath
-        {
-            get { return defaultThemePath; }
-        }
+		public string DefaultConfigFile
+		{
+			get { return _defaultConfigFile; }
+		}
 
-        public List<string> WordList
-        {
-            get { return wordList; }
-        }
+		public string ConfigFile
+		{
+			get { return _configFile; }
+		}
 
-        public char[] Symbols
-        {
-            get { return symbols; }
-        }
+		public string DefaultThemePath
+		{
+			get { return _defaultThemePath; }
+		}
 
-        public int SpecialCharsCount
-        {
-            get { return symbols.Length; }
-        }
+		public List<string> WordList
+		{
+			get { return _wordList; }
+		}
 
-        public ObservableCollection<string> LanguageList
-        {
-            get { return languageList; }
-            set { languageList = value; }
-        }
-        public ObservableCollection<string> ThemeList
-        {
-            get { return themeList; }
-            set { themeList = value; }
-        }
-        #endregion Properties
+		public char[] Symbols
+		{
+			get { return _symbols; }
+		}
 
-        #region Methods
-        public void DefaultSettings()
-        {
-            SetSetting("languageID", "en-US");
-            SetSetting("theme", "Light");
-            SetSetting("lastWordList", string.Empty);
-            SetSetting("rememberLastWordList", "False");
-            SetSetting("defaultWordCount", "5");
-            SetSetting("defaultCharCount", "5");
-            SetSetting("clearClipboard", "False");
-            SetSetting("clearClipboardDelay", "15");
-        }
+		public int SpecialCharsCount
+		{
+			get { return _symbols.Length; }
+		}
 
-        public Dictionary<string, string> GetAllSettings()
-        {
-            return settings;
-        }
+		public ObservableCollection<string> ThemeList
+		{
+			get { return _themes; }
+			set { _themes = value; }
+		}
+		#endregion Properties
 
-        public string GetSetting(string key)
-        {
-            return settings[key];
-        }
+		#region Methods
+		public Dictionary<string, string> GetAllSettings()
+		{
+			return _settings;
+		}
 
-        public void SetSetting(string key, string value)
-        {
-            if (settings.ContainsKey(key))
-            { settings[key] = value; }
-            else
-            { settings.Add(key, value); }
-        }
+		public string GetSetting(string key)
+		{
+			return _settings[key];
+		}
 
-        
-        public void AddAvailableLanguage(string languageCode)
-        {
-            if (!languageList.Contains(languageCode))
-            { languageList.Add(languageCode); }
-        }
+		public void SetSetting(string key, string value)
+		{
+			if (_settings.ContainsKey(key))
+			{
+				_settings[key] = value;
+			}
+			else
+			{
+				_settings.Add(key, value);
+			}
+		}
 
-        public int LanguageIndex(string languageCode)
-        {
-            int languageIndex = languageList.IndexOf(languageCode);
-            return (languageIndex > -1) ? languageIndex : 0;
-        }
+		public void AddAvailableTheme(string themeName)
+		{
+			if (!_themes.Contains(themeName))
+			{
+				_themes.Add(themeName);
+			}
+		}
 
-        public void AddAvailableTheme(string themeName)
-        {
-            if (!themeList.Contains(themeName))
-            { themeList.Add(themeName); }
-        }
-
-        public int ThemeIndex(string themeName)
-        {
-            int themeIndex = themeList.IndexOf(themeName);
-            return (themeIndex > -1) ? themeIndex : 0;
-        }
-        #endregion Methods
-    }
+		public int ThemeIndex(string themeName)
+		{
+			int themeIndex = _themes.IndexOf(themeName);
+			return (themeIndex > -1) ? themeIndex : 0;
+		}
+		#endregion Methods
+	}
 }

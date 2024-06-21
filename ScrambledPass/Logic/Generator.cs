@@ -1,185 +1,212 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Text;
+using ScrambledPass.Helpers;
+using ScrambledPass.Models;
 
 namespace ScrambledPass.Logic
 {
-    public class Generator
-    {
-        Random randomIndex = new Random();
-        List<char> availableCharList = new List<char>();
+	public class Generator
+	{
+		private DataBank _dataBank;
 
-        public Generator()
-        {
+		private Random _randomInt = new Random();
+		private List<char> _availableCharacters = new List<char>();
 
-        }
+		public Generator(DataBank dataBank)
+		{
+			_dataBank = dataBank;
+		}
 
-        #region Methods (public)
-        public string GeneratePassword(int wordCount, int symbolMode, int symbolCount, bool randomCharSize, bool useLetters, bool useBigLetters, bool useNumbers, bool useSymbols)
-        {
-            string newPassword = "";
-            PrepareCharList(wordCount, useLetters, useBigLetters, useNumbers, useSymbols);
+		#region Methods (public)
+		public string GeneratePassword(GeneratorParameters parameters)
+		{
+			StringBuilder passwordBuilder = new StringBuilder();
 
-            for (int i = 0; i < wordCount; i++)
-                newPassword += Refs.dataBank.WordList[randomIndex.Next(0, Refs.dataBank.WordList.Count)] + " ";
+			PrepareCharacterList(
+				parameters.WordCount,
+				parameters.UseLetters,
+				parameters.UseCapitalLetters,
+				parameters.UseNumbers,
+				parameters.UseSymbols
+			);
 
-            if (randomCharSize)
-                newPassword = RandomizeLetterSize(newPassword);
+			InsertWords(parameters.WordCount, ref passwordBuilder);
 
-            if (useLetters || useBigLetters || useNumbers || useSymbols)
-            {
-                switch (symbolMode)
-                {
-                    case 0:
-                        newPassword = RandomizeSpacing(newPassword, symbolCount);
-                        break;
+			if (parameters.RandomizeLetterSize)
+			{
+				RandomizeLetterSize(ref passwordBuilder);
+			}
 
-                    case 1:
-                        newPassword = ReplaceRandomCharacters(newPassword, symbolCount);
-                        break;
+			InsertSymbols(
+				parameters.SymbolMode,
+				parameters.SymbolCount,
+				parameters.UseLetters,
+				parameters.UseCapitalLetters,
+				parameters.UseNumbers,
+				parameters.UseSymbols,
+				ref passwordBuilder
+			);
 
-                    case 2:
-                        newPassword = InsertRandomCharacters(newPassword, symbolCount);
-                        break;
+			return passwordBuilder.ToString().Trim();
+		}
+		#endregion Methods (public)
 
-                    default:
-                        break;
-                }
-            }
+		#region Methods (private)
+		private void PrepareCharacterList(
+			int wordCount,
+			bool useLetters,
+			bool useCapitalLetters,
+			bool useNumbers,
+			bool useSymbols
+		)
+		{
+			_availableCharacters.Clear();
 
-            return newPassword.Trim();
-        }
+			if (useLetters)
+			{
+				for (int i = 0; i < 26; i++)
+				{
+					_availableCharacters.Add((char)('a' + i));
+				}
+			}
 
-        public void PrepareWordList(string filePath)
-        {
-            Refs.dataBank.WordList.Clear();
+			if (useCapitalLetters)
+			{
+				for (int i = 0; i < 26; i++)
+				{
+					_availableCharacters.Add((char)('A' + i));
+				}
+			}
 
-            if (filePath == string.Empty)
-                Refs.dataBank.WordList.AddRange(FileOperations.LoadDefaultWordList());
-            else
-                Refs.dataBank.WordList.AddRange(FileOperations.LoadCustomWordList(filePath));
-        }
+			if (useNumbers)
+			{
+				for (int i = 48; i < 58; i++)
+				{
+					_availableCharacters.Add((char)i);
+				}
+			}
 
-        public double CalculateEntropy(string password)
-        {
-            int uniqueSymbols = 0;
+			if (useSymbols)
+			{
+				_availableCharacters.AddRange(_dataBank.Symbols);
+			}
 
-            if (password.Any(char.IsLower))
-                uniqueSymbols += 26;
+			if (wordCount > 0 && !useSymbols)
+			{
+				_availableCharacters.Add(' ');
+			}
+		}
 
-            if (password.Any(char.IsUpper))
-                uniqueSymbols += 26;
+		private void InsertWords(int wordCount, ref StringBuilder passwordBuilder)
+		{
+			if (_dataBank.WordList.Count < 1)
+			{
+				new ErrorHandler("WordListEmpty");
+			}
 
-            if (password.Any(char.IsDigit))
-                uniqueSymbols += 10;
+			for (int i = 0; i < wordCount; i++)
+			{
+				passwordBuilder.Append(_dataBank.WordList[_randomInt.Next(0, _dataBank.WordList.Count)] + " ");
+			}
+		}
 
-            if (password.Any(char.IsSymbol) || password.Any(char.IsPunctuation))
-                uniqueSymbols += Refs.dataBank.SpecialCharsCount;
+		private void InsertSymbols(
+			int symbolMode,
+			int symbolCount,
+			bool useLetters,
+			bool useCapitalLetters,
+			bool useNumbers,
+			bool useSymbols,
+			ref StringBuilder passwordBuilder
+		)
+		{
+			if (useLetters || useCapitalLetters || useNumbers || useSymbols)
+			{
+				if (passwordBuilder.Length == 0)
+				{
+					symbolMode = (int)SymbolMode.RandomInsert;
+				}
 
-            double entropy = Math.Log(Math.Pow(uniqueSymbols, password.Length));
-            return Math.Round(entropy, 2);
-        }
-        #endregion Methods (public)
+				switch (symbolMode)
+				{
+					case (int)SymbolMode.RandomSpacing:
+						RandomizeSpacing(ref passwordBuilder, symbolCount);
+						break;
 
-        #region Methods (private)
-        void PrepareCharList(int wordCount, bool useLetters, bool useBigLetters, bool useNumbers, bool useSymbols)
-        {
-            availableCharList.Clear();
+					case (int)SymbolMode.ReplaceCharacters:
+						ReplaceRandomCharacters(ref passwordBuilder, symbolCount);
+						break;
 
-            if (useLetters)
-            {
-                for (int i = 0; i < 26; i++)
-                    availableCharList.Add((char)('a' + i));
-            }
+					case (int)SymbolMode.RandomInsert:
+						InsertRandomCharacters(ref passwordBuilder, symbolCount);
+						break;
 
-            if (useBigLetters)
-            {
-                for (int i = 0; i < 26; i++)
-                    availableCharList.Add((char)('A' + i));
-            }
+					default:
+						break;
+				}
+			}
+		}
 
-            if (useNumbers)
-            {
-                for (int i = 48; i < 58; i++)
-                    availableCharList.Add((char)i);
-            }
+		private char GetRandomSymbol()
+		{
+			if (_availableCharacters.Count < 1)
+			{
+				return ' ';
+			}
 
-            if (useSymbols)
-                availableCharList.AddRange(Refs.dataBank.Symbols);
+			return _availableCharacters[_randomInt.Next(0, _availableCharacters.Count)];
+		}
 
-            if (wordCount > 0 && !useSymbols)
-                availableCharList.Add(' ');
-        }
+		private void RandomizeSpacing(ref StringBuilder passwordBuilder, int characterCount)
+		{
+			StringBuilder spacingBuilder = new StringBuilder();
 
+			for (int index = 0; index < passwordBuilder.Length; index++)
+			{
+				spacingBuilder.Clear();
 
-        char GetRandomSymbol()
-        {
-            if (availableCharList.Count < 1)
-                return ' ';
+				if (passwordBuilder[index] == ' ')
+				{
+					int spacingWidth = _randomInt.Next(0, characterCount);
 
-            return availableCharList[randomIndex.Next(0, availableCharList.Count)];
-        }
+					for (int spaceIndex = 0; spaceIndex < spacingWidth; spaceIndex++)
+					{
+						spacingBuilder.Append(GetRandomSymbol());
+					}
 
-        string RandomizeSpacing(string password, int charCount)
-        {
-            string newPassword = password.Trim();
-            int spacePosition = newPassword.IndexOf(' ');
+					passwordBuilder.Remove(index, 1);
+					passwordBuilder.Insert(index, spacingBuilder);
+				}
+			}
+		}
 
-            while (spacePosition > 0)
-            {
-                int spacingWidth = randomIndex.Next(0, charCount);
-                string newSpacing = "";
+		private void RandomizeLetterSize(ref StringBuilder passwordBuilder)
+		{
+			int charactersToChange = _randomInt.Next(0, passwordBuilder.Length);
 
-                for (int i = 0; i < spacingWidth; i++)
-                    newSpacing += GetRandomSymbol();
+			for (int changedCount = 0; changedCount < charactersToChange; changedCount++)
+			{
+				int characterIndex = _randomInt.Next(0, passwordBuilder.Length);
+				passwordBuilder[characterIndex] = char.ToUpper(passwordBuilder[characterIndex]);
+			}
+		}
 
-                newPassword = newPassword.Substring(0, spacePosition) + newSpacing + newPassword.Substring(spacePosition + 1);
-                spacePosition = newPassword.IndexOf(' ', spacePosition + newSpacing.Length + 1);
-            }
+		private void ReplaceRandomCharacters(ref StringBuilder passwordBuilder, int characterCount)
+		{
+			for (int i = 0; i < characterCount; i++)
+			{
+				passwordBuilder[_randomInt.Next(0, passwordBuilder.Length)] = GetRandomSymbol();
+			}
+		}
 
-            return newPassword;
-        }
+		private void InsertRandomCharacters(ref StringBuilder passwordBuilder, int characterCount)
+		{
+			for (int i = 0; i < characterCount; i++)
+			{
+				int charPosition = (passwordBuilder.Length > 0) ? _randomInt.Next(0, passwordBuilder.Length) : 0;
 
-        string RandomizeLetterSize(string password)
-        {
-            char[] newPassword = password.ToCharArray();
-            int charChanges = randomIndex.Next(0, newPassword.Length);
-
-            for (int i = 0; i < charChanges; i++)
-            {
-                int charPosition = randomIndex.Next(0, newPassword.Length);
-                newPassword[charPosition] = char.ToUpper(newPassword[charPosition]);
-            }
-
-            return new string(newPassword);
-        }
-
-        string ReplaceRandomCharacters(string password, int charCount)
-        {
-            char[] newPassword = password.ToCharArray();
-
-            for (int i = 0; i < charCount; i++)
-                newPassword[randomIndex.Next(0, newPassword.Length)] = GetRandomSymbol();
-
-            return new string(newPassword);
-        }
-
-        string InsertRandomCharacters(string password, int charCount)
-        {
-            string newPassword = password;
-
-            for (int i = 0; i < charCount; i++)
-            {
-                int charPosition = (newPassword.Length > 0) ? randomIndex.Next(0, newPassword.Length) : 0;
-
-                if (charPosition > 0)
-                    newPassword = newPassword.Substring(0, charPosition) + GetRandomSymbol() + newPassword.Substring(charPosition);
-                else
-                    newPassword = GetRandomSymbol() + newPassword;
-            }
-
-            return newPassword;
-        }
-        #endregion Methods (private)
-    }
+				passwordBuilder.Insert(charPosition, GetRandomSymbol());
+			}
+		}
+		#endregion Methods (private)
+	}
 }

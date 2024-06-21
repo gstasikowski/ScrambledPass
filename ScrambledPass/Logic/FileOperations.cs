@@ -1,118 +1,154 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using ScrambledPass.Models;
 
 namespace ScrambledPass.Logic
 {
-    public static class FileOperations
-    {
-        public static void LoadResources()
-        {
-            LoadTranslations();
-            LoadThemes();
-            LoadSettings();
-        }
+	public class FileOperations
+	{
+		private DataBank _dataBank;
 
-        public static List<string> LoadDefaultWordList()
-        {
-            List<string> wordList = new List<string>();
-            try
-            {
-                var assembly = Assembly.GetExecutingAssembly();
+		public FileOperations(DataBank dataBank)
+		{
+			_dataBank = dataBank;
+			LoadResources();
+		}
 
-                using (Stream stream = assembly.GetManifestResourceStream(Refs.dataBank.DefaultWordListFile))
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    string newWord = "";
+		public void LoadResources()
+		{
+			LoadSettings();
+			PrepareWordList();
+		}
 
-                    do
-                    {
-                        newWord = reader.ReadLine();
-                        wordList.Add(newWord);
-                    } while (!string.IsNullOrEmpty(newWord));
+		public void PrepareWordList()
+		{
+			string wordlistFilePath = _dataBank.GetSetting("lastWordList");
 
-                    reader.Close();
-                }
-            }
-            catch
-            { new ErrorHandler("ErrorFileNotFound"); }
-            
-            Refs.dataBank.SetSetting("lastWordList", string.Empty);
-            return wordList;
-        }
+			_dataBank.WordList.Clear();
 
-        public static List<string> LoadCustomWordList(string filePath)
-        {
-            List<string> wordList = new List<string>();
+			if (wordlistFilePath == string.Empty)
+			{
+				_dataBank.WordList.AddRange(LoadDefaultWordList());
+			}
+			else
+			{
+				_dataBank.WordList.AddRange(LoadCustomWordList(wordlistFilePath));
+			}
+		}
 
-            if (File.Exists(filePath))
-            {
-                wordList.Clear();
-                wordList.AddRange(File.ReadAllLines(filePath));
+		public List<string> LoadDefaultWordList()
+		{
+			List<string> wordList = new List<string>();
+			try
+			{
+				var assembly = Assembly.GetExecutingAssembly();
 
-                Refs.dataBank.SetSetting("lastWordList", filePath);
-            }
-            else
-            { new ErrorHandler("ErrorFileNotFound"); }
+				using (Stream stream = assembly.GetManifestResourceStream(_dataBank.DefaultWordListFile))
+				using (StreamReader reader = new StreamReader(stream))
+				{
+					string? newWord = reader.ReadLine();
 
-            return wordList;
-        }
+					while (!string.IsNullOrEmpty(newWord))
+					{
+						wordList.Add(newWord);
+						newWord = reader.ReadLine();
+					}
 
-        public static void LoadSettings()
-        {
-            string configFilePath = Refs.dataBank.DefaultConfigFile;
+					reader.Close();
+				}
+			}
+			catch (FileNotFoundException e)
+			{
+				new ErrorHandler("ErrorFileNotFound", null, e.InnerException);
+			}
 
-            if (File.Exists(configFilePath))
-            {
-                string configFile = File.ReadAllText(configFilePath);
-                XElement rootElement = XElement.Parse(configFile);
+			_dataBank.SetSetting("lastWordList", string.Empty);
+			return wordList;
+		}
 
-                foreach (var element in rootElement.Elements())
-                { Refs.dataBank.SetSetting(element.Name.LocalName, element.Value); }
-            }
-            else
-            {
-                Refs.dataBank.DefaultSettings();
-                SaveSettings();
-            }
+		public List<string> LoadCustomWordList(string filePath)
+		{
+			List<string> wordList = new List<string>();
 
-            Refs.resourceHandler.SwitchLanguage(Refs.dataBank.GetSetting("languageID"));
-        }
+			if (File.Exists(filePath))
+			{
+				wordList.Clear();
+				wordList.AddRange(File.ReadAllLines(filePath));
 
-        public static void SaveSettings()
-        {
-            Dictionary<string, string> appSettings = Refs.dataBank.GetAllSettings();
+				if (_dataBank.GetSetting("rememberLastWordList") == "True")
+				{
+					_dataBank.SetSetting("lastWordList", filePath);
+					SaveSettings();
+				}
+			}
+			else
+			{
+				new ErrorHandler("ErrorFileNotFound");
+			}
 
-            FileStream fileStream;
-            fileStream = new FileStream(Refs.dataBank.DefaultConfigFile, FileMode.Create);
+			return wordList;
+		}
 
-            XElement rootElement = new XElement("Config", appSettings.Select(kv => new XElement(kv.Key, kv.Value)));
-            XmlSerializer serializer = new XmlSerializer(rootElement.GetType());
-            serializer.Serialize(fileStream, rootElement);
+		public void LoadSettings()
+		{
+			string configFilePath = _dataBank.ConfigFile;
 
-            fileStream.Close();
-        }
+			if (File.Exists(configFilePath))
+			{
+				string configFile = File.ReadAllText(configFilePath);
+				ParseSettings(configFile);
+			}
+			else
+			{
+				LoadDefaultSettings(_dataBank.DefaultConfigFile);
+				SaveSettings();
+			}
+		}
 
-        public static void LoadTranslations()
-        {
-            foreach (string filePath in Directory.EnumerateFiles(Refs.dataBank.DefaultLanguagePath))
-            {
-                string cultureCode = filePath.Substring(filePath.LastIndexOf('\\') + 1).Replace(".xaml", "");
-                var newCulture = System.Globalization.CultureInfo.GetCultureInfo(cultureCode);
-                Refs.dataBank.AddAvailableLanguage(string.Format("{0} [{1}]", newCulture.DisplayName, newCulture.Name));
-            }
-        }
+		public void LoadDefaultSettings(string assemblyConfigFile)
+		{
+			try
+			{
+				var assembly = Assembly.GetExecutingAssembly();
 
-        public static void LoadThemes()
-        {
-            foreach (string filePath in Directory.EnumerateFiles(Refs.dataBank.DefaultThemePath))
-            {
-                string themeName = filePath.Substring(filePath.LastIndexOf('\\') + 1).Replace(".xaml", "");
-                Refs.dataBank.AddAvailableTheme(themeName);
-            }
-        }
-    }
+				using (Stream stream = assembly.GetManifestResourceStream(assemblyConfigFile))
+				using (StreamReader reader = new StreamReader(stream))
+				{
+					string? configContent = reader.ReadToEnd();
+					ParseSettings(configContent);
+
+					reader.Close();
+				}
+			}
+			catch (FileNotFoundException e)
+			{
+				new ErrorHandler("ErrorFileNotFound", null, e.InnerException);
+			}
+		}
+
+		public void SaveSettings()
+		{
+			Dictionary<string, string> appSettings = _dataBank.GetAllSettings();
+
+			FileStream fileStream;
+			fileStream = new FileStream(_dataBank.ConfigFile, FileMode.Create);
+
+			XElement rootElement = new XElement("Config", appSettings.Select(kv => new XElement(kv.Key, kv.Value)));
+			XmlSerializer serializer = new XmlSerializer(rootElement.GetType());
+			serializer.Serialize(fileStream, rootElement);
+
+			fileStream.Close();
+		}
+
+		public void ParseSettings(string configContent)
+		{
+			XElement rootElement = XElement.Parse(configContent);
+
+			foreach (var element in rootElement.Elements())
+			{
+				_dataBank.SetSetting(element.Name.LocalName, element.Value);
+			}
+		}
+	}
 }

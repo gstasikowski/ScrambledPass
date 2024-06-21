@@ -1,0 +1,46 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+		xmlns:controls="using:RatingControlSample.Controls"
+		xmlns:converter="using:RatingControlSample.Converter"
+				xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<ResourceDictionary.ThemeDictionaries>
+		<ResourceDictionary x:Key="Light">
+			<SolidColorBrush x:Key="PasswordQualityGreat" Color="Green"/>
+			<SolidColorBrush x:Key="PasswordQualityGood" Color="Blue"/>
+			<SolidColorBrush x:Key="PasswordQualityWeak" Color="Orange"/>
+			<SolidColorBrush x:Key="PasswordQualityPoor" Color="Red"/>
+
+			<ControlTheme x:Key="PanelContainer" TargetType="Border">
+				<Setter Property="HorizontalAlignment" Value="Stretch"/>
+				<Setter Property="Padding" Value="5"/>
+				<Setter Property="BorderBrush">
+					<SolidColorBrush  Color="Black" Opacity="0.3" />
+				</Setter>
+				<Setter Property="BorderThickness" Value="1"/>
+				<Setter Property="CornerRadius" Value="3"/>
+				<Setter Property="Background">
+					<SolidColorBrush  Color="Black" Opacity="0.1" />
+				</Setter>
+			</ControlTheme>
+		</ResourceDictionary>
+		<ResourceDictionary x:Key="Dark">
+			<SolidColorBrush x:Key="PasswordQualityGreat" Color="Green"/>
+			<SolidColorBrush x:Key="PasswordQualityGood" Color="CornflowerBlue"/>
+			<SolidColorBrush x:Key="PasswordQualityWeak" Color="Yellow"/>
+			<SolidColorBrush x:Key="PasswordQualityPoor" Color="OrangeRed"/>
+
+			<ControlTheme x:Key="PanelContainer" TargetType="Border">
+				<Setter Property="HorizontalAlignment" Value="Stretch"/>
+				<Setter Property="Padding" Value="5"/>
+				<Setter Property="BorderBrush">
+					<SolidColorBrush  Color="White" Opacity="0.3" />
+				</Setter>
+				<Setter Property="BorderThickness" Value="1"/>
+				<Setter Property="CornerRadius" Value="3"/>
+				<Setter Property="Background">
+					<SolidColorBrush  Color="White" Opacity="0.1" />
+				</Setter>
+			</ControlTheme>
+		</ResourceDictionary>
+	</ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

@@ -1,0 +1,93 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ScrambledPass.DesktopApp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Class="ScrambledPass.DesktopApp.Views.GeneratorView"
+        x:DataType="vm:GeneratorViewModel"
+        x:CompileBindings="True"
+        xmlns:lang="clr-namespace:ScrambledPass.DesktopApp.Logic"
+        mc:Ignorable="d">
+	<Design.DataContext>
+		<vm:GeneratorViewModel />
+	</Design.DataContext>
+<Panel>
+	<Grid RowDefinitions="Auto,Auto,*,Auto">
+		<StackPanel Grid.Row="0">
+			<Border Theme="{DynamicResource PanelContainer}" CornerRadius="3,3,0,3">
+				<CheckBox Content="{lang:Localize EnableRandomWords}" IsChecked="True" Click="ToggleWordPanel" Margin="10,0,0,0"/>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}" Margin="30,0,0,0" BorderThickness="1,0,1,1" CornerRadius="0,3">
+				<StackPanel x:Name="WordPanel" HorizontalAlignment="Stretch" Spacing="5">
+					<StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Stretch">
+						<Label Content="{lang:Localize WordCount}" VerticalAlignment="Center" Margin="10,0"/>
+						<NumericUpDown x:Name="WordCount" Value="{Binding Generator.Parameters.WordCount}" FormatString="0" Minimum="1" Width="200" Margin="10,5"/>
+					</StackPanel>
+					<CheckBox Content="{lang:Localize EnableRandomLetterSize}" IsChecked="{Binding Generator.Parameters.RandomizeLetterSize}" Margin="10,0"/>
+				</StackPanel>
+			</Border>
+		</StackPanel>
+		<StackPanel Grid.Row="1">
+			<Separator Height="10" Opacity="0"/>
+			<Border Theme="{DynamicResource PanelContainer}" CornerRadius="3,3,0,3">
+				<CheckBox Content="{lang:Localize EnableRandomCharacters}" IsChecked="True" Click="ToggleSymbolPanel" Margin="10,0,0,0"/>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}" Margin="30,0,0,0" BorderThickness="1,0,1,1" CornerRadius="0,3">
+				<StackPanel x:Name="CharacterPanel" HorizontalAlignment="Stretch" Spacing="10">
+					<StackPanel Orientation="Horizontal" Spacing="5">
+						<Label Content="{lang:Localize CharacterCount}" VerticalAlignment="Center" Margin="10,0"/>
+						<NumericUpDown x:Name="CharacterCount" Value="{Binding Generator.Parameters.SymbolCount}" FormatString="0" Minimum="1" Width="200" Margin="10,5"/>
+					</StackPanel>
+					<StackPanel HorizontalAlignment="Left" Height="35" Orientation="Horizontal" Spacing="10" Margin="10,0">
+						<Label x:Name="SymbolModeLabel" Content="{lang:Localize SymbolMode}" VerticalAlignment="Center"/>
+						<ComboBox x:Name="SymbolMode" SelectedIndex="{Binding Generator.Parameters.SymbolMode}">
+							<ComboBoxItem Content="{lang:Localize RandomPosition}"/>
+							<ComboBoxItem Content="{lang:Localize ReplaceSpacing}"/>
+							<ComboBoxItem Content="{lang:Localize ReplaceCharacters}"/>
+						</ComboBox>
+					</StackPanel>
+					<Label Content="{lang:Localize IncludeCharacters}" VerticalAlignment="Center" Margin="10,0"/>
+					<CheckBox x:Name="EnableRandomLowerLetters" Content="a-z" IsChecked="{Binding Generator.Parameters.UseLetters}" Margin="20,0"/>
+					<CheckBox x:Name="EnableRandomUpperLetters" Content="A-Z" IsChecked="{Binding Generator.Parameters.UseCapitalLetters}" Margin="20,0"/>
+					<CheckBox x:Name="EnableRandomNumbers" Content="0-9" IsChecked="{Binding Generator.Parameters.UseNumbers}" Margin="20,0"/>
+					<CheckBox x:Name="EnableSymbols" Content="{lang:Localize Symbols}" IsChecked="{Binding Generator.Parameters.UseSymbols}" Margin="20,0"/>
+				</StackPanel>
+			</Border>
+		</StackPanel>
+		<Separator Height="5" Opacity="0" Grid.Row="2"/>
+		<StackPanel Grid.Row="3" Margin="0,0,0,35">
+				<Label x:Name="PasswordEntropy" HorizontalContentAlignment="Right" Height="22" Padding="5,5,15,-11"/>
+				<Label x:Name="PasswordStrength" HorizontalContentAlignment="Right" Height="22" Padding="5,5,15,-11"/>
+				<StackPanel Orientation="Horizontal" Height="50">
+					<Label Content="{lang:Localize Password}" VerticalAlignment="Center" Margin="12,0,0,0"/>
+					<TextBox x:Name="Password" VerticalAlignment="Center" Width="400" Margin="10,0,0,0"/>
+				</StackPanel>
+		</StackPanel>
+	</Grid>
+	<Grid ColumnDefinitions="Auto,*,Auto" VerticalAlignment="Bottom" Margin="0,0,35,0">
+			<StackPanel Orientation="Horizontal" Margin="0,5" Grid.Column="0">
+				<Button Content="{lang:Localize Generate}" HorizontalAlignment="Left" Click="GeneratePassword"/>
+				<Button Content="{lang:Localize Randomize}" HorizontalAlignment="Left" Click="RandomizeParameters"/>
+			</StackPanel>
+			<Separator Margin="10" Opacity="0" HorizontalAlignment="Stretch" Grid.Column="1"/>
+			<StackPanel Orientation="Horizontal" Grid.Column="2">
+				<Button HorizontalAlignment="Left" Click="OpenFilePicker">
+					<Button.Content>
+						<Image Source="/Assets/Icons/open_file.png" Height="20" Width="20"/>
+					</Button.Content>
+					<Button.Background>
+						<SolidColorBrush Opacity="0"/>
+					</Button.Background>
+				</Button>
+				<Button HorizontalAlignment="Right" Click="ResetWordList">
+					<Button.Content>
+						<Image Source="/Assets/Icons/reload.png" Height="20" Width="20"/>
+					</Button.Content>
+					<Button.Background>
+						<SolidColorBrush Opacity="0"/>
+					</Button.Background>
+				</Button>
+			</StackPanel>
+        </Grid>
+	</Panel>
+</UserControl>
