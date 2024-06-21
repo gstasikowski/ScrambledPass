@@ -38,24 +38,26 @@ public class Settings : INotifyPropertyChanged
 
 	public int DefaultWordCount
 	{
-		get
-		{
-			int count = 1;
-			int.TryParse(GetSetting("defaultWordCount"), out count);
-			return count;
-		}
+		get { return HelperMethods.ParseIntSetting("defaultWordCount"); }
 		set { SetSetting("defaultWordCount", value.ToString()); }
 	}
 
 	public int DefaultSymbolCount
 	{
-		get
-		{
-			int count = 1;
-			int.TryParse(GetSetting("defaultSymbolCount"), out count);
-			return count;
-		}
+		get { return HelperMethods.ParseIntSetting("defaultSymbolCount"); }
 		set { SetSetting("defaultSymbolCount", value.ToString()); }
+	}
+
+	public bool ClearClipboard
+	{
+		get { return GetSetting("clearClipboard") == "True"; }
+		set { SetSetting("clearClipboard", value.ToString()); }
+	}
+
+	public int ClearClipboardDelay
+	{
+		get { return HelperMethods.ParseIntSetting("clearClipboardDelay"); }
+		set { SetSetting("clearClipboardDelay", value.ToString()); }
 	}
 
 	public void ApplyUserSettings()
