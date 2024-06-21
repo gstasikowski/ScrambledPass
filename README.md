@@ -1,9 +1,15 @@
-# ScrambledPass
- Rewrite of an old password generator project with more sensible code structure.
+# ![Logo](/assets/logo.png) ScrambledPass
+Simple password generator with customizable parameters.
+Written in .Net Core, UI created with Avalonia, basic automatic tests using xUnit.
 
-**Features:**
-- configurable (word list & count, special characters...)
-- custom word lists
+### Features:
+- configurable parameters(word count, special characters count and types)
+- custom word list support
 - password entropy and (biased) strength indicator
-- multi language support (loaded on boot, can add your own)
+- automatic clipboard clearing (optional)
+- multi language support
 - themes
+
+### Screenshots
+![Generator view](/assets/generator_view.png)
+![Settings view](/assets/settings_view.png)
