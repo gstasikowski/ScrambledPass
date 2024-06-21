@@ -1,11 +1,12 @@
 using Avalonia.Controls;
 
-namespace ScrambledPass.DesktopApp.Views;
-
-public partial class MainWindow : Window
+namespace ScrambledPass.DesktopApp.Views
 {
-    public MainWindow()
-    {
-        InitializeComponent();
-    }
+	public partial class MainWindow : Window
+	{
+		public MainWindow()
+		{
+			InitializeComponent();
+		}
+	}
 }

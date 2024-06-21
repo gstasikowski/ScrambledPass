@@ -1,7 +1,8 @@
 ﻿using ReactiveUI;
 
-namespace ScrambledPass.DesktopApp.ViewModels;
-
-public class ViewModelBase : ReactiveObject
+namespace ScrambledPass.DesktopApp.ViewModels
 {
+	public class ViewModelBase : ReactiveObject
+	{
+	}
 }
