@@ -11,36 +11,48 @@
 		<vm:SettingsViewModel />
 	</Design.DataContext>
 
-    <Grid RowDefinitions="Auto, *, Auto">
+    <Grid RowDefinitions="Auto,*,Auto">
         <StackPanel Spacing="10" Grid.Row="0">
-            <StackPanel Orientation="Horizontal" Margin="0,10">
-                <Label Content="{lang:Localize Language}"/>
-                <ComboBox ItemsSource="{Binding LanguageList}" SelectedIndex="{Binding AppSettings.SelectedLanguage}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                <Label Content="{lang:Localize Theme}"/>
-                <ComboBox SelectedIndex="{Binding AppSettings.SelectedTheme}">
-					<ComboBoxItem Content="{lang:Localize ThemeAutomatic}"/>
-					<ComboBoxItem Content="{lang:Localize ThemeLight}"/>
-					<ComboBoxItem Content="{lang:Localize ThemeDark}"/>
-				</ComboBox>
-            </StackPanel>
-            <CheckBox Content="{lang:Localize LoadWordList}" Margin="3,0,0,0" IsChecked="{Binding AppSettings.RememberLastWordList}"/>
-            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
-                <Label Content="{lang:Localize DefaultWordCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <NumericUpDown HorizontalAlignment="Right" Width="200" Value="{Binding AppSettings.DefaultWordCount}" FormatString="0" Minimum="1"/>
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
-                <Label Content="{lang:Localize DefaultCharacterCount}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <NumericUpDown HorizontalAlignment="Left" Width="200" Value="{Binding AppSettings.DefaultSymbolCount}" FormatString="0" Minimum="1"/>
-            </StackPanel>
-            <StackPanel>
-                <CheckBox Content="{lang:Localize ClearClipboard}" Margin="3,0,0,0" />
-                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Width="220" Orientation="Horizontal">
-                    <Label Content="{lang:Localize ClearClipboardDelay}" VerticalAlignment="Center"/>
-                    <TextBox HorizontalAlignment="Left" Text="25" VerticalAlignment="Center" Width="40"/>
-                </StackPanel>
-            </StackPanel>
+			<Border Theme="{DynamicResource PanelContainer}">
+				<StackPanel Spacing="5">
+					<Label Content="{lang:Localize Language}" Margin="10,0"/>
+					<ComboBox ItemsSource="{Binding LanguageList}" SelectedIndex="{Binding AppSettings.SelectedLanguage}" Width="200" Margin="10,0,0,5"/>
+				</StackPanel>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}">
+				<StackPanel Spacing="5" Margin="0,0,0,5">
+					<Label Content="{lang:Localize Theme}" Margin="10,0"/>
+					<ComboBox SelectedIndex="{Binding AppSettings.SelectedTheme}" Width="200" Margin="10,0,0,5">
+						<ComboBoxItem Content="{lang:Localize ThemeAutomatic}"/>
+						<ComboBoxItem Content="{lang:Localize ThemeLight}"/>
+						<ComboBoxItem Content="{lang:Localize ThemeDark}"/>
+					</ComboBox>
+				</StackPanel>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}">
+            	<CheckBox Content="{lang:Localize LoadWordList}" IsChecked="{Binding AppSettings.RememberLastWordList}" Margin="10,0"/>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}">
+				<StackPanel Spacing="5">
+					<Label Content="{lang:Localize DefaultWordCount}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0"/>
+					<NumericUpDown Value="{Binding AppSettings.DefaultWordCount}" FormatString="0" Minimum="1" Width="200" HorizontalAlignment="Left" Margin="10,0,0,5"/>
+				</StackPanel>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}">
+				<StackPanel Spacing="5">
+					<Label Content="{lang:Localize DefaultCharacterCount}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0"/>
+					<NumericUpDown Value="{Binding AppSettings.DefaultSymbolCount}" FormatString="0" Minimum="1" Width="200" HorizontalAlignment="Left" Margin="10,0,0,5"/>
+				</StackPanel>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}">
+                <CheckBox Content="{lang:Localize ClearClipboard}" IsChecked="{Binding AppSettings.ClearClipboard}" Margin="10,0"/>
+            </Border>
+			<Border Theme="{DynamicResource PanelContainer}">
+				<StackPanel Spacing="5">
+					<Label Content="{lang:Localize ClearClipboardDelay}" Margin="10,0"/>
+					<NumericUpDown Value="{Binding AppSettings.ClearClipboardDelay}" FormatString="0" Minimum="1" Width="200" HorizontalAlignment="Left" Margin="10,0,0,5"/>
+				</StackPanel>
+			</Border>
         </StackPanel>
 		<Separator Height="10" Opacity="0" Grid.Row="1"/>
         <StackPanel Orientation="Horizontal" Margin="0,0,10,5" Grid.Row="2">

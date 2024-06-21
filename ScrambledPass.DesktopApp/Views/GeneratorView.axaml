@@ -12,38 +12,47 @@
 		<vm:GeneratorViewModel />
 	</Design.DataContext>
 
-	<Grid RowDefinitions="Auto, Auto, *, Auto, Auto">
+	<Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
 		<StackPanel Grid.Row="0">
-			<CheckBox Content="{lang:Localize EnableRandomWords}" Margin="10,10,0,0" IsChecked="True" Click="ToggleWordPanel"/>
-			<StackPanel x:Name="WordPanel" Theme="{DynamicResource PanelContainer}" HorizontalAlignment="Stretch" Margin="30,0,0,0" Spacing="5">
-				<StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Stretch">
-					<Label Content="{lang:Localize CharacterCount}"/>
-					<NumericUpDown x:Name="WordCount" Height="23" HorizontalAlignment="Stretch" Value="{Binding Generator.Parameters.WordCount}" FormatString="0" Minimum="1"/>
+			<Border Theme="{DynamicResource PanelContainer}" CornerRadius="3,3,0,3">
+				<CheckBox Content="{lang:Localize EnableRandomWords}" IsChecked="True" Click="ToggleWordPanel" Margin="10,0,0,0"/>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}" Margin="30,0" BorderThickness="1,0,1,1" CornerRadius="0,3">
+				<StackPanel x:Name="WordPanel" HorizontalAlignment="Stretch" Spacing="5">
+					<StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Stretch">
+						<Label Content="{lang:Localize WordCount}" VerticalAlignment="Center" Margin="10,0"/>
+						<NumericUpDown x:Name="WordCount" Value="{Binding Generator.Parameters.WordCount}" FormatString="0" Minimum="1" Width="200" Margin="10,5"/>
+					</StackPanel>
+					<CheckBox Content="{lang:Localize EnableRandomLetterSize}" IsChecked="{Binding Generator.Parameters.RandomizeLetterSize}" Margin="10,0"/>
 				</StackPanel>
-				<CheckBox Content="{lang:Localize EnableRandomLetterSize}" IsChecked="{Binding Generator.Parameters.RandomizeLetterSize}"/>
-			</StackPanel>
+			</Border>
 		</StackPanel>
 		<StackPanel Grid.Row="1">
 			<Separator Height="10" Opacity="0"/>
-			<CheckBox Content="{lang:Localize EnableRandomCharacters}" Margin="10,10,0,0" IsChecked="True" Click="ToggleSymbolPanel"/>
-			<StackPanel x:Name="CharacterPanel" Theme="{DynamicResource PanelContainer}" HorizontalAlignment="Stretch" Margin="30,0,0,0" Spacing="10">
-				<StackPanel Orientation="Horizontal" Spacing="5">
-					<Label Content="{lang:Localize CharacterCount}" />
-					<NumericUpDown x:Name="CharacterCount" HorizontalAlignment="Left" Height="23" Width="200" Value="{Binding Generator.Parameters.SymbolCount}" FormatString="0" Minimum="1"/>
+			<Border Theme="{DynamicResource PanelContainer}" CornerRadius="3,3,0,3">
+				<CheckBox Content="{lang:Localize EnableRandomCharacters}" IsChecked="True" Click="ToggleSymbolPanel" Margin="10,0,0,0"/>
+			</Border>
+			<Border Theme="{DynamicResource PanelContainer}" Margin="30,0" BorderThickness="1,0,1,1" CornerRadius="0,3">
+				<StackPanel x:Name="CharacterPanel" HorizontalAlignment="Stretch" Spacing="10">
+					<StackPanel Orientation="Horizontal" Spacing="5">
+						<Label Content="{lang:Localize CharacterCount}" VerticalAlignment="Center" Margin="10,0"/>
+						<NumericUpDown x:Name="CharacterCount" Value="{Binding Generator.Parameters.SymbolCount}" FormatString="0" Minimum="1" Width="200" Margin="10,5"/>
+					</StackPanel>
+					<StackPanel HorizontalAlignment="Left" Height="35" Orientation="Horizontal" Spacing="10" Margin="10,0">
+						<Label x:Name="SymbolModeLabel" Content="{lang:Localize SymbolMode}" VerticalAlignment="Center"/>
+						<ComboBox x:Name="SymbolMode" SelectedIndex="{Binding Generator.Parameters.SymbolMode}">
+							<ComboBoxItem Content="{lang:Localize RandomPosition}"/>
+							<ComboBoxItem Content="{lang:Localize ReplaceSpacing}"/>
+							<ComboBoxItem Content="{lang:Localize ReplaceCharacters}"/>
+						</ComboBox>
+					</StackPanel>
+					<Label Content="{lang:Localize IncludeCharacters}" VerticalAlignment="Center" Margin="10,0"/>
+					<CheckBox x:Name="EnableRandomLowerLetters" Content="a-z" IsChecked="{Binding Generator.Parameters.UseLetters}" Margin="20,0"/>
+					<CheckBox x:Name="EnableRandomUpperLetters" Content="A-Z" IsChecked="{Binding Generator.Parameters.UseCapitalLetters}" Margin="20,0"/>
+					<CheckBox x:Name="EnableRandomNumbers" Content="0-9" IsChecked="{Binding Generator.Parameters.UseNumbers}" Margin="20,0"/>
+					<CheckBox x:Name="EnableSymbols" Content="{lang:Localize Symbols}" IsChecked="{Binding Generator.Parameters.UseSymbols}" Margin="20,0"/>
 				</StackPanel>
-				<StackPanel HorizontalAlignment="Left" Height="35" Orientation="Horizontal" Spacing="10">
-					<Label x:Name="SymbolModeLabel" Content="{lang:Localize SymbolMode}" VerticalAlignment="Center"/>
-					<ComboBox x:Name="SymbolMode" SelectedIndex="{Binding Generator.Parameters.SymbolMode}">
-						<ComboBoxItem Content="{lang:Localize RandomPosition}"/>
-						<ComboBoxItem Content="{lang:Localize ReplaceSpacing}"/>
-						<ComboBoxItem Content="{lang:Localize ReplaceCharacters}"/>
-					</ComboBox>
-				</StackPanel>
-				<CheckBox x:Name="EnableRandomLowerLetters" Content="a-z" IsChecked="{Binding Generator.Parameters.UseLetters}"/>
-				<CheckBox x:Name="EnableRandomUpperLetters" Content="A-Z" IsChecked="{Binding Generator.Parameters.UseCapitalLetters}"/>
-				<CheckBox x:Name="EnableRandomNumbers" Content="0-9" IsChecked="{Binding Generator.Parameters.UseNumbers}"/>
-				<CheckBox x:Name="EnableSymbols" Content="{lang:Localize Symbols}" IsChecked="{Binding Generator.Parameters.UseSymbols}"/>
-			</StackPanel>
+			</Border>
 		</StackPanel>
 		<Separator Height="10" Opacity="0" Grid.Row="2"/>
 		<StackPanel Grid.Row="3">
@@ -56,7 +65,7 @@
 				<TextBox x:Name="Password" Height="23" Width="350" Margin="10,0" VerticalAlignment="Center"/>
 			</StackPanel>
 		</StackPanel>
-		<Grid ColumnDefinitions="Auto, *, Auto" Grid.Row="4">
+		<Grid ColumnDefinitions="Auto,*,Auto" Grid.Row="4">
 			<StackPanel Orientation="Horizontal" Margin="5,5,5,5" Grid.Column="0">
 				<Button Content="{lang:Localize Generate}" HorizontalAlignment="Left" Click="GeneratePassword"/>
 				<Button Content="{lang:Localize Randomize}" HorizontalAlignment="Left" Click="RandomizeParameters"/>

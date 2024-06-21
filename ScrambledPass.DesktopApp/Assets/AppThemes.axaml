@@ -10,9 +10,17 @@
 			<SolidColorBrush x:Key="PasswordQualityWeak" Color="Orange"/>
 			<SolidColorBrush x:Key="PasswordQualityPoor" Color="Red"/>
 
-			<ControlTheme x:Key="PanelContainer" TargetType="StackPanel">
+			<ControlTheme x:Key="PanelContainer" TargetType="Border">
+				<Setter Property="HorizontalAlignment" Value="Stretch"/>
+				<Setter Property="Padding" Value="5"/>
+				<Setter Property="Margin" Value="0,0,30,0"/>
+				<Setter Property="BorderBrush">
+					<SolidColorBrush  Color="Black" Opacity="0.3" />
+				</Setter>
+				<Setter Property="BorderThickness" Value="1"/>
+				<Setter Property="CornerRadius" Value="3"/>
 				<Setter Property="Background">
-					<SolidColorBrush  Color="Gray" Opacity="0.2" />
+					<SolidColorBrush  Color="Black" Opacity="0.1" />
 				</Setter>
 			</ControlTheme>
 		</ResourceDictionary>
@@ -22,9 +30,17 @@
 			<SolidColorBrush x:Key="PasswordQualityWeak" Color="Yellow"/>
 			<SolidColorBrush x:Key="PasswordQualityPoor" Color="OrangeRed"/>
 
-			<ControlTheme x:Key="PanelContainer" TargetType="StackPanel">
+			<ControlTheme x:Key="PanelContainer" TargetType="Border">
+				<Setter Property="HorizontalAlignment" Value="Stretch"/>
+				<Setter Property="Padding" Value="5"/>
+				<Setter Property="Margin" Value="0,0,30,0"/>
+				<Setter Property="BorderBrush">
+					<SolidColorBrush  Color="White" Opacity="0.3" />
+				</Setter>
+				<Setter Property="BorderThickness" Value="1"/>
+				<Setter Property="CornerRadius" Value="3"/>
 				<Setter Property="Background">
-					<SolidColorBrush  Color="Gray" Opacity="0.3" />
+					<SolidColorBrush  Color="White" Opacity="0.1" />
 				</Setter>
 			</ControlTheme>
 		</ResourceDictionary>
