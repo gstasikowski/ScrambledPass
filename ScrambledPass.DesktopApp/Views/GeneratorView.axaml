@@ -60,7 +60,7 @@
 				<Label x:Name="PasswordStrength" HorizontalContentAlignment="Right" Height="22" Padding="5,5,15,-11"/>
 				<StackPanel Orientation="Horizontal" Height="50">
 					<Label Content="{lang:Localize Password}" VerticalAlignment="Center" Margin="12,0,0,0"/>
-					<TextBox x:Name="Password" VerticalAlignment="Center" Width="350" Margin="10,0,0,0"/>
+					<TextBox x:Name="Password" VerticalAlignment="Center" Width="400" Margin="10,0,0,0"/>
 				</StackPanel>
 		</StackPanel>
 	</Grid>
