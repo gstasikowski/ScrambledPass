@@ -18,6 +18,8 @@ public partial class GeneratorView : UserControl
 	private void SubscribeToEvents()
 	{
 		Password.TextChanged += UpdatePasswordStrength;
+		Password.CopyingToClipboard += ClearClipboard;
+		Password.CuttingToClipboard += ClearClipboard;
 	}
 
 	private void ToggleWordPanel(object sender, RoutedEventArgs e)
@@ -53,6 +55,11 @@ public partial class GeneratorView : UserControl
 	private void RandomizeParameters(object sender, RoutedEventArgs e)
 	{
 		((GeneratorViewModel)this.DataContext).Generator.RandomizeParameters();
+	}
+
+	private void ClearClipboard(object sender, RoutedEventArgs e)
+	{
+		((GeneratorViewModel)this.DataContext).TriggerClipboardClearingTask(TopLevel.GetTopLevel(this));
 	}
 
 	private bool GetCheckBoxState(CheckBox source)

@@ -13,4 +13,10 @@ public class GeneratorViewModel : ViewModelBase
 	{
 		get { return Localizer.Instance; }
 	}
+
+	public async void TriggerClipboardClearingTask(Avalonia.Controls.TopLevel window)
+	{
+		ClipboardTasks.Instance.CancelClipboardClearingTask();
+		await ClipboardTasks.Instance.ClearClipboardAsync(window);
+	}
 }

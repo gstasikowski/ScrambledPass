@@ -1,5 +1,3 @@
-using System.Diagnostics.Contracts;
-
 namespace ScrambledPass.DesktopApp.Logic;
 
 public class AppLogic
