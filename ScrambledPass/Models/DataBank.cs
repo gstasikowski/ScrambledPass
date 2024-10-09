@@ -13,8 +13,6 @@ namespace ScrambledPass.Models
 		private Dictionary<string, string> _settings = new Dictionary<string, string>();
 		private List<string> _wordList = new List<string>();
 		private static readonly char[] _symbols = { ' ', '.', ',', ';', '/', '\\', '\'', '[', ']', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '|', ':', '\"', '<', '>', '?' };
-
-		private ObservableCollection<string> _themes = new ObservableCollection<string>();
 		#endregion Variables
 
 		#region Properties
@@ -57,12 +55,6 @@ namespace ScrambledPass.Models
 		{
 			get { return _symbols.Length; }
 		}
-
-		public ObservableCollection<string> ThemeList
-		{
-			get { return _themes; }
-			set { _themes = value; }
-		}
 		#endregion Properties
 
 		#region Methods
@@ -86,20 +78,6 @@ namespace ScrambledPass.Models
 			{
 				_settings.Add(key, value);
 			}
-		}
-
-		public void AddAvailableTheme(string themeName)
-		{
-			if (!_themes.Contains(themeName))
-			{
-				_themes.Add(themeName);
-			}
-		}
-
-		public int ThemeIndex(string themeName)
-		{
-			int themeIndex = _themes.IndexOf(themeName);
-			return (themeIndex > -1) ? themeIndex : 0;
 		}
 		#endregion Methods
 	}

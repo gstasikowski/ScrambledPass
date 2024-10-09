@@ -25,8 +25,8 @@ namespace ScrambledPass.DesktopApp.ViewModels
 		{
 			Pages = new ViewModelBase[]
 			{
-			new GeneratorViewModel(),
-			new SettingsViewModel()
+				new GeneratorViewModel(),
+				new SettingsViewModel()
 			};
 		}
 

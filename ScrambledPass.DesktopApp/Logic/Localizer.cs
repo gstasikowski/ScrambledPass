@@ -9,6 +9,7 @@ using System.Security;
 using System.Text;
 using System.Text.Json;
 using Avalonia.Platform;
+
 namespace ScrambledPass.DesktopApp.Logic
 {
 	public class Localizer : INotifyPropertyChanged
